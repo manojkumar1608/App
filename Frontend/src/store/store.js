@@ -4,7 +4,7 @@ import SidebarSlice from "./SidebarSlice"
 const store = configureStore({
   reducer:{
      auth: authSlice,
-     sidebar: SidebarSlice
+     Sidebar: SidebarSlice
   }
 })
 
