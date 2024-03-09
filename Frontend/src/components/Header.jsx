@@ -29,12 +29,12 @@ function Header() {
                 {/* //search bar with search btn// */}
                 <div className="flex col-span-10 pl-14">
                     <Input
-                        className="text-center w-full mt-2  border border-gray-400 pr-[15rem] pl-[10rem] rounded-l-full"
+                        className="text-center w-full mt-2 mb-2  border border-gray-400 pr-[15rem] pl-[10rem] rounded-l-full"
                         label=""
                         placeholder="Search"
                     />
                     <button
-                        className="border border-gray-400 px-5 py-2 bg-gray-100 rounded-r-full mt-2"
+                        className="border border-gray-400 mb-2 px-5 py-2 bg-gray-100 rounded-r-full mt-2"
                         type="button"
                     >
                          <BiSearchAlt2 />
