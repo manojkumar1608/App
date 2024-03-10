@@ -23,10 +23,9 @@ import EmptyCard from '../EmptyUi/EmptyCard';
 
 function SideBar() {
     const menu = useSelector((state)=> state.Sidebar.isMenuOpen)
-    console.log(menu)
     if(!menu) {
     return (
-        <div className='flex flex-row'>
+        <div className='flex  w-[5rem] '>
             <ul className=''>
             
                 <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  font-bold hover:bg-gray-300 w-[3rem]'>

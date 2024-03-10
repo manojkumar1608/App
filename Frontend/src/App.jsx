@@ -6,13 +6,14 @@ import SideBar from './components/SideBar.jsx';
 import EmptyCard from "./EmptyUi/EmptyCard.jsx"
 import { Outlet } from 'react-router-dom';
 import Body from './components/Body.jsx';
+import DashBoard from './components/DashBoard.jsx';
 function App() {
   return (
     <>
     <Provider store= {store} >
       <Header />
-      <SideBar />
-      <EmptyCard/>
+      {/* <SideBar /> */}
+      <DashBoard/>
     </Provider>
     </>
   )

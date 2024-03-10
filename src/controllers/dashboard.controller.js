@@ -48,7 +48,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
     }
 ]);
 // total subscriber 
-const allSubscribes = await Subscription.aggregate([
+const allSubscribers = await Subscription.aggregate([
     {
         $match:{
             channel: new mongoose.Types.ObjectId(req.user._id)
@@ -87,7 +87,7 @@ const allViews = await Video.aggregate([
 ])
 
 const stats = {
-    Subscribers: allSubscribes[0].subscribers,
+    Subscribers: allSubscribers[0].subscribers,
     totalVideos: allVideo[0].Videos,
     totalVideoViews: allViews[0].allVideosViews,
     totalVideoLikes: allLikes[0].totalVideoLikes,
