@@ -5,14 +5,17 @@ import { useSelector,useDispatch } from 'react-redux';
 import { isTogglemenu} from "../store/SidebarSlice"
 
 function Header() {
+    const menu = useSelector((state)=>state.Sidebar.isTogglemenu)
     const dispatch = useDispatch()
     const Handletogglemenu = ()=>{
        dispatch(isTogglemenu())
 
     }
-    return (
-        <div className='grid grid-flow-col p-3 shadow-lg'>
-            <div className='flex col-span-1 text-2xl mt-1'>
+   
+    return(
+        
+        <div className='relative z-0 flex flex-row  p-3 shadow-lg'>
+            <div className='flex flex-row text-2xl mt-1'>
                 {/*  sidebar */}
                     <img 
                     onClick={()=>Handletogglemenu()}
@@ -29,14 +32,14 @@ function Header() {
                 {/* /* // */ }
                 {/* //search bar with search btn// */}
                 </div>
-                <div className="flex col-span-10 pl-[5rem] ">
+                <div className="flex  pl-[5rem] ">
                     <Input
-                        className=" w-[28rem] border border-gray-400 p-1 pl-3 rounded-l-full "
+                        className=" w-[30rem] border border-gray-500 p-1 pl-3 rounded-l-full "
                         type="text"
                         placeholder="Search..."
                     />
                     <button
-                        className="border border-gray-400 px-5 py-2 bg-gray-100 rounded-r-full "
+                        className="border border-gray-500 px-5 py-2 bg-gray-300 rounded-r-full "
                         type="button"
                     >
                          <BiSearchAlt2 />

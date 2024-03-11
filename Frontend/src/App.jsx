@@ -1,22 +1,42 @@
-import './App.css'
-import store from './store/store.js';
-import { Provider, useSelector } from 'react-redux';
-import Header from './components/Header.jsx';
-import SideBar from './components/SideBar.jsx';
-import EmptyCard from "./EmptyUi/EmptyCard.jsx"
-import { Outlet } from 'react-router-dom';
-import Body from './components/Body.jsx';
-import DashBoard from './components/DashBoard.jsx';
+// 
+import { Provider } from "react-redux";
+import "./App.css";
+import Body from "./components/Body";
+import Header from "./components/Header"; 
+import store from "./store/store.js";
+import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import EmptyCard from "./EmptyUi/EmptyCard";
+
+const appRouter = createBrowserRouter([
+  {
+    path:"/", 
+    element:<Body />,
+    children:[
+      {
+        path:"/",
+        element:<EmptyCard />
+      },
+      {
+        path:"/watch",
+        element:''
+      },
+      {
+        path:"/",
+        element:''
+      }
+    ]
+  }
+])
+
 function App() {
   return (
-    <>
-    <Provider store= {store} >
-      <Header />
-      {/* <SideBar /> */}
-      <DashBoard/>
+    <Provider store={store}>
+      <div className="App"> 
+        <Header />
+        <RouterProvider router={appRouter}></RouterProvider>
+      </div>
     </Provider>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -71,8 +71,7 @@ function SideBar() {
 
 
   return (
-   
-        <div className = "p-5 shadow-xl w-60 h-screen overflow-y-auto ">
+        <div className = "z-10 p-5 shadow-xl w-60 h-screen overflow-y-auto">
         <ul >
           <li className="py-2 flex hover:bg-gray-200 rounded-lg pl-2 font-semibold">
           <Link to="/" className="flex">
