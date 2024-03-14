@@ -1,13 +1,16 @@
 import React from 'react'
 import SideBar from './SideBar'
-import { Outlet } from 'react-router-dom'
+import EmptyCard from '../EmptyUi/EmptyCard.jsx'
 
 function Body() {
   return (
-    <div className='app flex container w-full'>
-        <SideBar/>
-        <Outlet/>
+    <>
+    <div className='flex '>
+      <SideBar/>
+      <EmptyCard/>
     </div>
+    
+        </>
   )
 }
 

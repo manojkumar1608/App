@@ -2,40 +2,26 @@
 import { Provider } from "react-redux";
 import "./App.css";
 import Body from "./components/Body";
-import Header from "./components/Header"; 
+import Header from "./components/Header.jsx"; 
 import store from "./store/store.js";
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import EmptyCard from "./EmptyUi/EmptyCard";
+import SideBar from "./components/SideBar.jsx";
 
-const appRouter = createBrowserRouter([
-  {
-    path:"/", 
-    element:<Body />,
-    children:[
-      {
-        path:"/",
-        element:<EmptyCard />
-      },
-      {
-        path:"/watch",
-        element:''
-      },
-      {
-        path:"/",
-        element:''
-      }
-    ]
-  }
-])
+
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App"> 
-        <Header />
-        <RouterProvider router={appRouter}></RouterProvider>
-      </div>
-    </Provider>
+    <>
+      <div className="">
+        <Header/>
+      {/* <main> */}
+       <Outlet />
+       {/* </main> */}
+  </div>
+  </>
+    
+    
   );
 }
 
