@@ -25,16 +25,14 @@ function SideBar() {
 
     const menu = useSelector((state)=> state.Sidebar.isMenuOpen)
     const dispatch = useDispatch()
+
     
-   
-   
-     
       if(menu){
         return (
           <>
-          <div onClick={()=>dispatch(closeMenu())} className='h-full z-30 w-full none fixed  top-0 left-0 bg-black bg-opacity-5'>
+          <div onClick={()=>dispatch(closeMenu())} className='h-full w-full none fixed top-0  bg-black bg-opacity-15'>
         
-                <div className = "relative bg-gray-50 z-30 p-5 shadow-xl w-60 h-screen overflow-y-auto rounded-xl ">
+                <div  className = " relative bg-gray-50 z-30 p-5 shadow-xl w-60 h-screen overflow-y-auto rounded-xl ">
             <div className='flex flex-row text-2xl '>
                 {/*  sidebar */}
                     <img 
@@ -53,9 +51,9 @@ function SideBar() {
             
 
 
-              <ul className='inset-y-0 left-0 pt-2'>
-                <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to="/" className="flex">
+              <ul className=' pt-2 '>
+                <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold   ">
+                <Link to="/" className="flex  ">
                   {""}
                   <IoHomeOutline className="mr-5 mt-1 text-xl" />
                   Home
@@ -186,46 +184,8 @@ function SideBar() {
             </div>
             </div>
 
-            <div className='flex  w-[5rem] '>
-            <ul className=''>
+            <div className='flex  w-[5rem]'>
             
-                <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  font-bold hover:bg-gray-300 w-[3rem]'>
-                    <Link to="/" className="text-3xl">
-                        <IoHome  />
-                        {""}
-                    </Link>
-                </li>
-
-                <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 w-[3rem]'>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <MdSubscriptions  />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <AiFillLike   />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <FaHistory   />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <MdAccountCircle   />
-                    </Link>
-                </li>
-
-            </ul>
-          
         </div>
             </>
         )

@@ -5,20 +5,42 @@ import Body from "./components/Body";
 import Header from "./components/Header.jsx"; 
 import store from "./store/store.js";
 import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
-import EmptyCard from "./EmptyUi/EmptyCard";
-import SideBar from "./components/SideBar.jsx";
+import MainContainer from "./components/MainContainer.jsx";
+import WatchPage from "./components/WatchPage.jsx";
+const router = createBrowserRouter([
+  {
+    path:"/", 
+    element:<Body/>,
+        children:[
+          {
+            path:"/",
+            element:<MainContainer/>
+          },
+        {
+          path:"/",
+          element:""
 
-
+        },
+          {
+        path:"/watch",
+        element:<WatchPage/>
+      },
+      {
+        path:"/",
+        element:''
+      }
+    ]
+  }
+])
 
 function App() {
+
   return (
     <>
-      <div className="">
-        <Header/>
-      {/* <main> */}
-       <Outlet />
-       {/* </main> */}
-  </div>
+     <Provider store = {store}>
+      <Header/>
+      <RouterProvider router= {router}/>
+    </Provider>
   </>
     
     
