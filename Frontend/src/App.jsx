@@ -7,6 +7,10 @@ import store from "./store/store.js";
 import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import MainContainer from "./components/MainContainer.jsx";
 import WatchPage from "./components/WatchPage.jsx";
+import TweetsPage from "./components/Tweets.jsx";
+import YourAccount from "./components/YourAccount.jsx";
+import Signup from "./components/SignUp.jsx";
+import Login from "./components/Login.jsx";
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -17,8 +21,8 @@ const router = createBrowserRouter([
             element:<MainContainer/>
           },
         {
-          path:"/",
-          element:""
+          path:"/tweets",
+          element:<TweetsPage/>
 
         },
           {
@@ -26,8 +30,18 @@ const router = createBrowserRouter([
         element:<WatchPage/>
       },
       {
-        path:"/",
-        element:''
+        path:"/acc",
+        element:<YourAccount/>
+      },
+      {
+        path:"/signup",
+        element:<Signup/>
+
+      },
+      {
+        path:"/login",
+        element:<Login/>
+
       }
     ]
   }

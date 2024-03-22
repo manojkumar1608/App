@@ -30,9 +30,9 @@ function SideBar() {
       if(menu){
         return (
           <>
-          <div onClick={()=>dispatch(closeMenu())} className='h-full w-full none fixed top-0  bg-black bg-opacity-15'>
+          <div onClick={()=>dispatch(closeMenu())} className='h-full w-full none fixed top-0  bg-black bg-opacity-30 z-50'>
         
-                <div  className = " relative bg-gray-50 z-30 p-5 shadow-xl w-60 h-screen overflow-y-auto rounded-xl ">
+                <div  className = " p-5 shadow-xl w-60 bg-gray-50 h-screen overflow-y-auto rounded-xl ">
             <div className='flex flex-row text-2xl '>
                 {/*  sidebar */}
                     <img 
@@ -53,7 +53,7 @@ function SideBar() {
 
               <ul className=' pt-2 '>
                 <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold   ">
-                <Link to="/" className="flex  ">
+                <Link to="" className="flex  ">
                   {""}
                   <IoHomeOutline className="mr-5 mt-1 text-xl" />
                   Home
@@ -61,8 +61,8 @@ function SideBar() {
               </li>
       
                 <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold ">
-                <Link to="/" className="flex">
-                  {""}
+                <Link to= {`/`} className="flex">
+                  
                   <MdOutlineSubscriptions className="mr-5 mt-1 text-xl " />
                  Subscriptions
                 </Link>
@@ -191,7 +191,7 @@ function SideBar() {
         )
       }
     return (
-        <div className='flex  w-[5rem] '>
+        <div className='flex shadow-xl shadow-gray-300 w-[5rem] '>
             <ul className=''>
             
                 <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  font-bold hover:bg-gray-300 w-[3rem]'>

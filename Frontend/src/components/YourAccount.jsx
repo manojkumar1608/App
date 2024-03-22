@@ -1,61 +1,71 @@
-import React from 'react'
-import authSlice from '../store/authSlice'
-import { useSelector } from 'react-redux'
-import axios from "axios"
-import { useState ,useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import VideoContainer from "./VideoContainer.jsx"
 import Button from "./Button.jsx"
-
+import { Link } from 'react-router-dom'
+import TweetsPage from './Tweets.jsx'
  function YourAccount() {
-  const [user,setUser] = useState([])
-  const [account ,setAccount] = useState([])
-  // const userData = useSelector((state)=>state.auth.userData)
-  // if(userData) return "Create or Login to get details..."
-
- useEffect(()=>{
-  async function Accountdata(){
-    try {
-      const response = await axios.get('8000/api/v1/c/:six')
-      const data = response.json
-      console.log(data)
-      setAccount(data)
-    } catch (error) {
-      throw new Error(error.message)
-    }
-  };
-  Accountdata()
- },[])
  
 
   return (
 <>
-<div className='float-right'>
+<div className='relative w-full h-screen z-10 overflow-x-hidden'>
 
-        <div className=' flex flex-row'>
-         <img className=' object-contain h-[12rem] w-[60rem] p-3 m-2 '
-         src= 'https://cdn.pixabay.com/photo/2018/05/27/22/48/social-3434840_1280.png'
+        <div className='absolute h-[11rem] p-2 top-2 right-[7rem] left-[4rem] bg-gray-200'>
+         <img className=' '
+         src= ''
          alt='Cover-Image'
          />
         </div>
 
-        <div className='w-24 h-24 mt-[3rem] flex flex-row'>
-         <img className=' w-24 h-24 rounded-full"'
+        <div className='absolute grid grid-rows-3 grid-flow-col gap-4 top-[12rem] left-[4rem] mt-1 p-2'>
+
+         <img className=' row-span-3 w-24 h-24 rounded-full"'
          src="https://cdn.pixabay.com/photo/2018/05/27/22/48/social-3434840_1280.png"
          alt='Cover-Image'
          />
-         <div className='flex flex-col w-[10rem]'>
-         <h2 className=' '>Hello</h2>
-         <h3 className=''>@hello . 20 . 20</h3>
+          <h1 className='h-fit col-span-2 text-3xl '>ChannelName</h1>
+
+          <div className='row-span-2 col-span-2'>
+          <p className=''>@channel</p>
+          <p className='inline-block'> followers </p> <span className='ml-2'> following </span> 
+          </div>
+          <Button className='row-span-3 col-span-3 w-[6rem] h-fit m-3 p-2 bg-gray-800  rounded-3xl hover:bg-gray-500'>
+               Follow
+            </Button>
+         </div>
+          
+          <div  className='relative top-[20rem] left-[4rem] '>
+            <button
+            className='p-2 mr-2  border-none text-xl font-bold hover:underline'
+            onClick={Home}>
+              Home
+            </button>
+           
+            <button 
+            type='button'
+            className='p-2 mr-2 border-none text-xl font-bold hover:underline'>
+              Videos
+            </button>
+            <button 
+            type='button'
+            className='p-2 mr-2 border-none text-xl font-bold hover:underline'
+            onClick={Tweets}>
+              Tweets
+            </button>
+            <button 
+            type='button'
+            className='p-2 mr-2 border-none text-xl font-bold hover:underline'>
+              Playlists
+            </button>
 
           </div>
-         </div>
-         <div className=' float-right'>
-         <Button 
-         className=' mt-2 '
-         type='button'
 
-         >Subscribe
-         </Button>
-         </div>
+          <hr className='absolute w-screen h-2 top-[23rem] border-gray-300' />
+
+          <div id='Home' className='absolute flex flex-wrap top-[24rem] '>
+            {home}
+          </div>
+
 
          </div>
 

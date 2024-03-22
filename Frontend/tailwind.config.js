@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      textUnderlineOffset: {
+        3: '3px',
+      }
       
 
     },

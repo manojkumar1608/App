@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from "./Button"
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
-import CommentsContainer from './CommentsContainer';
+import CommentBox from './CommentsContainer';
 
 
 function WatchPage() {
@@ -102,7 +102,7 @@ function WatchPage() {
          </div>
 
          <div>
-            <CommentsContainer/>
+            <CommentBox/>
          </div>
 
 
