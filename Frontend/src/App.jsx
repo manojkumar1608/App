@@ -11,6 +11,7 @@ import TweetsPage from "./components/Tweets.jsx";
 import YourAccount from "./components/YourAccount.jsx";
 import Signup from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
+import AuthLayout from "./components/AuthLayout.jsx";
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -35,12 +36,21 @@ const router = createBrowserRouter([
       },
       {
         path:"/signup",
-        element:<Signup/>
+        element:(
+          <AuthLayout authentication = {false}>
+            <Signup/>
+          </AuthLayout>
+        )
+        
 
       },
       {
         path:"/login",
-        element:<Login/>
+        element:(
+          <AuthLayout authentication = {false}>
+            <Login/>
+          </AuthLayout>
+        )
 
       }
     ]

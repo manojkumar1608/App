@@ -9,6 +9,7 @@ import {useForm} from "react-hook-form"
 import axios from "axios"
 
 function Login() {
+    const authstatus = useSelector(state =>state.auth.status)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
@@ -22,33 +23,22 @@ function Login() {
         try {
             const session = await axios({
                 method: 'POST',
-                url:'http://localhost:8000/api/v1/users/login',
+                url:'/api/v1/users/login',
                 data: {
                     'email': data.email,
                     'password': data.password
-
                 }
-                
-            })           
-            console.log(session.data)
-          
-          
+            })      
+
             if (session) {
-                window.localStorage.setItem('user',JSON.stringify(session))
-                const userData  = await axios({
-                    method:'GET',
-                    url:'http://localhost:8000/api/v1/users/current-user',
-                    
-                })
-                
-                console.log(userData)
-                    
+                const userData  = await axios.get('/api/v1/users/current-user')
                 if(userData){
-                    dispatch(authLogin(userData))
-                    navigate("/")
-                };
+                    dispatch(authLogin(userData.data))
+                }
+                navigate("/")
+                
+                    
             }
-            console.log(userData)
         } catch (error) {
             setError(error.message)
         }
@@ -56,7 +46,7 @@ function Login() {
 
   return (
     <div
-    className='flex items-center justify-center w-full'
+    className='flex items-center justify-center w-full mt-2'
     >
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
