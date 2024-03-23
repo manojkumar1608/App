@@ -12,6 +12,7 @@ import YourAccount from "./components/YourAccount.jsx";
 import Signup from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
+import UploadVideo from "./components/UploadVideo.jsx.jsx";
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -49,6 +50,15 @@ const router = createBrowserRouter([
         element:(
           <AuthLayout authentication = {false}>
             <Login/>
+          </AuthLayout>
+        )
+
+      },
+      {
+        path:"/uploadvideo",
+        element:(
+          <AuthLayout authentication = {false}>
+            <UploadVideo/>
           </AuthLayout>
         )
 
