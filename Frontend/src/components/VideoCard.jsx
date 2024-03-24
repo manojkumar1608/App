@@ -10,6 +10,7 @@ function VideoCard({videoinfo}) {
   return (
     <>
     <div className='flex  flex-wrap '>
+    <a className='hover:bg-gray-200 rounded-xl' href='/watch '>
     <div className='p-2 w-96 '>
       <Link to="/watch">
       <img className='rounded-xl hover:opacity-60 transition-opacity duration-300'
@@ -56,8 +57,8 @@ function VideoCard({videoinfo}) {
           {2} hours ago
         </li>
       </ul>
-      
     </div>
+    </a>
     <div className='p-2 w-96 '>
       <Link to="/watch">
       <img className='rounded-xl hover:opacity-60 transition-opacity duration-300'

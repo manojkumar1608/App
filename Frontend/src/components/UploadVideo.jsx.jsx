@@ -1,14 +1,16 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import  { useSelector }  from 'react-redux';
 import { useForm } from 'react-hook-form'
 import Input from './Input';
 import Button from './Button';
-import Logo from './utils/Logo';
+import { BiLogIn } from "react-icons/bi";
 import { RiVideoUploadFill } from "react-icons/ri";
+
 function UploadVideo() {
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.auth.userData);
+    const authstatus = useSelector((state) => state.auth.status);
+
     const video = ""
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -52,15 +54,18 @@ function UploadVideo() {
             }
         }
     };
-
-  return (
     
-    <div className='flex justify-center items-center w-full flex-col '>
+if(authstatus === true){
+return (
+    
+    <div className='flex justify-center items-center w-full  flex-col bg-gradient-to-b from-gray-200 to-gray-300 '>
+        
         
         <RiVideoUploadFill className='inline-block text-red-700 size-10 max-w-[100px] '/>
-        <h1 className=' font-bold shadow-red-400 shadow-lg rounded-xl text-red-800 text-center text-3xl mb-4'>
+        <h1 className='font-bold rounded-xl  text-center text-3xl mb-4 shadow-xl'>
              Upload Video</h1>
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap  border-2 border-black shadow-black shadow-lg rounded-xl h-screen p-4">
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap font-medium  border-2 border-black shadow-black shadow-lg rounded-xl  p-4 
+    ">
     <div className="w-60 px-2">
         <Input 
             label="Title :"
@@ -80,7 +85,7 @@ function UploadVideo() {
         <Input
             label="Thumbnail:"
             type="file"
-            className="mb-4 bg-gray-950  text-white "
+            className="mb-4 bg-gray-700 text-white" 
             accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("thumbnail", { required: !video })}
         />
@@ -96,14 +101,14 @@ function UploadVideo() {
         <Input
             label="video:"
             type="file"
-            className="mb-4 bg-gray-950  text-white"
+            className="mb-4 bg-gray-700 text-white"
             accept="*/video "
             {...register("video", { required: !video })}
         />
       
         <label 
   htmlFor="AcceptConditions"
-  className="relative px-4 mx-4  h-8 w-14 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
+  className="relative px-4 mx-4  h-8 w-14 cursor-pointer rounded-full bg-gray-700 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
 >
   <input type="checkbox" id="AcceptConditions" className="peer sr-only" 
 
@@ -116,13 +121,41 @@ function UploadVideo() {
 </label>
   <h1 className='font-bold mx-2 px-3 '>Publish</h1>
 
-        <Button type="submit" bgColor={video ? "bg-green-500" : undefined} className="w-fit m-auto ">
+        <Button type="submit" bgColor={video ? "bg-green-500" : undefined} className="w-fit m-auto bg-red-700 ">
             {video ? "Update" : "Upload" }
         </Button>
     </div>
 </form>
 </div>
-  )
-}
+
+          )
+        }else{
+            return(
+                <>
+                <div className='w-full h-screen bg-gradient-to-r from-gray-200 to-gray-500'>
+            <div className='flex  justify-center '>
+                <BiLogIn className='text-7xl mt-10 mr-2'/>
+                <h1 className='text-3xl font-bold mt-12'>Login to Upload Video</h1>
+            </div>
+            <div className='flex justify-center '>
+                <Link to={'/login'}>
+                <Button 
+                type='button'
+                onClick={()=>{hello}}
+                
+                className='bg-red-700 rounded-lg'>
+                    Login
+                </Button>
+                </Link>
+
+            </div>
+            </div>
+
+            </>
+            )
+        }
+        
+        }
+
 
 export default UploadVideo

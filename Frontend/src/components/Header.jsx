@@ -3,7 +3,8 @@ import Input from './Input';
 import  { BiSearchAlt2 } from "react-icons/bi"
 import { useSelector,useDispatch } from 'react-redux';
 import { isTogglemenu} from "../store/SidebarSlice"
-import { Link } from 'react-router-dom';
+import { TbVideoPlus } from "react-icons/tb";
+import Button from './Button';
 import { IoHome } from "react-icons/io5";
 import { MdSubscriptions } from "react-icons/md";
 import { AiFillLike } from "react-icons/ai";
@@ -34,27 +35,34 @@ function Header() {
                 </div>
                 {/* //search bar with search btn// */}
                 {/* /* // */ }
-                <div className="flex  pl-[5rem] ">
+                <div className="flex pl-[2rem] mx-[3rem] ">
                     <Input
-                        className=" w-[30rem] border border-gray-500 p-1 pl-3 rounded-l-full "
+                        className=" w-[30rem] border border-gray-500 rounded-l-full "
                         type="text"
                         placeholder="Search..."
                     />
                     <button
-                        className="border border-gray-500 px-5 py-2 bg-gray-300 rounded-r-full "
+                        className="border border-gray-500 px-5  bg-gray-300 rounded-r-full "
                         type="button"
                     >
                          <BiSearchAlt2 />
                     </button>
+                    
                     {/* // */}
-
-                    
-
-                    
-            
-            
+                  
                 </div>
-            </div>
+                <div className=' flex mx-16 m-1 pt-1 pr-3 border border-gray-500 rounded-xl'>
+                  <a  href=''>
+                    <TbVideoPlus className='text-3xl  ml-4 inline-block'/><span className='ml-1 font-bold'>Create</span>
+
+
+                  </a>
+                </div>
+                
+               
+
+                  
+                </div>
             </>
             )}
             export default Header
