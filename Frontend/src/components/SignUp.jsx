@@ -5,14 +5,14 @@ import Logo from './utils/Logo'
 import Button from './Button'
 import Input from './Input'
 import {useDispatch} from 'react-redux'
-import {useForm} from 'react-hook-form'
+import {useForm, useFormState} from 'react-hook-form'
 import axios from 'axios'
-
+import { MdErrorOutline } from "react-icons/md";
 function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState("")
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, } = useForm()
 
     const create = async(data) => {
         setError("")
@@ -38,8 +38,21 @@ function Signup() {
                 navigate("/")
             }
         } catch (error) {
-            setError(error.message)
+            setError(error.response.status)
+            console.log(error.response.status)
         }
+    }
+    if(error && error === 409){
+        const  err = "user with same username or email already exists"
+        setError(err) 
+    }
+    if(error && error === 400){
+        const err = "Avatar file is required or Something went wrong" 
+        setError(err)
+    }
+    if(error && error === 500){
+        const err = "Something went wrong" 
+        setError(err)
     }
 
   return (
@@ -60,7 +73,8 @@ function Signup() {
                         Sign In
                     </Link>
                 </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                {error && <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-6 mb-2 text-center text-lg font-mono">
+                    <MdErrorOutline className='inline-block text-3xl'/> {error}</p>}
 
                 <form id='myform' onSubmit={handleSubmit(create)}>
                     <div className='space-y-5'>
@@ -76,7 +90,9 @@ function Signup() {
                         placeholder="Enter your full name"
                         {...register("fullName", {
                             required: true,
-                        })}
+                        }
+                        )}
+                        
                         />
                         <Input
                         label="Email: "
@@ -96,6 +112,7 @@ function Signup() {
                         placeholder="avatar"
                         {...register("avatar", {
                             required: true,
+                            
                         })}
                         />
                         <Input
@@ -103,7 +120,7 @@ function Signup() {
                         label="coverImage: "
                         placeholder="coverImage"
                         {...register("coverImage", {
-                            required: true,
+                            required:false,
                         })}
                         />
 

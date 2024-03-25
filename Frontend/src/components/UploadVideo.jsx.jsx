@@ -24,6 +24,11 @@ function UploadVideo() {
 
 
     const submit = async (data) => {
+        if(!data.title.trim() === ""){
+            
+        }
+
+
         if (video) {
             const file = data.thumbnail[0] ? await axios.patch('') : null;
 
@@ -68,7 +73,7 @@ return (
     ">
     <div className="w-60 px-2">
         <Input 
-            label="Title :"
+            label="Title:"
             placeholder= "Title"
             className="mb-4"
             {...register("title", { required: true })}
