@@ -2,7 +2,7 @@
 import { Provider } from "react-redux";
 import "./App.css";
 import Body from "./components/Body";
-import Header from "./components/Header.jsx"; 
+import Header from "./components/Header/Header.jsx"; 
 import store from "./store/store.js";
 import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import MainContainer from "./components/MainContainer.jsx";

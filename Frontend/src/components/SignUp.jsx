@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link ,useNavigate} from 'react-router-dom'
 import {login} from '../store/authSlice'
-import Logo from './utils/Logo'
+import Logo from '../components/Header/Logo'
 import Button from './Button'
 import Input from './Input'
 import {useDispatch} from 'react-redux'
