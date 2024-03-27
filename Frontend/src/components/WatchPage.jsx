@@ -30,7 +30,7 @@ function WatchPage() {
 
 
 
-      <div className=' w-[50rem] p-2 border-t-2 border-gray-500  shadow-lg shadow-gray-500 ml-1 mr-1 mt-2 rounded-xl'>
+      <div className='w-1/2 p-2 border-t-2 border-gray-500  shadow-lg shadow-gray-500 ml-1 mr-1 mt-2 rounded-xl'>
          <ul className='flex flex-wrap rounded-2xl shadow-sm hover:bg-gray-200'>
          <li className='p-2 overflow-hidden text-ellipsis font-bold '> 
         {/* {videoinfo.title} */}

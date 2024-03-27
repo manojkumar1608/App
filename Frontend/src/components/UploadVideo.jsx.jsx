@@ -1,69 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import  { useSelector }  from 'react-redux';
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 import Input from './Input';
 import Button from './Button';
 import { BiLogIn } from "react-icons/bi";
 import { RiVideoUploadFill } from "react-icons/ri";
 
-function UploadVideo() {
+function UploadVideo({video}) {
     const navigate = useNavigate();
+    const [error , setError] = useState('')
     const authstatus = useSelector((state) => state.auth.status);
 
-    const video = ""
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
-        defaultValues: {
-            title: video?.title || "",
-            description: video?.description || "",
-            thumbnail: video?.thumbnail || "",
-            videoFile: video?.videoFile || "",
-            isPublished: video?.status || "published",
-        },
-    });
-
-
+    const { register, handleSubmit } = useForm()
+      
     const submit = async (data) => {
-        if(!data.title.trim() === ""){
-            
-        }
-
-
+        setError("")
+        try {
         if (video) {
-            const file = data.thumbnail[0] ? await axios.patch('') : null;
-
-            if (file) {
-                await axios.delete('');
-            }
-
-            const dbvideo = await appwriteService.updatePost(post.$id, {
-                ...data,
-                thumbnail: file ? file._id : undefined,
-                videofile: file ? file._id : undefined
-            });
-
-            if (dbvideo) {
-                // navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
-
-            if (file) {
-                const fileId = file._id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data,  });
-
-                if (dbPost) {
-                    // navigate(`/post/${dbPost.$id}`);
+            const file = data.thumbnail[0] ? await axios.patch('/api/v1/videos/:videoId',{
+                data:{
+                    'title': data.title,
+                    'description': data.description,
+                    'thumbnail': data.thumbnail[0]
                 }
+            }): null;
+
+            if (!file) {
+               setError()
+            }else{
+                navigate(`/acc`);
+            }
+            
+        } else {
+          const file = await axios({
+            method: 'POST',
+            url :'/api/v1/videos/',
+            data:{
+                'title': data.title,
+                'description': data.description,
+                'thumbnail': data.thumbnail[0],
+                'videoFile': data.videoFile[0],
+            }
+          })
+          if(!file) {
+            setError()
             }
         }
-    };
+    }catch(error){
+        setError(error.response)
+    }
+}
+
     
 if(authstatus === true){
 return (
     
     <div className='flex justify-center items-center w-full  flex-col bg-gradient-to-b from-gray-200 to-gray-300 '>
+        {error && <p className='text-red-600 mt-8 text-center'>{error}</p>}
         
         
         <RiVideoUploadFill className='inline-block text-red-700 size-10 max-w-[100px] '/>
@@ -146,8 +141,6 @@ return (
                 <Link to={'/login'}>
                 <Button 
                 type='button'
-                onClick={()=>{hello}}
-                
                 className='bg-red-700 rounded-lg'>
                     Login
                 </Button>
@@ -160,7 +153,7 @@ return (
             )
         }
         
-        }
+    }
 
 
 export default UploadVideo

@@ -68,7 +68,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description} = req.body
     const userid = req.user._id
-    // TODO: get video, upload to cloudinary, create video
     const videoLocalPath = req.files?.videoFile[0]?.path
     if(!videoLocalPath){
         throw new ApiError(400,"VideoFile is required")
@@ -137,10 +136,6 @@ const getVideoById = asyncHandler(async (req, res) => {
 
 
 const updateVideo = asyncHandler(async (req, res) => {
-    // const { videoId } = req.params
-    //TODO: update video details like title, description, thumbnail
-    
-    
         const { videoId } = req.params
         const video = await Video.findById(videoId)
         const {title , description} = req.body

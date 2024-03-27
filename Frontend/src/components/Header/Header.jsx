@@ -6,12 +6,19 @@ import { isTogglemenu} from "../../store/SidebarSlice"
 import { TbVideoPlus } from "react-icons/tb";
 import  {logout as authlogout} from "../../store/authSlice"
 import LogoutBtn from './LogoutBtn';
+import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
   const authStatus = useSelector((state)=>state.auth.status)
-    const menu = useSelector((state)=>state.Sidebar.isMenuOpen)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const createHandler = ()=>{
+      if(authStatus){
+        navigate('/uploadvideo')
+      }
+    }
   
     return(
         <>
@@ -52,24 +59,23 @@ function Header() {
                 </div>
                
 
-                
+                {authStatus &&
                 <div className=' flex  mx-16 m-1 pt-1 pr-3 border border-gray-500 rounded-xl'>
-                  <a  href=''>
+                  <button onClick={createHandler}>
                     <TbVideoPlus className='text-3xl  ml-4 inline-block'/><span className='ml-1 font-bold'>Create</span>
+                  </button>
+                  
+                </div>}
 
-
-                  </a>
-                </div>
-
-                {!authStatus &&
+                {authStatus ? <LogoutBtn/>:
                 <div className='bg-red-500 flex mx-18 m-1 pt-1 pr-3 border border-gray-500 rounded-xl'>
                   <a   href='/login'>
                     <span className='p-2 pl-4 ml-1 font-bold'>Login/Signup</span>
 
                   </a>
                 </div>}
-                {authStatus &&
-                <LogoutBtn/>}
+               
+               
                   
                 </div>
                 </header>
