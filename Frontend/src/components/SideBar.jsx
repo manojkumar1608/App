@@ -191,7 +191,7 @@ function SideBar() {
         )
       }
     return (
-        <div className='flex shadow-xl shadow-gray-300 w-[5rem] '>
+        <div className='flex shadow-sm  w-[5rem] '>
             <ul className=''>
             
                 <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  font-bold hover:bg-gray-300 w-[3rem]'>

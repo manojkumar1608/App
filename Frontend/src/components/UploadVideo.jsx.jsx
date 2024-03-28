@@ -40,8 +40,8 @@ function UploadVideo({video}) {
             data:{
                 'title': data.title,
                 'description': data.description,
-                'thumbnail': data.thumbnail[0],
-                'videoFile': data.videoFile[0],
+                'thumbnail': data.thumbnail,
+                'videoFile': data.videoFile,
             }
           })
           if(!file) {
@@ -85,7 +85,7 @@ return (
         <Input
             label="Thumbnail:"
             type="file"
-            className="mb-4 bg-gray-700 text-white" 
+            className="mb-4 bg-gray-900 text-white" 
             accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("thumbnail", { required: !video })}
         />
@@ -101,7 +101,7 @@ return (
         <Input
             label="video:"
             type="file"
-            className="mb-4 bg-gray-700 text-white"
+            className="mb-4 bg-gray-900 text-white"
             accept="*/video "
             {...register("video", { required: !video })}
         />

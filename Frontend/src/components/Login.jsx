@@ -14,7 +14,6 @@ function Login() {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
-    console.log(error)
     
  
 
@@ -30,7 +29,6 @@ function Login() {
                     'password': data.password
                 }
             })      
-            console.log(session)
 
             if (session) {
                 const userData  = await axios.get('/api/v1/users/current-user')
@@ -56,6 +54,10 @@ function Login() {
     }
      if(error && error === 401){
         const  err = "Invalid user credentials"
+        setError(err) 
+    }
+     if(error && error === 500){
+        const  err = "Something went wrong please try again later"
         setError(err) 
     }
 
