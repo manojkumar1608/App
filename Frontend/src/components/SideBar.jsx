@@ -105,7 +105,7 @@ function SideBar() {
               </li>
       
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to="/" className="flex">
+                <Link to="/allVideos" className="flex">
                   {""}
                   <GoVideo className="mr-5 mt-1 text-xl" />
                  Your videos

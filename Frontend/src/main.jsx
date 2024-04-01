@@ -14,6 +14,7 @@ import Signup from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
 import UploadVideo from "./components/UploadVideo.jsx.jsx";
+import AllVideos from './components/usercontent/AllVideos.jsx';
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -60,6 +61,15 @@ const router = createBrowserRouter([
         element:(
           <AuthLayout authentication = {false}>
             <UploadVideo/>
+          </AuthLayout>
+        )
+
+      },
+      {
+        path:"/allVideos",
+        element:(
+          <AuthLayout authentication = {false}>
+            <AllVideos/>
           </AuthLayout>
         )
 

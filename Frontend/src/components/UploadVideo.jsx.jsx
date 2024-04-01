@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import  { useSelector }  from 'react-redux';
+import  { useDispatch, useSelector }  from 'react-redux';
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import Input from './Input';
@@ -11,8 +11,8 @@ import { RiVideoUploadFill } from "react-icons/ri";
 function UploadVideo({video}) {
     const navigate = useNavigate();
     const [error , setError] = useState('')
+    const [status , setStatus] = useState(false)
     const authstatus = useSelector((state) => state.auth.status);
-
     const { register, handleSubmit } = useForm()
       
     const submit = async (data) => {
@@ -34,23 +34,32 @@ function UploadVideo({video}) {
             }
             
         } else {
-          const file = await axios({
+          const videoData = await axios({
             method: 'POST',
             url :'/api/v1/videos/',
             data:{
                 'title': data.title,
                 'description': data.description,
-                'thumbnail': data.thumbnail,
-                'videoFile': data.videoFile,
+                'thumbnail': data.thumbnail[0],
+                'videoFile': data.videoFile[0],
+            },
+            headers:{
+                'Content-Type': 'multipart/form-data'
             }
-          })
-          if(!file) {
-            setError()
-            }
+        })
+        console.log(videoData)
+          if(videoData && status) {
+            const publish = await axios.patch('/toggle/publish/:videoId')
+            navigate(`/`)
+        }
         }
     }catch(error){
-        setError(error.response)
+        setError(error.message)
     }
+}
+const toggle = async () =>{
+    console.log("clicked")
+    setStatus(true)
 }
 
     
@@ -64,7 +73,7 @@ return (
         <RiVideoUploadFill className='inline-block text-red-700 size-10 max-w-[100px] '/>
         <h1 className='font-bold rounded-xl  text-center text-3xl mb-4 shadow-xl'>
              Upload Video</h1>
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap font-medium  border-2 border-black shadow-black shadow-lg rounded-xl  p-4 
+    <form encType='multipart/form-data' onSubmit={handleSubmit(submit)} className="flex flex-wrap font-medium  border-2 border-black shadow-black shadow-lg rounded-xl  p-4 
     ">
     <div className="w-60 px-2">
         <Input 
@@ -85,8 +94,8 @@ return (
         <Input
             label="Thumbnail:"
             type="file"
-            className="mb-4 bg-gray-900 text-white" 
-            accept="image/png, image/jpg, image/jpeg, image/gif"
+            className="mb-4 " 
+            // accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("thumbnail", { required: !video })}
         />
         {video && (
@@ -101,25 +110,27 @@ return (
         <Input
             label="video:"
             type="file"
-            className="mb-4 bg-gray-900 text-white"
-            accept="*/video "
-            {...register("video", { required: !video })}
+            className="mb-4"
+            
+            {...register("videoFile", { required: !video })}
         />
       
         <label 
   htmlFor="AcceptConditions"
   className="relative px-4 mx-4  h-8 w-14 cursor-pointer rounded-full bg-gray-700 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
 >
-  <input type="checkbox" id="AcceptConditions" className="peer sr-only" 
+   
 
-  />
+    
+  <input type="checkbox" id="AcceptConditions" className="peer sr-only" />
 
-  <span
+  <span onClick={toggle}
     className="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-white transition-all peer-checked:start-6">
         
   </span>
 </label>
   <h1 className='font-bold mx-2 px-3 '>Publish</h1>
+  
 
         <Button type="submit" bgColor={video ? "bg-green-500" : undefined} className="w-fit m-auto bg-red-700 ">
             {video ? "Update" : "Upload" }
