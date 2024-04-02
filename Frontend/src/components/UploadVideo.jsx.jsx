@@ -47,10 +47,13 @@ function UploadVideo({video}) {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        console.log(videoData)
+        const videoId = videoData.data.data.videoPublish._id
+            if(videoId){
+                navigate(`/watch/${'videoId'}`)
+
+            }
           if(videoData && status) {
             const publish = await axios.patch('/toggle/publish/:videoId')
-            navigate(`/`)
         }
         }
     }catch(error){

@@ -15,7 +15,7 @@ function VideoCard({videoinfo}) {
     <div className='flex  flex-wrap '>
     
     <div className='p-2 w-96  '>
-    <Link to={'/watch'} className='hover:bg-gray-400 '>
+    <Link to={'/watch/:videoId'} className='hover:bg-gray-400 '>
       <img className='rounded-xl hover:opacity-60 transition-opacity duration-300'
       src='https://images.pexels.com/photos/1188083/pexels-photo-1188083.png?cs=srgb&dl=sea-dawn-nature-1188083.jpg&fm=jpg'
       alt='thumbnail'>
