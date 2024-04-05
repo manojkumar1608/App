@@ -12,27 +12,42 @@ import axios from 'axios';
 
 
 function WatchPage() {
-   const { videoid } = useParams()
-   console.log(videoid)
+   const { videoId } = useParams()
    const navigate =useNavigate()
-   const [ video , setVideo ] = useState()
+   const [url , setUrl ] = useState()
+   const [ video , setVideo ] = useState(null)
    const userData = useSelector((state) => state.auth.userData)
    useEffect( () =>{
-         if(videoid){
-         const videoinfo =  axios.get('/api/v1/videos/:videoId')
-         console.log(videoinfo)
-         setVideo(videoinfo.data)
-      }else{
-         // navigate('/')
-      }
+      async function videoinfo(){
+     try {
+    const videodata = await axios({
+      method: "GET",
+      url: `/api/v1/videos/${videoId}`,
+      headers: {
+         Accept: 'video/mp4;charset=UTF-8'
+     },
+    responseType: 'blob'
+   })
+   if(videodata){
+      console.log(videodata)
       
-   },[videoid,navigate])
+      const url = URL.createObjectURL(new Blob([videodata.data.data], {type: "video/mp4"}))
+      setUrl(url);
+      console.log(url)
+   }
+     } catch (error) {
+      
+     }
+   }
+   videoinfo()
+      
+   },[videoId,navigate,])
    return (
       <>
          <div className='flex flex-wrap '>
             <video className='rounded-2xl mt-2  w-[48rem] h-[27rem]'
                controls preload="auto" >
-               <source src=''
+               <source src={url}
                   type="video/mp4" />
 
             </video>

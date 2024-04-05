@@ -1,10 +1,11 @@
 import React from 'react'
 import VideoCard from './VideoCard'
 
-function VideoContainer({videoinfo}) {
+function VideoContainer() {
+
   return (
     <div>
-        <VideoCard videoinfo={videoinfo}/>
+        <VideoCard />
     </div>
   )
 }

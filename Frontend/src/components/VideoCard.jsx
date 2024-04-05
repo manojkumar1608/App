@@ -4,56 +4,71 @@ import { Link, useNavigate } from 'react-router-dom'
 import { RxAvatar } from "react-icons/rx";
 
 
-function VideoCard({videoinfo}) {
+function VideoCard({_id,title,avatar,thumbnail,owner,views,createdAt,updatedAt}) {
   const navigate = useNavigate()
-
-
-
-  
+const videoId = _id
+useEffect(()=>{
+  try {
+    async function getUser(){
+      try {
+          const response = await axios.get(`/api/v1/users/`)
+          console.log(response)
+          // const videodata = response.data.data
+          // if(videodata){
+          //     setVideo(videodata.docs)
+          // }
+          
+      } catch (error) {
+          // setError(error)
+      }
+     
+     }
+     getUser()
+  } catch (error) {
+    
+  }
+})
   return (
     <>
     <div className='flex  flex-wrap '>
     
     <div className='p-2 w-96  '>
-    <Link to={'/watch/:videoId'} className='hover:bg-gray-400 '>
+    <Link to={`/watch/${videoId}`} className='hover:bg-gray-400 '>
       <img className='rounded-xl hover:opacity-60 transition-opacity duration-300'
-      src='https://images.pexels.com/photos/1188083/pexels-photo-1188083.png?cs=srgb&dl=sea-dawn-nature-1188083.jpg&fm=jpg'
+      src={thumbnail.url}
       alt='thumbnail'>
       
       </img>
         </Link>
       
-
       <div className='flex mt-1 '>
 
-        <Link to="" className='hover:bg-gray-200 rounded-lg'>
-      <img src='https://images.pexels.com/photos/1188083/pexels-photo-1188083.png?cs=srgb&dl=sea-dawn-nature-1188083.jpg&fm=jpg 
-      'className='flex flex-row rounded-full h-[3rem] w-[3.5rem] mr-9 p-1'
+        <Link to={`/`} className='hover:bg-gray-200 rounded-lg'>
+      <img src={''} 
+      className='flex flex-row rounded-full h-[3rem] w-[3.5rem] mr-9 p-1'
             alt="avatar"/>
             </Link>
             
-            <Link to='/watch' className='hover:bg-gray-200 rounded-xl'>
+            <Link to={`/watch/${videoId}`} className='hover:bg-gray-200 rounded-xl'>
         <p className='p-1 overflow-hidden text-ellipsis font-bold '> 
-         {/* {videoinfo.title} */}
-         Cheeku Dosanjh / SoulCity By Echo RP🚀/ GTA 5 Roleplay #8bit #lifeinsoulcity
+         {title}
          </p>
             </Link>
         </div>
 
         <div className='px-3 mx-9'>
           <Link to={"/channelpage"} className='' >
-            {/* {videoinfo?.owner} */}
-            Channelname
+            {owner}
           </Link>
         </div>
 
         <div className='flex flex-wrap ml-[3rem]'>
         
           <li className='w-[4.5rem] flex'>
-          {22} views 
+          {views} views 
           </li>
         <li >
-          {2} hours ago
+          {} hours ago
         </li>
       </div>
       </div>

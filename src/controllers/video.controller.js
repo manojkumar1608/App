@@ -8,25 +8,25 @@ import {uploadOnCloudinary} from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
-    //TODO: get all videos based on query, sort, pagination
+    //getting all videos based on query, sort, pagination
     
-    const { page = 1, limit = 10, query =`/^video/` , sortBy= "createddAt", sortType= 1, userId= req.user._id} = req.query
+    const { page = 1, limit = 10, query =`/^video/` , sortBy= "createddAt", sortType= 1} = req.query
     
     // find user in db
-    const user = await User.findById(
-        {
-            _id: userId
-        }
-    )
+    // const user = await User.findById(
+    //     {
+    //         _id: userId
+    //     }
+    // )
 
-    if(!user){
-        throw new ApiError(404, "user not found")
-    }
+    // if(!user){
+    //     throw new ApiError(404, "user not found")
+    // }
 
     const getAllVideosAggregate = await Video.aggregate([
         {
             $match: { 
-                owner: new mongoose.Types.ObjectId(userId),
+                // owner: new mongoose.Types.ObjectId(userId),
                 $or: [
                     { title: { $regex: query, $options: 'i' } },
                     { description: { $regex: query, $options: 'i' } }
@@ -123,11 +123,19 @@ const getVideoById = asyncHandler(async (req, res) => {
     
     try {
         const { videoId } = req.params
+        if(!isValidObjectId(videoId)){
+            throw new ApiError(404, "Video not found")
+        }
+
         const video = await Video.findById(videoId)
+        console.log(video)
         if(!video){
             throw new ApiError(400, "video not found")
         }
-        return res(200).json( new ApiResponse(200,{ video})," Video found successfully" )
+        return res.status(200)
+        .json( new ApiResponse (200,{ video}," Video found successfully" )
+        )
+
     } catch (error) {
         throw new ApiError(404, error.message)
         
@@ -201,7 +209,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 )
 
 const deleteVideo = asyncHandler(async (req, res) => {
-    //TODO: delete video
+    // delete video
     const { videoId } = req.params
     const video =  Video.findById(videoId)
     if(!isValidObjectId(video)){
