@@ -4,7 +4,7 @@ import {User} from "../models/user.model.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import {uploadOnCloudinary , deleteOnCloudinary} from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -128,7 +128,6 @@ const getVideoById = asyncHandler(async (req, res) => {
         }
 
         const video = await Video.findById(videoId)
-        console.log(video)
         if(!video){
             throw new ApiError(400, "video not found")
         }
@@ -147,6 +146,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         const { videoId } = req.params
         const video = await Video.findById(videoId)
         const {title , description} = req.body
+        const thumbnail = req.file
         if
         (!(thumbnail || !(!title || title?.trim() === "") || !(!description || description?.trim() === ""))
         ){
@@ -175,8 +175,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         if(thumbnail){
         const deletedFile = await deleteOnCloudinary(previousVideo.thumbnail?.public_id)
         }
-        
-        
+        if(req.file){
         const thumbnailLocalPath = req.file.path
         if(!thumbnailLocalPath){
             throw new ApiError(404 , "Thumbnail required")
@@ -189,22 +188,21 @@ const updateVideo = asyncHandler(async (req, res) => {
         }
 
          updateFields.$set = {
-            thumnail: {
+            thumbnail: {
                 public_id: thumbnailUploadOnCloudinary.public_id,
                 url: thumbnailUploadOnCloudinary.url
             }
          }
+        }
 
-         const updatevideoDetails =await Video.findByIdAndUpdate({
-            videoId,
-            updateFields
-         })
-         if(!updatevideoDetails){
+         const updatedvideoDetails =await Video.findByIdAndUpdate(videoId,updateFields)
+         
+         if(!updatedvideoDetails){
             throw new ApiError(500 , "Something went wrong while updating Video Detail")
 
          }
          return res.status(200)
-         .json(new ApiResponse(200 ,{updatevideoDetails}, "Video details updated successfully" ))
+         .json(new ApiResponse(200 ,{updatedvideoDetails}, "Video details updated successfully" ))
     }
 )
 

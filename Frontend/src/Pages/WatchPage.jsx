@@ -14,9 +14,11 @@ function WatchPage() {
    const { videoId } = useParams()
    const navigate = useNavigate()
    const [video, setVideo] = useState(null)
+   let [clicked, setClicked] = useState(false)
    const [user, setUser] = useState(null)
 
    const userData = useSelector((state) => state.auth.userData)
+   const isAuthor = video && userData ? userData.data._id === video.owner : false
    useEffect(() => {
       if (videoId) {
          axios({
@@ -50,9 +52,20 @@ function WatchPage() {
        }else{
          navigate('/')
        }      
-   }, [ video,navigate,])
+   }, [ videoId,navigate,])
 
-   console.log(video)
+   const deleteVideo = () => {
+      axios.delete(`/api/v1/videos/${videoId}`).then((status) => {
+          if (status) {
+              navigate("/");
+          }
+      });
+  };
+  const handledes = () => {
+setClicked(clicked = !clicked)
+  }
+  console.log(clicked )
+
    return video && user && (
       <>
          <div className='flex flex-wrap '>
@@ -74,7 +87,22 @@ function WatchPage() {
                <p className='p-2 overflow-hidden text-ellipsis font-bold text-xl'>
                   {video.title}
                </p>
-               <p className='mx-2 my-1 font-semibold text-gray-700'>  {video.views} views • 2 days ago</p>
+
+                  <p className='mx-2 my-1 font-semibold text-gray-700'>  {video.views} views • 2 days ago</p>
+
+              <p onClick = {handledes}
+              className='w-full ml-2 bg-gray-200 rounded-xl text-lg font-bold'>
+               Description
+              </p>
+
+              {clicked && (
+               <div>
+                  {video.description}
+               </div>
+              )}
+             
+              
+
             <div />
 
             <div className='mt-3 '>
@@ -93,19 +121,31 @@ function WatchPage() {
                         </Link>
                      </p>
 
-                     <p className=' text-gray-400 w-[13rem]'>
+                     <p className=' text-gray-400 w-[11rem]'>
                         Followers
                      </p>
                      </div>
 
-                  
                   {
-
+                     
+                     !isAuthor ? (
                      <Button className='w-[6rem] m-3 p-2 bg-gray-800  rounded-3xl hover:bg-gray-500'>
                         Follow
+                     </Button>):
+                     ( <div className="flex flex-row ">
+                     <Link to={`/edit-video/${video._id}`}>
+                         <Button bgColor="bg-green-800" >
+                             Edit
+                         </Button>
+                     </Link>
+                     <Button bgColor="bg-red-700" className="h-fit ml-2"
+                      onClick={deleteVideo}>
+                         Delete
                      </Button>
+                 </div>)
+                     
+                     
                   }
-
 
                </div>
 
