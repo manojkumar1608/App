@@ -1,6 +1,6 @@
 import React from 'react'
 import VideoContainer from './VideoContainer'
-import HomePage from './Pages/HomePage'
+import HomePage from '../Pages/HomePage'
 
 function MainContainer() {
   return (

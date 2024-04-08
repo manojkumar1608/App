@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 
 import store from "./store/store.js";
 import MainContainer from "./components/MainContainer.jsx";
-import WatchPage from "./components/WatchPage.jsx";
+import WatchPage from "./Pages/WatchPage.jsx";
 import TweetsPage from "./components/Tweets.jsx";
 import YourAccount from "./components/YourAccount.jsx";
 import Signup from "./components/SignUp.jsx";
@@ -25,13 +25,13 @@ const router = createBrowserRouter([
             element:<MainContainer/>
           },
         {
-          path:"/tweets",
-          element:<TweetsPage/>
+          path:"/watch/:videoId",
+          element:<WatchPage/>
 
         },
           {
-        path:"/watch/:videoId",
-        element:<WatchPage/>
+        path:"/tweets",
+        element:<TweetsPage/>
       },
       {
         path:"/acc",

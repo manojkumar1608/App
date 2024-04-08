@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import VideoCard from '../VideoCard'
+import VideoCard from '../components/VideoCard'
 
 
 function HomePage() {
@@ -24,11 +24,11 @@ useEffect(()=>{
 },[])
 
   return (
-    <div>
+    <div className='flex'>
         {error && <p className='text-center text-3xl font-bold'>Something went wrong</p>}
         {videos.map((video)=>(
-            <div key={video._id} className='flex flex-wrap'>
-                <VideoCard {...video} />
+            <div key={video._id} className=''>
+                <VideoCard  {...video} />
             </div>
         ))
 

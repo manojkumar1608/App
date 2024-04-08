@@ -160,6 +160,14 @@ const loginUser = asyncHandler(async (req, res) =>{
     )
 
 })
+const getUserbyId = asyncHandler(async (req, res) => {
+    const { userId } = req.body
+    const user = await User.findById(userId)
+    if (!user) {
+        throw new ApiError (404, "User not found")
+    }
+    return res.status(200).json(new ApiResponse(200, user,"user fetched successfully" ))
+})
 
 const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate(
@@ -330,8 +338,7 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
         throw new ApiError(400, "Cover image file is missing")
     }
 
-    //TODO: delete old image - assignment
-
+    // delete old image 
 
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
@@ -489,6 +496,7 @@ export {
     registerUser,
     loginUser,
     logoutUser,
+    getUserbyId,
     refreshAccessToken,
     changeCurrentPassword,
     getCurrentUser,
