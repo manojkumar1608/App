@@ -33,15 +33,18 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
 
   return user ? (
     <>
-      <div className="m-4 rounded-xl  object-cover">
+   
+
+    
+      <div className=" m-4 rounded-xl object-cover">
         <Link to={`/watch/${_id}`}>
-    <img  src={thumbnail.url} alt="Video Thumbnail" className="w-96 h-56 border bg-gray-100 rounded-xl object-cover"/>
+    <img  src={thumbnail.url} alt="Video Thumbnail" className="w-[22.5rem] h-56 border bg-gray-100 rounded-xl object-cover"/>
         </Link>
         
     <div className='flex  flex-row'>
 
       <Link>
-    <img src={user.avatar} alt="Video Thumbnail" className="rounded-full w-[3rem] h-[3rem] mt-2 object-cover"/>
+    <img src={user.avatar} alt="avatar" className="rounded-full w-[3rem] h-[3rem] mt-2 object-cover"/>
       </Link>
        
     <div className="p-2 ml-1">

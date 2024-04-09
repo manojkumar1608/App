@@ -9,7 +9,11 @@ import { BiLogIn } from "react-icons/bi";
 import { RiVideoUploadFill } from "react-icons/ri";
 
 function UploadVideo({ video }) {
-    const Video = video.video
+    const [Video , setVideo] =useState()
+    if(video){
+    const VideoData = video.video
+    setVideo(VideoData)
+}
     const navigate = useNavigate();
     const [error, setError] = useState('')
     const [status, setStatus] = useState(false)

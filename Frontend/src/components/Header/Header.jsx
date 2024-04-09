@@ -64,7 +64,7 @@ function Header() {
             {authStatus &&
             <Link to={'/uploadvideo'}>
 
-              <Button className=' text-gray-200 border bg-gradient-to-r from-red-500 to-red-900 border-gray-900 rounded-xl font-bold'>
+              <Button className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold'>
                 <TbVideoPlus className='inline-block mr-1 size-5' />Create
               </Button>
               </Link>
@@ -74,7 +74,7 @@ function Header() {
 
               <Link to='/login'>
                 <Button
-                  className=' text-gray-200 border bg-gradient-to-r from-red-500 to-red-900 border-gray-900 rounded-xl font-bold '>
+                  className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold '>
                   Login/Signup
                 </Button>
               </Link>

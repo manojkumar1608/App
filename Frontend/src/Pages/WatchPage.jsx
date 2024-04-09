@@ -8,6 +8,7 @@ import CommentBox from '../components/CommentsContainer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import HomePage from './HomePage';
+import { RiDropdownList } from "react-icons/ri";
 
 
 function WatchPage() {
@@ -68,36 +69,41 @@ setClicked(clicked = !clicked)
 
    return video && user && (
       <>
-         <div className='flex flex-wrap '>
+         <div className='flex flex-col'>
             <video className='rounded-2xl mt-2  w-[47rem] h-[27rem]'
                controls preload="auto"  >
                <source src={video.videoFile.url}
                   type="video/mp4" />
             </video>
 
-            <div className='flex h-screen max-w-[47rem] text-sm'>
-               <HomePage />
-            </div>
 
+            <div className='flex flex-row text-sm'>
+               <HomePage/>
+            </div>
          </div>
 
 
 
+
          <div className='min-w-[26rem] p-2 border-t-2 border-gray-500  shadow-lg shadow-gray-400  mr-1 mt-2 rounded-xl'>
-               <p className='p-2 overflow-hidden text-ellipsis font-bold text-xl'>
+               <p className='p-2 overflow-hidden text-ellipsis font-bold text-xl bg-gray-100 rounded-xl'>
                   {video.title}
                </p>
 
                   <p className='mx-2 my-1 font-semibold text-gray-700'>  {video.views} views • 2 days ago</p>
 
-              <p onClick = {handledes}
-              className='w-full ml-2 bg-gray-200 rounded-xl text-lg font-bold'>
-               Description
+                  <div onClick = {handledes}
+                  className='flex flex-row  w-full my-3 bg-gray-200 rounded-xl text-lg font-bold shadow-md shadow-gray-300 hover:cursor-pointer'>
+              <p 
+              className='w-80 ml-2 my-1'>
+                 Description 
               </p>
+                 <RiDropdownList className='mt-2 ml-9 text-2xl'/>
+              </div>
 
               {clicked && (
-               <div>
-                  {video.description}
+               <div className=' min-h-48 bg-gray-200 rounded-xl '>
+                 <p className='ml-2 p-2 mt-2 font-semibold'> {video.description} </p>
                </div>
               )}
              
@@ -107,14 +113,14 @@ setClicked(clicked = !clicked)
 
             <div className='mt-3 '>
                <div className='flex flex-row '>
-                     <Link to="/">
+                     <Link to="/" >
                         <img src={user.avatar}
-      className='flex flex-row rounded-full h-[3.5rem] w-[3.5rem] p-1 mt-1 mr-2'
+      className='flex flex-row rounded-full h-[3.5rem] w-[3.5rem] p-1 mt-1 mr-1  '
                            alt="avatar" />
                      </Link>
 
                      <div>
-                     <p className='text-lg mt-2 mr-4 font-semibold'>
+                     <p className='text-xl mt-2 mr-4 font-semibold'>
                         <Link to="/">
                            {user.username}
 
@@ -132,13 +138,13 @@ setClicked(clicked = !clicked)
                      <Button className='w-[6rem] m-3 p-2 bg-gray-800  rounded-3xl hover:bg-gray-500'>
                         Follow
                      </Button>):
-                     ( <div className="flex flex-row ">
+                     ( <div className="flex flex-row mt-4">
                      <Link to={`/edit-video/${video._id}`}>
-                         <Button bgColor="bg-green-800" >
+                         <Button bgColor=" bg-gradient-to-r from-green-600 to-green-950 mr-3 rounded-xl font-semibold" >
                              Edit
                          </Button>
                      </Link>
-                     <Button bgColor="bg-red-700" className="h-fit ml-2"
+                     <Button bgColor=" bg-gradient-to-r from-red-600 to-red-950" className="h-fit font-semibold rounded-xl"
                       onClick={deleteVideo}>
                          Delete
                      </Button>
