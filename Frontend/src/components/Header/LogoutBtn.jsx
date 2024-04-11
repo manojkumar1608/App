@@ -8,7 +8,6 @@ function  LogoutBtn() {
   const dispatch = useDispatch()
     const logoutHandler = async()=>{
       const res = await axios.post('/api/v1/users/logout')
-      console.log(res)
       if(res)
         dispatch(authlogout())
     }

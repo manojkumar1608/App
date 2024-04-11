@@ -24,7 +24,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <div className='flex flex-wrap '>
+    <div className='flex flex-wrap ml-2 mt-2'>
         {error && <p className='text-center text-3xl font-bold'>Something went wrong</p>}
         {videos.map((video)=>(
             <div key={video._id} className=''>

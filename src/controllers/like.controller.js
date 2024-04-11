@@ -8,7 +8,7 @@ import { Comment } from "../models/comment.model.js"
 import { Tweet } from "../models/tweet.model.js"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
-    //TODO: toggle like on video
+    // toggle like on video
     const {videoId} = req.params
     const userId = req.user._id    
     if(!isValidObjectId(videoId)){
@@ -47,7 +47,7 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
 
 const toggleCommentLike = asyncHandler(async (req, res) => {
     const {commentId} = req.params
-    //TODO: toggle like on comment
+    // toggle like on comment
     const userId = req.user._id    
     if(!isValidObjectId(commentId)){
         throw new ApiError(404,"video not found")
@@ -84,7 +84,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 })
 
 const toggleTweetLike = asyncHandler(async (req, res) => {
-    //TODO: toggle like on tweet
+    // toggle like on tweet
     const {tweetId} = req.params
     const userId = req.user._id    
     if(!isValidObjectId(tweetId)){
@@ -123,7 +123,7 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 )
 
 const getLikedVideos = asyncHandler(async (req, res) => {
-    //TODO: get all liked videos
+    // getting all liked videos
     const videos = await Like.aggregate([
         {
             $match: {
@@ -174,11 +174,80 @@ const getLikedVideos = asyncHandler(async (req, res) => {
         {videos, videosCount: videos.length},
         "Get liked videos success"
     ));
+
+
+    
 });
 
+
+// controller to return channel list to which user has subscribed
+const getLikes = asyncHandler(async (req, res) => {
+    // getting all liked videos
+    const {videoId} = req.params
+    if(!isValidObjectId(videoId)){
+        throw new ApiError(
+            400,
+            "This channel id is not valid"
+        )
+    }
+    const likes = await Like.aggregate([
+        {
+            $match: {
+                video: new mongoose.Types.ObjectId(videoId),
+                likedby: {
+                    $exists: true
+                }
+            }
+        },
+        {
+            $lookup: {
+                from: "likes",
+                localField: "likedby",
+                foreignField: "_id",
+                as: "Likes",
+                pipeline: [
+                    {
+                        $project: {
+                            username: 1,
+                            fullName: 1,
+                            avatar: 1,
+                            
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            $addFields: {
+                likes: {
+                    $first: "$likes"
+                }
+            }
+        }, 
+        {
+            $project: {
+                likes: 1,
+                _id: 0
+            }
+        },
+        {
+            $replaceRoot: { newRoot: "$likes" }
+        }
+    ]);
+
+    res.status(200).json(new ApiResponse(
+        200,
+        {likes, likescount: likes.length},
+        "Get liked videos success"
+    ));
+
+
+    
+});
 export {
     toggleCommentLike,
     toggleTweetLike,
     toggleVideoLike,
-    getLikedVideos
+    getLikedVideos,
+    getLikes
 }

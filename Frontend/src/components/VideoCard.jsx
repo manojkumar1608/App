@@ -35,8 +35,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
     <>
    
 
-    
-      <div className=" m-4 rounded-xl object-cover">
+      <div className=" m-2 rounded-xl object-cover">
         <Link to={`/watch/${_id}`}>
     <img  src={thumbnail.url} alt="Video Thumbnail" className="w-[22.5rem] h-56 border bg-gray-100 rounded-xl object-cover"/>
         </Link>
@@ -63,6 +62,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
     
     </div>
 </div>
+
 
 
 
