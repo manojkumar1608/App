@@ -182,68 +182,36 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 
 // controller to return channel list to which user has subscribed
 const getLikes = asyncHandler(async (req, res) => {
-    // getting all liked videos
-    const {videoId} = req.params
-    if(!isValidObjectId(videoId)){
-        throw new ApiError(
-            400,
-            "This channel id is not valid"
-        )
+    //TODO: get all comments for a video
+    const { videoId } = req.params
+    if (!isValidObjectId(videoId)) {
+        throw new ApiError(400, "This video id is not valid")
     }
-    const likes = await Like.aggregate([
+
+    // find video in database 
+    const video = await Video.findById(videoId)
+    if (!video) {
+        throw new ApiError(404, "video not found");
+    }
+
+    // match and finds all the comments
+    const aggregateLikes = await Like.aggregate([
         {
             $match: {
-                video: new mongoose.Types.ObjectId(videoId),
-                likedby: {
-                    $exists: true
-                }
+                video: new mongoose.Types.ObjectId(videoId)
             }
-        },
-        {
-            $lookup: {
-                from: "likes",
-                localField: "likedby",
-                foreignField: "_id",
-                as: "Likes",
-                pipeline: [
-                    {
-                        $project: {
-                            username: 1,
-                            fullName: 1,
-                            avatar: 1,
-                            
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            $addFields: {
-                likes: {
-                    $first: "$likes"
-                }
-            }
-        }, 
-        {
-            $project: {
-                likes: 1,
-                _id: 0
-            }
-        },
-        {
-            $replaceRoot: { newRoot: "$likes" }
         }
     ]);
+    if(!aggregateLikes){
+        throw new ApiError(500, "something went wrong while fetching likes")
 
-    res.status(200).json(new ApiResponse(
-        200,
-        {likes, likescount: likes.length},
-        "Get liked videos success"
-    ));
+    }
+    // Like.aggregatePaginate(aggregateLikes)
+            return res.status(200).json(
+                new ApiResponse(200, {aggregateLikes , Likeslength : aggregateLikes.length}, "VideoLikes fetched  successfully!!"))
 
-
-    
-});
+           
+})
 export {
     toggleCommentLike,
     toggleTweetLike,

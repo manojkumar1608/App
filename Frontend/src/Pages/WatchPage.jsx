@@ -7,7 +7,7 @@ import axios from 'axios';
 import HomePage from './HomePage';
 import { RiDropdownList } from "react-icons/ri";
 import Likehandler from '../utils/Likehandler';
-import Likes from '../utils/Likes';
+import CommentsHandler from '../utils/CommentsHandler';
 
 
 function WatchPage() {
@@ -30,7 +30,6 @@ function WatchPage() {
                const videoData = response.data.data.video
                setVideo(videoData)
                const owner = videoData.owner
-               console.log(video)
                if (owner) {
                   axios({
                      method: 'POST',
@@ -42,14 +41,11 @@ function WatchPage() {
                      const userData = response.data.data
                      setUser(userData)
                   })
-
-               } else {
-                  navigate('/')
                }
             } else {
                navigate('/')
             }
-           
+            
          })
       } else {
          navigate('/')
@@ -57,11 +53,13 @@ function WatchPage() {
    }, [videoId, navigate,])
 
    const deleteVideo = () => {
-      axios.delete(`/api/v1/videos/${videoId}`).then((status) => {
+      axios.delete(`/api/v1/videos/${videoId}`)
+      .then((status) => {
          if (status) {
             navigate("/");
          }
       });
+      console.log(videoId)
    };
 
    const handledescription = () => {
@@ -147,7 +145,7 @@ function WatchPage() {
                            Follow
                         </Button>) :
                         (<div className="flex flex-row mt-4">
-                           <Link to={`/edit-video/${video._id}`}>
+                           <Link  to={`/edit-video/${video._id}`}>
                               <Button bgColor=" bg-gradient-to-r from-green-600 to-green-950 mr-3 rounded-xl font-semibold" >
                                  Edit
                               </Button>
@@ -162,17 +160,15 @@ function WatchPage() {
                   }
 
                </div>
+
                <div>
                <Likehandler  video = {video}/>
                </div>
-               <div>
-               <Likes  video = {video}/>
-               </div>
-
+              
             </div>
 
-            <div>
-               <CommentBox />
+            <div className='m-2 mt-4'>
+               <CommentsHandler video = {video} />
             </div>
 
 

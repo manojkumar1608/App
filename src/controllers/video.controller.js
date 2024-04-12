@@ -210,9 +210,10 @@ const deleteVideo = asyncHandler(async (req, res) => {
     // delete video
     const { videoId } = req.params
     const video =  Video.findById(videoId)
-    if(!isValidObjectId(video)){
-        throw new ApiError(404, "Video not found")
-    }
+    console.log(video)
+    // if(!isValidObjectId(video)){
+    //     throw new ApiError(404, "Video not found")
+    // }
 
     //find in DB
 
@@ -236,12 +237,12 @@ const deleteVideo = asyncHandler(async (req, res) => {
         await deleteOnCloudinary(videoinDB.videoFile,"videoinDB")
     }
 
-    const deletedResponce = await Video.findByIdAndDelete(videoId)
-    if(!deletedonDB){
+    const deletedResponse = await Video.findByIdAndDelete(videoId)
+    if(!deletedResponse){
         throw new ApiError(500, "Something went wrong while deleting video")
     }
     return res.status(200)
-    .json(new ApiResponse(200, { deletedResponce }, "Video Deleted Successfully"))
+    .json(new ApiResponse(200, { deletedResponse }, "Video Deleted Successfully"))
 })
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
