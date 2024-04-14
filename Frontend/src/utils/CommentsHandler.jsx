@@ -1,22 +1,27 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { BiLike } from "react-icons/bi";
+import { BiDislike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi";
+import { BiSolidDislike } from "react-icons/bi";
+import CommentCard from './CommentCard'
+import Button from '../components/Button'
 
 function CommentsHandler({ video }) {
     const userData = useSelector((state) => state.auth.userData)
-
     const navigate = useNavigate()
     const [loading, setLoading] = useState()
-    const [change , setchange] = useState()
-    const [error , setError] = useState()
-    const [newComment , setNewComment] = useState()
-    const [comments, setVideoComments] = useState()
+    const [change, setchange] = useState()
+    const [error, setError] = useState()
+    const [currentUserComments, setcurrentUsercomments] = useState()
+    const [VideoComments, setVideoComments] = useState()
 
-    const {handleSubmit, register} = useForm({
-        defaultValues:{
-            content:comments?.content
+    const { handleSubmit, register } = useForm({
+        defaultValues: {
+            content: VideoComments?.content
         }
     })
     useEffect(() => {
@@ -26,16 +31,15 @@ function CommentsHandler({ video }) {
                 axios({
                     method: 'GET',
                     url: `/api/v1/comments/${video._id}`
-                }).then(response => {
-                    console.log(response)
-                    setVideoComments(response.data.data)
+                }).then(response => {                
+                    setVideoComments(response.data.data.Comments)
                     if (userData) {
-                        const commentsarr = response.data.data.aggregateLikes
+                        const commentsarr = response.data.data.Comments
                         const commented = commentsarr.filter((commentarr) => {
                             return userData.data._id === commentarr.owner
                         })
                         if (commented) {
-                            setVideoComments(commented)
+                            setcurrentUsercomments(commented)
                         }
                     }
                 })
@@ -45,47 +49,85 @@ function CommentsHandler({ video }) {
                 navigate('/')
             }
         } catch (error) {
+            console.log(error.response)
             // setError(error.response.statusText + ":" + "Something went wrong")
         }
 
     }, [userData, video, navigate, loading, change])
 
+    if (error) {
+        setTimeout(() => {
+            setError(false)
+        }, 5000)
+    }
+    
+       
+
     const create = async (data) => {
         setError("")
         try {
+            if (!data.content || data.content?.trim() === "") {
+                setError("No Data :Comment is required")
+            }
             const commentData = await axios({
                 method: 'POST',
-                url:`/api/v1/comments/${video._id}`,
-                data:{
-                    'content' : data.content
+                url: `/api/v1/comments/${video._id}`,
+                data: {
+                    'content': data.content
                 },
-                
+
             })
-            console.log(commentData)
-            if(commentData){
+            if (commentData) { 
                 setchange(commentData.data)
-            }
+             
+        }
         } catch (error) {
-            
+
         }
 
     }
 
-    return (
-        <form onSubmit={handleSubmit(create)}>
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-500"
-          placeholder="Write a comment..."
-          {...register("content",{ required:true })}
-        ></textarea>
-        <button
-          type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300"
-        >
-          Post Comment
-        </button>
-      </form>
-  )
+    return VideoComments ? (
+        <>
+            {error && <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-1 mb-2 text-center text-lg font-mono">{error}</p>}
+
+            <form onSubmit={handleSubmit(create)}>
+                <input
+                type='text'
+                    className="w-full p-2 mb-3 border-b-2 border-black text-ellipsis"
+                    placeholder="Write a comment..."                    
+                    {...register("content", { required: true })}
+                />
+                <Button
+                    type="submit"
+                    className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold '>
+                    Comment
+                </Button>
+            </form>
+            <p className='mt-3 text-xl font-bold'>{VideoComments.length} Comments</p>
+            <hr className='border border-gray-300 my-2' />
+
+            {
+            currentUserComments &&(
+                currentUserComments.map((comment)=>(
+                <div key={comment._id} className='mt-1'>
+                  <CommentCard {...comment} />
+                </div>
+                ))
+            )
+            }
+
+            {
+                VideoComments.map((comment) => (
+                    <div key={comment._id} className='mt-1'>
+                        <CommentCard {...comment} />
+                    </div>
+                ))
+
+            }
+
+        </>
+    ) : null
 }
 
 export default CommentsHandler

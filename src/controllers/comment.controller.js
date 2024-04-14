@@ -8,7 +8,6 @@ import { Video } from "../models/video.model.js"
 const getVideoComments = asyncHandler(async (req, res) => {
     // getting all comments for a video
     const { videoId } = req.params
-    const { page = 1, limit = 10 } = req.query
     // if (!isValidObjectId(videoId)) {
     //     throw new ApiError(400, "This video id is not valid")
     // }
@@ -20,26 +19,22 @@ const getVideoComments = asyncHandler(async (req, res) => {
     }
 
     // match and finds all the comments
-    const aggregateComments = await Comment.aggregate([
+    const Comments = await Comment.aggregate([
         {
             $match: {
                 video: new mongoose.Types.ObjectId(videoId)
             }
         }
-    ])
+    ]);
+    if(!Comments){
+        throw new ApiError(500, "something went wrong while fetching comments")
 
-    Comment.aggregatePaginate(aggregateComments, {
-        page,
-        limit
-    })
-        .then((result) => {
-            return res.status(201).json(
-                new ApiResponse(200, result, "VideoComments fetched  successfully!!"))
+    }
+    // Like.aggregatePaginate(aggregateLikes)
+            return res.status(200).json(
+                new ApiResponse(200, {Comments , Commentslength : Comments.length}, "VideoComments fetched  successfully!!"))
 
-            })
-            .catch((error) => {
-                throw new ApiError(500, "something went wrong while fetching video Comments", error)
-            })
+           
 })
 
 const addComment = asyncHandler(async (req, res) => {

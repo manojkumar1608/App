@@ -16,6 +16,7 @@ import AuthLayout from "./components/AuthLayout.jsx";
 import UploadVideo from "./components/UploadVideo.jsx.jsx";
 import AllVideos from './components/usercontent/AllVideos.jsx';
 import EditVideo from './Pages/EditVideo.jsx';
+
 const router = createBrowserRouter([
   {
     path:"/", 

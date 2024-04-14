@@ -59,7 +59,6 @@ function WatchPage() {
             navigate("/");
          }
       });
-      console.log(videoId)
    };
 
    const handledescription = () => {
