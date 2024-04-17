@@ -3,23 +3,21 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { BiLike } from "react-icons/bi";
-import { BiDislike } from "react-icons/bi";
-import { BiSolidLike } from "react-icons/bi";
-import { BiSolidDislike } from "react-icons/bi";
 import CommentCard from './CommentCard'
 import Button from '../components/Button'
 
 function CommentsHandler({ video }) {
+    let CommentData = useSelector((state) => state.comment.commentData)
     const userData = useSelector((state) => state.auth.userData)
     const navigate = useNavigate()
     const [loading, setLoading] = useState()
+    const [otherUserComments, setotherUserComments] = useState()
     const [change, setchange] = useState()
     const [error, setError] = useState()
     const [currentUserComments, setcurrentUsercomments] = useState()
     const [VideoComments, setVideoComments] = useState()
 
-    const { handleSubmit, register } = useForm({
+    const { handleSubmit, register, reset } = useForm({
         defaultValues: {
             content: VideoComments?.content
         }
@@ -31,7 +29,7 @@ function CommentsHandler({ video }) {
                 axios({
                     method: 'GET',
                     url: `/api/v1/comments/${video._id}`
-                }).then(response => {                
+                }).then(response => {
                     setVideoComments(response.data.data.Comments)
                     if (userData) {
                         const commentsarr = response.data.data.Comments
@@ -40,6 +38,15 @@ function CommentsHandler({ video }) {
                         })
                         if (commented) {
                             setcurrentUsercomments(commented)
+                        }
+                    }
+                    if (userData) {
+                        const commentsarr = response.data.data.Comments
+                        const otherusercomments = commentsarr.filter((commentarr) => {
+                            return userData.data._id !== commentarr.owner
+                        })
+                        if (otherusercomments) {
+                            setotherUserComments(otherusercomments)
                         }
                     }
                 })
@@ -53,15 +60,14 @@ function CommentsHandler({ video }) {
             // setError(error.response.statusText + ":" + "Something went wrong")
         }
 
-    }, [userData, video, navigate, loading, change])
+    }, [userData, video, navigate, loading, change, CommentData])
+
 
     if (error) {
         setTimeout(() => {
             setError(false)
         }, 5000)
     }
-    
-       
 
     const create = async (data) => {
         setError("")
@@ -69,6 +75,7 @@ function CommentsHandler({ video }) {
             if (!data.content || data.content?.trim() === "") {
                 setError("No Data :Comment is required")
             }
+
             const commentData = await axios({
                 method: 'POST',
                 url: `/api/v1/comments/${video._id}`,
@@ -77,15 +84,17 @@ function CommentsHandler({ video }) {
                 },
 
             })
-            if (commentData) { 
+            if (commentData) {
                 setchange(commentData.data)
-             
-        }
+                reset()
+            }
+
         } catch (error) {
 
         }
 
     }
+
 
     return VideoComments ? (
         <>
@@ -93,9 +102,9 @@ function CommentsHandler({ video }) {
 
             <form onSubmit={handleSubmit(create)}>
                 <input
-                type='text'
+                    type='text'
                     className="w-full p-2 mb-3 border-b-2 border-black text-ellipsis"
-                    placeholder="Write a comment..."                    
+                    placeholder="Write a comment..."
                     {...register("content", { required: true })}
                 />
                 <Button
@@ -107,23 +116,50 @@ function CommentsHandler({ video }) {
             <p className='mt-3 text-xl font-bold'>{VideoComments.length} Comments</p>
             <hr className='border border-gray-300 my-2' />
 
+            {/* //current logged in user comments which will be showed at top and highlighted in the commentsLis  */}
             {
-            currentUserComments &&(
-                currentUserComments.map((comment)=>(
-                <div key={comment._id} className='mt-1'>
-                  <CommentCard {...comment} />
-                </div>
-                ))
-            )
+                currentUserComments && (
+                    currentUserComments.map((comment) => (
+                        <div key={comment._id} className='shadow-md rounded-lg  bg-gray-200'>
+                            <CommentCard comment={comment} />
+                        </div>
+                    ))
+                )
             }
 
-            {
-                VideoComments.map((comment) => (
-                    <div key={comment._id} className='mt-1'>
-                        <CommentCard {...comment} />
-                    </div>
-                ))
 
+
+            {
+                userData ? (
+                    otherUserComments.map((comment) => (
+                        <div key={comment._id} className='border-b rounded-lg '>
+                            <CommentCard comment={comment} />
+                        </div>
+                    ))
+                ) : (
+                    VideoComments.map((comment) => (
+                        <div key={comment._id} className='border-b rounded-lg '>
+                            <CommentCard comment={comment} />
+
+                            {
+                                userData && userData.data._id === comment.owner ? (
+                                    <div className=''>
+                                        <button onClick={clicked}
+                                            className='w-8 rounded-md text-xs text-gray-700 font-semibold hover:bg-gray-300'>
+                                            <AiOutlineEdit className='ml-1 rounded-md size-5 ' />
+                                            Edit
+                                        </button>
+                                        <button className=' ml-3 text-xs text-gray-600 font-semibold hover:bg-gray-300 rounded-md '>
+                                            <AiOutlineDelete className='ml-1 size-5 rounded-md' />
+                                            Delete
+                                        </button>
+                                    </div>
+                                ) : null
+                            }
+                        </div>
+
+                    ))
+                )
             }
 
         </>

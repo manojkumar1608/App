@@ -40,6 +40,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
     <img  src={thumbnail.url} alt="Video Thumbnail" className="w-[22.5rem] h-56 border bg-gray-100 rounded-xl object-cover"/>
         </Link>
         
+        
     <div className='flex  flex-row'>
 
       <Link>
@@ -48,7 +49,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
        
     <div className="p-2 ml-1">
 
-      <Link to={`watch/${_id}`}>
+      <Link to={`/watch/${_id}`}>
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
         </Link>
 

@@ -1,62 +1,139 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BiLike } from "react-icons/bi";
-import { BiDislike } from "react-icons/bi";
-import { BiSolidLike } from "react-icons/bi";
-import { BiSolidDislike } from "react-icons/bi";
-import { useSelector } from 'react-redux';
-function CommentCard({ content ,createdAt, owner }) {
-    const[user , setUser] = useState()
-    const navigate = useNavigate()
-    useEffect(() => {
-        if (owner) {
-          axios({
-            method: 'POST',
-            url: '/api/v1/users/getuserbyId',
-            data: {
-              userId: owner
-            }
-          }).then((response) => {
-            if (response) {
-              const userData = response.data.data
-              setUser(userData)
-            } else {
-              navigate('/')
-            }
-          })
+import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
+import { useSelector, useDispatch } from 'react-redux';
+import CommentLikeHandler from './CommentLikeHandler';
+import { useForm } from 'react-hook-form';
+import Button from '../components/Button';
+import { load } from '../store/commentSlice';
+function CommentCard({ comment }) {
+  let owner = comment.owner
+  const userData = useSelector((state) => state.auth.userData)
+  const dispatch = useDispatch()
+  const [user, setUser] = useState()
+  let [edit, setedit] = useState()
+  const [update, setUpdate] = useState()
+  const navigate = useNavigate()
+  const { handleSubmit, register, reset } = useForm({
+    defaultValues: {
+      content: comment?.content
+    }
+  })
+  useEffect(() => {
+    if (owner) {
+      axios({
+        method: 'POST',
+        url: '/api/v1/users/getuserbyId',
+        data: {
+          userId: owner
+        }
+      }).then((response) => {
+        if (response) {
+          const userData = response.data.data
+          setUser(userData)
         } else {
           navigate('/')
         }
-      }, [owner, navigate ])
-    return user ?(
-    <div className="flex flex-wrap  p-3 mb-4">
-                        {/* Avatar */}
-                        <div className="mr-3 ">
-                            <img
-                                className='size-12 rounded-full'
-                                src={user.avatar} />
-                        </div>
+      })
+    } else {
+      navigate('/')
+    }
 
-                        {/* Comment content */}
-                        <div>
-                            <p className="inline-block text-xl text-gray-800 font-semibold mr-2">{user.username}</p>
-                             <span className='text-gray-400'>{createdAt} </span>
-                            <p className="text-lg text-black mb-1">{content}</p>
-                    <div className="mt-3 space-x-6">
-                        <button className="text-sm text-gray-500 focus:outline-none hover:text-gray-700">
-                        <BiLike className='inline-block size-6'/> <span>{20}</span>
-                        </button>
-                        <button className="text-sm text-gray-500 focus:outline-none hover:text-gray-700">
-                        <BiDislike className='inline-block size-6'/> <span>{}</span>
-                        </button>
-                        <button className="text-sm text-gray-500 focus:outline-none hover:text-gray-700">
-                            Reply
-                        </button>
-                        </div>
-                    </div> 
-                    </div>
-  ):null;
+  }, [owner, navigate, update])
+
+  const Edit = async (data) => {
+    if (comment) {
+      const commentData = await axios({
+        method: 'PATCH',
+        url: `/api/v1/comments/c/${comment._id}`,
+        data: {
+          'newContent': data.content
+        }
+      })
+      if (commentData) {
+        setUpdate(commentData.data)
+        reset()
+        setedit(false)
+        dispatch(load(commentData.data))
+      }
+    }
+  }
+  const deleteHandler = async () => {
+    const deletedata = await axios.delete(`/api/v1/comments/c/${comment._id}`)
+    dispatch(load(deletedata.data))
+
+
+  }
+
+  const clicked = () => {
+    setedit(edit = !edit)
+  }
+
+
+  return user ? (
+    <>
+
+      {edit &&
+        <form onSubmit={handleSubmit(Edit)}>
+          <input
+            type='text'
+            className="w-full p-2 mb-3 border-b-2 border-black text-ellipsis"
+            placeholder="Write a comment..."
+            {...register("content", { required: true })}
+          />
+          <Button
+            type="submit"
+            className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold '>
+            Comment
+          </Button>
+        </form>
+      }
+      <div className="flex flex-wrap  p-3 mb-4">
+        {/* Avatar */}
+        <div className="mr-3 ">
+          <img
+            className='size-12 rounded-full'
+            src={user.avatar} />
+        </div>
+
+
+
+        {/* Comment content */}
+
+        <div>
+          <p className="inline-block text-xl text-gray-800 font-semibold mr-2">{user.username}</p>
+          <span className=' text-gray-400'>{comment.createdAt} </span>
+          <p className="text-lg text-black mb-1">{comment.content}</p>
+
+
+
+          {comment &&
+            <div className="mt-3 space-x-6">
+              <CommentLikeHandler comment={comment} />
+            </div>
+          }
+        </div>
+        {
+          userData && userData.data._id === comment.owner ? (
+            <div className=''>
+              <button onClick={clicked}
+                className='w-8 rounded-md text-xs text-gray-700 font-semibold hover:bg-gray-300'>
+                <AiOutlineEdit className='ml-1 rounded-md size-5 ' />
+                Edit
+              </button>
+              <button onClick={deleteHandler}
+                className=' ml-3 text-xs text-gray-600 font-semibold hover:bg-gray-300 rounded-md '>
+                <AiOutlineDelete className='ml-1 size-5 rounded-md' />
+                Delete
+              </button>
+            </div>
+          ) : null
+        }
+      </div>
+    </>
+  ) : null;
 }
 
 export default CommentCard

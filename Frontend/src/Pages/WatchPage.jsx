@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from "../components/Button"
-import CommentBox from '../components/CommentsContainer';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import HomePage from './HomePage';
@@ -72,7 +71,9 @@ function WatchPage() {
       <>
          <div className='flex flex-col'>
             <video className='rounded-2xl mt-2  w-[47rem] h-[27rem]'
-               controls preload="auto"  >
+               key={video._id} 
+               controls preload="auto" >
+                  
                <source src={video.videoFile.url}
                   type="video/mp4" />
             </video>

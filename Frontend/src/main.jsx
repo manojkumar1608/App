@@ -14,7 +14,6 @@ import Signup from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
 import UploadVideo from "./components/UploadVideo.jsx.jsx";
-import AllVideos from './components/usercontent/AllVideos.jsx';
 import EditVideo from './Pages/EditVideo.jsx';
 
 const router = createBrowserRouter([
@@ -67,15 +66,7 @@ const router = createBrowserRouter([
         )
 
       },
-      {
-        path:"/allVideos",
-        element:(
-          <AuthLayout authentication = {false}>
-            <AllVideos/>
-          </AuthLayout>
-        )
 
-      },
       {
         path:"/edit-video/:videoId",
         element:(

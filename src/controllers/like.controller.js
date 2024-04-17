@@ -180,9 +180,8 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 });
 
 
-// controller to return channel list to which user has subscribed
 const getLikes = asyncHandler(async (req, res) => {
-    //TODO: get all comments for a video
+    // getting all comments for a video
     const { videoId } = req.params
     if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "This video id is not valid")
@@ -194,11 +193,42 @@ const getLikes = asyncHandler(async (req, res) => {
         throw new ApiError(404, "video not found");
     }
 
-    // match and finds all the comments
+    // match and finds all the Likes
     const aggregateLikes = await Like.aggregate([
         {
             $match: {
                 video: new mongoose.Types.ObjectId(videoId)
+            }
+        }
+    ]);
+    if(!aggregateLikes){
+        throw new ApiError(500, "something went wrong while fetching likes")
+
+    }
+    // Like.aggregatePaginate(aggregateLikes)
+            return res.status(200).json(
+                new ApiResponse(200, {aggregateLikes , Likeslength : aggregateLikes.length}, "VideoLikes fetched  successfully!!"))
+
+           
+})
+const getCommentLikes = asyncHandler(async (req, res) => {
+    // getting all comments for a video
+    const { commentId } = req.params
+    if (!isValidObjectId(commentId)) {
+        throw new ApiError(400, "This video id is not valid")
+    }
+
+    // find video in database 
+    const comment = await Comment.findById(commentId)
+    if (!comment) {
+        throw new ApiError(404, "comment not found");
+    }
+
+    // match and finds all the Likes
+    const aggregateLikes = await Like.aggregate([
+        {
+            $match: {
+                comment: new mongoose.Types.ObjectId(commentId)
             }
         }
     ]);
@@ -217,5 +247,6 @@ export {
     toggleTweetLike,
     toggleVideoLike,
     getLikedVideos,
-    getLikes
+    getLikes,
+    getCommentLikes
 }

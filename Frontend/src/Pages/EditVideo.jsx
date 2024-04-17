@@ -16,8 +16,7 @@ function EditVideo() {
         const videoData = response.data.data
         setVideo(videoData)
       })
-      console.log(video)
-    } else {
+     } else {
       navigate('/')
     }
   }, [videoId, navigate])

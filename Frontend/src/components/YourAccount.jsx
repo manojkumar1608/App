@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import VideoContainer from "./VideoContainer.jsx"
 import Button from "./Button.jsx"
 import { Link } from 'react-router-dom'
 import TweetsPage from './Tweets.jsx'

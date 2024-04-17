@@ -54,10 +54,10 @@ function Likehandler({ video }) {
       if (video._id) {
         await axios.post(`/api/v1/likes/toggle/v/${video._id}`)
           .then(response => {
-            setChange(response.data)
+            setChange(response.data.data)
           })
       }
-      if (change.data.deleteLike) {
+      if (change.deleteLike) {
         setDisLike(false)
       }
     } catch (error) {
@@ -80,7 +80,7 @@ function Likehandler({ video }) {
     if (Like.length > 0) {
       await axios.post(`/api/v1/likes/toggle/v/${video._id}`)
         .then(response => {
-          setChange(response.data)
+          setChange(response.data.data)
         })
     }
   }
