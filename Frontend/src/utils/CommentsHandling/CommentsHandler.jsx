@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import CommentCard from './CommentCard'
-import Button from '../components/Button'
+import Button from '../../components/Button'
 
 function CommentsHandler({ video }) {
     let CommentData = useSelector((state) => state.comment.commentData)

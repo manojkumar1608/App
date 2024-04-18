@@ -6,8 +6,8 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { useSelector, useDispatch } from 'react-redux';
 import CommentLikeHandler from './CommentLikeHandler';
 import { useForm } from 'react-hook-form';
-import Button from '../components/Button';
-import { load } from '../store/commentSlice';
+import Button from '../../components/Button';
+import { load } from '../../store/commentSlice';
 function CommentCard({ comment }) {
   let owner = comment.owner
   const userData = useSelector((state) => state.auth.userData)
