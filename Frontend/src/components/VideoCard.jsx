@@ -59,6 +59,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
 
         <p>  {views} views • 2 days ago</p>
     </div>
+    
 
     
     </div>

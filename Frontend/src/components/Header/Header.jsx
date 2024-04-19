@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../Input';
 import { BiSearchAlt2 } from "react-icons/bi"
 import { useSelector, useDispatch } from 'react-redux';
 import { isTogglemenu } from "../../store/SidebarSlice"
-import { TbVideoPlus } from "react-icons/tb";
-import { logout as authlogout } from "../../store/authSlice"
 import LogoutBtn from './LogoutBtn';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Button';
+import UploadTweetHandling from '../../utils/TweetHandling.jsx/TweetFormCard';
 
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status)
+  const [error , setError] = useState()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const createHandler = () => {
-    if (authStatus) {
+  const HandleCreateVideo = () => {
+    if(authStatus){
       navigate('/uploadvideo')
+    }else{
+      setError(' Login to upload video  ')
     }
+   
   }
+  const HandleCreateTweet = () => {
+    if(authStatus){
+      navigate('/Tweet')
+    }else{
+      setError(' Login to Tweet your thoughts')
+    }
 
+  }
+  
+  
+  if (error) {
+    setTimeout(() => {
+      setError(false)
+    }, 4000)
+  }
   return (
     <>
       <header>
@@ -42,39 +59,44 @@ function Header() {
           </div>
           {/* //search bar with search btn// */}
           {/* /* // */}
-          <div className="flex pl-[2rem] mx-[3rem] ">
+          <div className="flex mx-28">
             <Input
-              className=" w-[19rem] border border-gray-500 rounded-l-full "
+              className="h-10  border border-gray-500 rounded-l-full "
               type="text"
               placeholder="Search..."
             />
             <button
-              className="border border-gray-500 px-5  bg-gray-300 rounded-r-full "
+              className="h-10 border border-gray-500 px-5  bg-gray-300 rounded-r-full "
               type="button"
             >
               <BiSearchAlt2 />
             </button>
 
+            
+
             {/* // */}
 
           </div>
           <div className='absolute flex flex-wrap right-2 gap-5 '>
+            
+            <div className='flex flex-wrap'>
+              <div>
+              <button onClick={HandleCreateVideo}
+              className='text-sm font-bold'>
+                <img className='size-8  mx-7 '
+                src="https://cdn-icons-png.flaticon.com/128/4120/4120760.png" 
+                alt="" />Create
+              </button>
+              </div>
+              <UploadTweetHandling/>
 
 
-            {authStatus &&
-            <Link to={'/uploadvideo'}>
-
-              <Button className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold'>
-                <TbVideoPlus className='inline-block mr-1 size-5' />Create
-              </Button>
-              </Link>
-            }
-
-            {authStatus ? <LogoutBtn /> :
+            {authStatus ?
+             <LogoutBtn /> :
 
               <Link to='/login'>
                 <Button
-                  className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold '>
+                  className=' text-gray-200 border bg-gradient-to-r from-red-700 to-gray-950 rounded-xl font-bold '>
                   Login/Signup
                 </Button>
               </Link>
@@ -82,7 +104,9 @@ function Header() {
           </div>
 
         </div>
+        </div>
       </header>
+      {error &&  <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-6 mb-2 text-center text-lg font-mono">{error} </p>}
     </>
   )
 }

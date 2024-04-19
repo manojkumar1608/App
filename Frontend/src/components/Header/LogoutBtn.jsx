@@ -18,7 +18,7 @@ function  LogoutBtn() {
     <div className=''>
                
       <Button onClick={logoutHandler}
-         className='w-24 text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold'>Logout
+         className='w-24 text-gray-200 border bg-gradient-to-t from-red-800 to-gray-950 rounded-xl font-bold'>Logout
 
         </Button>
 

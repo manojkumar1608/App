@@ -127,8 +127,6 @@ function CommentsHandler({ video }) {
                 )
             }
 
-
-
             {
                 userData ? (
                     otherUserComments.map((comment) => (

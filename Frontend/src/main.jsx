@@ -8,13 +8,13 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import MainContainer from "./components/MainContainer.jsx";
 import WatchPage from "./Pages/WatchPage.jsx";
-import TweetsPage from "./components/Tweets.jsx";
 import YourAccount from "./components/YourAccount.jsx";
 import Signup from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
 import UploadVideo from "./components/UploadVideo.jsx.jsx";
 import EditVideo from './Pages/EditVideo.jsx';
+import TweetFormCard from './utils/TweetHandling.jsx/TweetFormCard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
 
         },
           {
-        path:"/tweets",
-        element:<TweetsPage/>
+        path:"/Tweet",
+        element:<TweetFormCard/>
       },
       {
         path:"/acc",
