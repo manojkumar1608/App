@@ -7,32 +7,27 @@ import LogoutBtn from './LogoutBtn';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import UploadTweetHandling from '../../utils/TweetHandling.jsx/TweetFormCard';
+import { AiOutlineHome } from "react-icons/ai";
+import { MdOutlineSubscriptions } from "react-icons/md"
+import { AiOutlineLike } from "react-icons/ai";
+import { RiTwitterXLine } from "react-icons/ri";
+import { VscAccount } from "react-icons/vsc";
 
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status)
-  const [error , setError] = useState()
+  const [error, setError] = useState()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const HandleCreateVideo = () => {
-    if(authStatus){
+    if (authStatus) {
       navigate('/uploadvideo')
-    }else{
-      setError(' Login to upload video  ')
+    } else {
+      navigate('login')
     }
-   
   }
-  const HandleCreateTweet = () => {
-    if(authStatus){
-      navigate('/Tweet')
-    }else{
-      setError(' Login to Tweet your thoughts')
-    }
-
-  }
-  
-  
+ 
   if (error) {
     setTimeout(() => {
       setError(false)
@@ -40,74 +35,106 @@ function Header() {
   }
   return (
     <>
-      <header>
-        <div className='flex relative p-3 shadow-sm shadow-gray-300'>
-          <div className='flex flex-row text-2xl mt-1'>
-            {/*  sidebar */}
-            <img
-              onClick={() => dispatch(isTogglemenu())}
-              className='h-[2rem] cursor-pointer mx-3'
-              src="https://cdn.iconscout.com/icon/free/png-256/free-hamburger-menu-462145.png?f=webp"
-              alt="sidebar" />
+    <div>
+    <nav className="w-full flex fixed top-0 z-40 px-4 py-2 bg-gray-100 shadow-sm justify-between items-center">
+      {/* <!-- Hamburger menu icon for small screens --> */}
+      {/* <button className="block lg:hidden text-white focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button> */}
 
-            {/* logo */}
-            <a className="flex flex-row " href='/'>
-              <img className='h-10 w-12 bg-transparent rounded-3xl '
-                src="https://cdn-icons-png.flaticon.com/512/8894/8894556.png" alt="videoTube" />
-              <h3 className='font-bold font-' >PlayTube</h3>
-            </a>
-          </div>
-          {/* //search bar with search btn// */}
-          {/* /* // */}
-          <div className="flex mx-28">
-            <Input
-              className="h-10  border border-gray-500 rounded-l-full "
-              type="text"
-              placeholder="Search..."
-            />
-            <button
-              className="h-10 border border-gray-500 px-5  bg-gray-300 rounded-r-full "
-              type="button"
-            >
-              <BiSearchAlt2 />
-            </button>
+      {/* <!-- Logo --> */}
+      <div className='flex flex-row'>
+        <img
+          onClick={() => dispatch(isTogglemenu())}
+          className='size-8 mx-2 cursor-pointer'
+          src="https://cdn.iconscout.com/icon/free/png-256/free-hamburger-menu-462145.png?f=webp"
+          alt="sidebar" />
 
-            
+        <a className="flex flex-row" href='/'>
+          <img className='h-10 w-12 bg-transparent rounded-3xl inline-block'
+            src="https://cdn-icons-png.flaticon.com/512/8894/8894556.png" alt="videoTube" />
+          <h3 className='text-2xl font-bold text-gray-950' >PlayTube</h3>
+        </a>
+      </div>
 
-            {/* // */}
+      {/* <!-- Search bar --> */}
+      <div className="hidden lg:block">
+        <input type="text" placeholder="Search..." className="h-12 border p-2 border-gray-500 rounded-2xl mr-2 " />
+        <button className="h-11 w-11 p-4  bg-gray-300 rounded-full ">
+          <BiSearchAlt2 className='size-4' /></button>
+      </div>
 
-          </div>
-          <div className='absolute flex flex-wrap right-2 gap-5 '>
-            
-            <div className='flex flex-wrap'>
-              <div>
-              <button onClick={HandleCreateVideo}
-              className='text-sm font-bold'>
-                <img className='size-8  mx-7 '
-                src="https://cdn-icons-png.flaticon.com/128/4120/4120760.png" 
-                alt="" />Create
-              </button>
-              </div>
-              <UploadTweetHandling/>
+      {/* <!-- Login/logout button --> */}
+      <div className='flex flex-wrap justify-end text-gray-950 mt-2'>
+        <button onClick={HandleCreateVideo}
+          className='text-sm font-bold'>
+          <img className='size-8  mx-7 '
+            src="https://cdn-icons-png.flaticon.com/128/4120/4120760.png"
+            alt="" />Create
+        </button>
+        <UploadTweetHandling />
+        {authStatus ?
+          <LogoutBtn /> :
 
-
-            {authStatus ?
-             <LogoutBtn /> :
-
-              <Link to='/login'>
-                <Button
-                  className=' text-gray-200 border bg-gradient-to-r from-red-700 to-gray-950 rounded-xl font-bold '>
-                  Login/Signup
-                </Button>
-              </Link>
-            }
-          </div>
-
+          <Link to='/login'>
+            <Button
+              className=' text-gray-200 border bg-gradient-to-r from-red-700 to-gray-950 rounded-xl font-bold '>
+              Login/Signup
+            </Button>
+          </Link>
+        }
         </div>
+      </nav>
+    <div className=''>
+            <ul className='flex flex-col fixed top-[5rem]  shadow-sm w-[5rem]'>
+            
+                <li className='flex flex-col items-center py-2 rounded-lg font-bold hover:bg-gray-200 '>
+                    <Link to="/" className="text-3xl">
+                        <AiOutlineHome  />
+                    </Link>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Home</p>
+
+                </li>
+                <li className='flex flex-col py-2 rounded-lg items-center font-bold hover:bg-gray-200 '>
+                    <Link to="/" className="inline-block text-3xl">
+                        <RiTwitterXLine  />
+                    </Link>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Twitter</p>
+                    
+                </li>
+
+                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200 '>
+                    <Link to="/" className="text-3xl">
+                        <MdOutlineSubscriptions  />
+                    </Link>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Subscriptions</p>
+
+                </li>
+
+                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
+                    <Link to="/" className="text-3xl">
+                        <AiOutlineLike   />
+                    </Link>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Liked Videos</p>
+
+                </li>
+
+                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
+                    <Link to="/" className="text-3xl">
+                        <VscAccount   />
+                    </Link>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>
+
+                </li>
+
+            </ul>
+    
+          
         </div>
-      </header>
-      {error &&  <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-6 mb-2 text-center text-lg font-mono">{error} </p>}
-    </>
-  )
+        
+    </div>
+</>)
 }
 export default Header

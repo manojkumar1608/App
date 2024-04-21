@@ -106,7 +106,7 @@ function FollowHandler({ video }) {
                     !isAuthor ? (
                         Subscribed.length > 0 ? (
                             <Button onClick={ToggleFollowBtn}
-                                className=' w-[6rem] m-3 ml-7 p-2 px-1 border border-black bg-gray-300 text-slate-900 font-semibold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
+                                className=' w-[6rem] m-3 ml-7 p-2 pl-3 border border-black bg-gray-300 text-gray-900 font-semibold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
                                 Following
                             </Button>) : (
                             <Button onClick={ToggleFollowBtn}

@@ -1,14 +1,11 @@
 import React from 'react'
-import { IoHome } from "react-icons/io5";
+import { AiOutlineHome } from "react-icons/ai";
 import { IoHomeOutline } from "react-icons/io5";
 import {Link} from "react-router-dom"
-import { MdSubscriptions } from "react-icons/md";
 import { MdOutlineSubscriptions } from "react-icons/md"
-import { AiFillLike } from "react-icons/ai";
 import { AiOutlineLike } from "react-icons/ai";
-import { FaHistory } from "react-icons/fa";
+import { RiTwitterXLine } from "react-icons/ri";
 import { LuHistory } from "react-icons/lu";
-import { MdAccountCircle } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import { GoVideo } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -32,24 +29,22 @@ function SideBar() {
           <>
           <div onClick={()=>dispatch(closeMenu())} className='h-full w-full none fixed top-0  bg-black bg-opacity-30 z-50'>
         
-                <div  className = " p-5 shadow-xl w-60 bg-gray-50 h-screen overflow-y-auto rounded-xl ">
+                <div  className = "fixed top-0 p-5 shadow-xl w-60 bg-gray-50 h-screen overflow-y-auto rounded-xl ">
             <div className='flex flex-row text-2xl '>
                 {/*  sidebar */}
                     <img 
                     onClick={()=>dispatch(closeMenu())}
-                    className='h-[2rem] cursor-pointer' 
+                    className='h-[2rem] ml-1 cursor-pointer' 
                     src="https://cdn.iconscout.com/icon/free/png-256/free-hamburger-menu-462145.png?f=webp" 
                     alt="sidebar" />
 
                {/* logo */}
                <a className="flex flex-row " href='/'>
-                    <img className='h-[2rem] ml-1  '
-                        src="https://cdn.pixabay.com/photo/2018/05/27/22/48/social-3434840_1280.png" alt="videoTube" />
-                    <h3 className='font-bold font-' >PlayTube</h3>
+                    <img className='h-[2rem] w-[2re] ml-3  '
+                        src="https://cdn-icons-png.flaticon.com/512/8894/8894556.png" alt="videoTube" />
+                    <h3 className='font-bold' >PlayTube</h3>
                 </a>
                 </div>
-            
-
 
               <ul className=' pt-2 '>
                 <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold   ">
@@ -57,6 +52,12 @@ function SideBar() {
                   {""}
                   <IoHomeOutline className="mr-5 mt-1 text-xl" />
                   Home
+                </Link>
+              </li>
+                <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold   ">
+                <Link to="/uploadvideo" className="flex  ">
+                  <RiTwitterXLine className="mr-5 mt-1 text-xl" />
+                  Twitter
                 </Link>
               </li>
       
@@ -183,56 +184,10 @@ function SideBar() {
               
             </div>
             </div>
-
-            <div className='flex  w-[5rem]'>
-            
-        </div>
             </>
         )
       }
-    return (
-        <div className='flex shadow-sm  w-[5rem] '>
-            <ul className=''>
-            
-                <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  font-bold hover:bg-gray-300 w-[3rem]'>
-                    <Link to="/" className="text-3xl">
-                        <IoHome  />
-                        {""}
-                    </Link>
-                </li>
-
-                <li className='px-2 py-2 h-[3rem] mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 w-[3rem]'>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <MdSubscriptions  />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <AiFillLike   />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <FaHistory   />
-                    </Link>
-                </li>
-
-                <li className=' px-2 py-2 mx-3 mb-2 flex rounded-lg  hover:bg-gray-300 h-[3rem] w-[3rem] '>
-                    <Link to="/" className="text-3xl">
-                        {""}
-                        <MdAccountCircle   />
-                    </Link>
-                </li>
-
-            </ul>
-          
-        </div>
-    )
+    
     
 
 }

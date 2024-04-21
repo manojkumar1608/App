@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useState , useEffect } from "react";
 import {login , logout} from './store/authSlice.js'
 import axios from 'axios'
+import { Outlet } from "react-router-dom";
+import SideBar from "./components/SideBar.jsx";
 function App() {
 
   const [loading, setLoading] = useState(true)
@@ -24,13 +26,20 @@ function App() {
   }, [])
   
   return !loading ? (
-    <>
-      <Header/>
-    <Body/>
-  </>
     
-    
-  ):null
+       <div className='min-h-screen flex flex-wrap content-between'>
+      <div className='w-full block'>
+        <Header />
+        <div className="flex flex-row mt-[4.5rem]">
+        <SideBar/>
+        <main className="w-full mx-auto ml-[5.2rem]">
+         <Outlet />
+         </main>
+        </div>
+      </div>
+    </div>
+  ) : null
 }
+
 
 export default App;

@@ -3,7 +3,7 @@ import HomePage from '../Pages/HomePage'
 
 function MainContainer() {
   return (
-    <div className='w-5/4'>
+    <div className='w-full block'>
         
          <HomePage/>
     </div>

@@ -2,17 +2,33 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import TweetsPage from "../../Pages/TweetsPage";
+import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 const TweetFormCard = ({ tweet }) => {
+  const authStatus = useSelector((state) => state.auth.status)
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState(false);
   const [tweetData, setTweetData] = useState();
   const { register, handleSubmit, reset, watch, formState } = useForm();
   const { errors, isDirty, isValid } = formState;
   const navigate = useNavigate()
-  const openModal = () => setIsOpen(true);
+  const openModal = () => {
+    if(authStatus){
+      setIsOpen(true)
+    }else{
+      navigate('/login')
+    }
+  }
   const closeModal = () => {
     setIsOpen(false);
     setTweetContent('');
+  }
+  if (error) {
+    setTimeout(() => {
+      setError(false)
+    }, 4000)
   }
   const onFormSubmit = (data) => {
     if (tweet) {
@@ -34,10 +50,10 @@ const TweetFormCard = ({ tweet }) => {
         }
       }).then(response => {
         setTweetData(response.data.data)
-        reset(); 
+        reset();
       })
     }
-    if(tweetData){
+    if (tweetData) {
       setIsOpen(false)
     }
 
@@ -45,50 +61,38 @@ const TweetFormCard = ({ tweet }) => {
 
   return (
     <>
-        { 
-        tweet ?(
-          <div>     
-          <button onClick={openModal}
-            className=' font-bold text-sm '>
-            <img className='size-8 mx-7 rounded-'
-              src="https://cdn-icons-png.flaticon.com/128/14417/14417460.png"
-              alt="" />Edit
-          </button>
-        </div>
-        ):(
-          <div>     
-          <button onClick={openModal}
-            className=' font-bold text-sm '>
-            <img className='size-8 mx-7 rounded-'
-              src="https://cdn-icons-png.flaticon.com/128/14417/14417460.png"
-              alt="" />Tweet
-          </button>
-        </div>
+      {
+        tweet ? (
+          <div>
+            <button onClick={openModal}
+              className=' font-bold text-sm '>
+              <img className='size-8 mx-7 rounded-'
+                src="https://cdn-icons-png.flaticon.com/128/14417/14417460.png"
+                alt="" />Edit
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={openModal}
+              className=' font-bold text-sm '>
+              <img className='size-8 mx-7 rounded-'
+                src="https://cdn-icons-png.flaticon.com/128/14417/14417460.png"
+                alt="" />Tweet
+            </button>
+          </div>
         )
-}
+      }
       {
         isOpen &&
         <>
-          <div className="flex justify-center items-center h-screen">
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="flex fixed justify-center items-center h-screen">
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-70 z-50">
               <div className="w-[24rem] bg-white p-4 rounded-lg shadow-md">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold">Create Tweet</h2>
-                  <button onClick={closeModal}>
-                    <svg
-                      className="w-6 h-6 text-gray-600 hover:text-gray-800"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                  <button className="p-1 hover:bg-gray-200 rounded-xl"
+                  onClick={closeModal}>
+                  <RxCross2 className="size-6 mx-2"/>
                   </button>
                 </div>
                 <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-md">
@@ -105,15 +109,15 @@ const TweetFormCard = ({ tweet }) => {
                       <button
                         type="submit"
                         className={`${formState.isDirty && formState.isValid
-                            ? "bg-blue-500 hover:bg-blue-700"
-                            : "bg-gray-300 cursor-not-allowed"
+                          ? "bg-blue-500 hover:bg-blue-700"
+                          : "bg-gray-300 cursor-not-allowed"
                           } text-white font-semibold py-2 px-4 rounded`}
                         disabled={!isValid}
                       >
                         Tweet
                       </button>
                       <button className="text-white font-semibold py-2 px-4 ml-5 rounded bg-red-600 hover:bg-red-700"
-                      onClick={closeModal}>
+                        onClick={closeModal}>
                         Cancel
                       </button>
                     </div>
@@ -122,6 +126,7 @@ const TweetFormCard = ({ tweet }) => {
               </div>
             </div>
           </div>
+
         </>
       }
     </>);

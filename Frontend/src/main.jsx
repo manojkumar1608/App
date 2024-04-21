@@ -14,7 +14,10 @@ import Login from "./components/Login.jsx";
 import AuthLayout from "./components/AuthLayout.jsx";
 import UploadVideo from "./components/UploadVideo.jsx.jsx";
 import EditVideo from './Pages/EditVideo.jsx';
-import TweetFormCard from './utils/TweetHandling.jsx/TweetFormCard.jsx';
+import TweetsPage from './Pages/TweetsPage.jsx';
+import HomePage from './Pages/HomePage.jsx';
+import SideBar from './components/SideBar.jsx';
+import PlayList from './components/PlayList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,8 +26,9 @@ const router = createBrowserRouter([
         children:[
           {
             path:"/",
-            element:<MainContainer/>
+            element:<HomePage/>
           },
+         
         {
           path:"/watch/:videoId",
           element:<WatchPage/>
@@ -32,12 +36,13 @@ const router = createBrowserRouter([
         },
           {
         path:"/Tweet",
-        element:<TweetFormCard/>
+        element:<TweetsPage/>
       },
       {
         path:"/acc",
         element:<YourAccount/>
       },
+    
       {
         path:"/signup",
         element:(
