@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import VideoCard from '../components/VideoCard'
-import container from '../components/Container/container'
+import VideoCard from '../utils/VideoHandler/VideoCard'
 
 function HomePage() {
     const [error, setError] = useState()

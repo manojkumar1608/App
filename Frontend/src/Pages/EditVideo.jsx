@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import UploadVideo from '../components/UploadVideo.jsx'
+import UploadVideo from '../utils/VideoHandler/UploadVideo.jsx'
 function EditVideo() {
   const { videoId } = useParams()
   const [video, setVideo] = useState()

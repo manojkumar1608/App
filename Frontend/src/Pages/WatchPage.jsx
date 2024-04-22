@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import HomePage from './HomePage';
 import { RiDropdownList } from "react-icons/ri";
-import Likehandler from '../utils/Likehandler';
+import Likehandler from '../utils/VideoHandler/Likehandler';
 import CommentsHandler from '../utils/CommentsHandling/CommentsHandler';
-import FollowHandler from '../utils/FollowHandler';
+import FollowHandler from '../utils/VideoHandler/FollowHandler';
 
 
 function WatchPage() {

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Input from '../Input';
 import { BiSearchAlt2 } from "react-icons/bi"
 import { useSelector, useDispatch } from 'react-redux';
 import { isTogglemenu } from "../../store/SidebarSlice"
 import LogoutBtn from './LogoutBtn';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../Button';
+import Button from '../utilities/Button';
 import UploadTweetHandling from '../../utils/TweetHandling.jsx/TweetFormCard';
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineSubscriptions } from "react-icons/md"
@@ -90,44 +89,40 @@ function Header() {
     <div className=''>
             <ul className='flex flex-col fixed top-[5rem]  shadow-sm w-[5rem]'>
             
+                    <Link to="/">
                 <li className='flex flex-col items-center py-2 rounded-lg font-bold hover:bg-gray-200 '>
-                    <Link to="/" className="text-3xl">
-                        <AiOutlineHome  />
-                    </Link>
+                        <AiOutlineHome className="text-3xl" />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Home</p>
+                    </li>
+                    </Link>
 
-                </li>
+                    <Link to="/Tweet" >
                 <li className='flex flex-col py-2 rounded-lg items-center font-bold hover:bg-gray-200 '>
-                    <Link to="/" className="inline-block text-3xl">
-                        <RiTwitterXLine  />
-                    </Link>
+                        <RiTwitterXLine className="inline-block text-3xl" />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Twitter</p>
-                    
                 </li>
+                    </Link>
 
+                    <Link to="/" >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200 '>
-                    <Link to="/" className="text-3xl">
-                        <MdOutlineSubscriptions  />
-                    </Link>
+                        <MdOutlineSubscriptions className="text-3xl"/>
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Subscriptions</p>
-
                 </li>
-
-                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
-                    <Link to="/" className="text-3xl">
-                        <AiOutlineLike   />
                     </Link>
+
+                    <Link to="/" >
+                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
+                        <AiOutlineLike className="text-3xl"  />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Liked Videos</p>
-
                 </li>
-
-                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
-                    <Link to="/" className="text-3xl">
-                        <VscAccount   />
                     </Link>
-                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>
 
+                    <Link to="/" >
+                <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
+                        <VscAccount className="text-3xl"  />
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>
                 </li>
+                    </Link>
 
             </ul>
     

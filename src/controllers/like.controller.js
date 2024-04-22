@@ -242,11 +242,43 @@ const getCommentLikes = asyncHandler(async (req, res) => {
 
            
 })
+const getTweetLikes = asyncHandler(async (req, res) => {
+    // getting all tweetLikes for a tweet
+    const { tweetId } = req.params
+    if (!isValidObjectId(tweetId)) {
+        throw new ApiError(400, "This video id is not valid")
+    }
+
+    // find video in database 
+    const tweet = await Tweet.findById(tweetId)
+    if (!tweet) {
+        throw new ApiError(404, "tweet not found");
+    }
+
+    // match and finds all the Likes
+    const aggregateLikes = await Like.aggregate([
+        {
+            $match: {
+                tweet: new mongoose.Types.ObjectId(tweetId)
+            }
+        }
+    ]);
+    if(!aggregateLikes){
+        throw new ApiError(500, "something went wrong while fetching likes")
+
+    }
+    // Like.aggregatePaginate(aggregateLikes)
+            return res.status(200).json(
+                new ApiResponse(200, {aggregateLikes , Likeslength : aggregateLikes.length}, "VideoLikes fetched  successfully!!"))
+
+           
+})
 export {
     toggleCommentLike,
     toggleTweetLike,
     toggleVideoLike,
     getLikedVideos,
     getLikes,
-    getCommentLikes
+    getCommentLikes,
+    getTweetLikes
 }

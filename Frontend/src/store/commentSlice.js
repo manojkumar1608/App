@@ -19,6 +19,6 @@ const commentSlice = createSlice({
      }
 })
 
-export const {load } = commentSlice.actions;
+export const { load } = commentSlice.actions;
 
 export default commentSlice.reducer;

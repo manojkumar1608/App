@@ -1,13 +1,12 @@
 
 import "./App.css";
 import Header from "./components/Header/Header.jsx"; 
-import Body from "./components/Body";
 import { useDispatch } from "react-redux";
 import { useState , useEffect } from "react";
 import {login , logout} from './store/authSlice.js'
 import axios from 'axios'
 import { Outlet } from "react-router-dom";
-import SideBar from "./components/SideBar.jsx";
+import SideBar from './components/Header/SideBar.jsx'
 function App() {
 
   const [loading, setLoading] = useState(true)

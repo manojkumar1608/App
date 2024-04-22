@@ -5,13 +5,15 @@ import {
     toggleVideoLike,
     toggleTweetLike,
     getLikes,
-    getCommentLikes
+    getCommentLikes,
+    getTweetLikes
 } from "../controllers/like.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 
 const router = Router();
 router.route("/likes/:videoId").get(getLikes);
 router.route("/commentlikes/:commentId").get(getCommentLikes);
+router.route("/tweetlikes/:tweetId").get(getTweetLikes);
 // router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
 router.route("/toggle/v/:videoId").post(verifyJWT ,toggleVideoLike);

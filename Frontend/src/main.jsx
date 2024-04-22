@@ -6,18 +6,14 @@ import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./store/store.js";
-import MainContainer from "./components/MainContainer.jsx";
 import WatchPage from "./Pages/WatchPage.jsx";
-import YourAccount from "./components/YourAccount.jsx";
-import Signup from "./components/SignUp.jsx";
-import Login from "./components/Login.jsx";
-import AuthLayout from "./components/AuthLayout.jsx";
-import UploadVideo from "./components/UploadVideo.jsx.jsx";
+import Signup from "./components/Authentication/SignUp.jsx";
+import Login from "./components/Authentication/Login.jsx";
+import AuthLayout from "./components/Authentication/AuthLayout.jsx";
+import UploadVideo from "./utils/VideoHandler/UploadVideo.jsx.jsx";
 import EditVideo from './Pages/EditVideo.jsx';
 import TweetsPage from './Pages/TweetsPage.jsx';
 import HomePage from './Pages/HomePage.jsx';
-import SideBar from './components/SideBar.jsx';
-import PlayList from './components/PlayList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -38,10 +34,7 @@ const router = createBrowserRouter([
         path:"/Tweet",
         element:<TweetsPage/>
       },
-      {
-        path:"/acc",
-        element:<YourAccount/>
-      },
+     
     
       {
         path:"/signup",

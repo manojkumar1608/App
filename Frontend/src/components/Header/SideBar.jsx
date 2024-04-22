@@ -15,7 +15,7 @@ import { CgFlag } from "react-icons/cg";
 import { MdOutlineHelpOutline } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useDispatch,useSelector } from 'react-redux';
-import { closeMenu, isTogglemenu} from "../store/SidebarSlice"
+import { closeMenu, isTogglemenu} from "../../store/SidebarSlice"
 
 
 function SideBar() {

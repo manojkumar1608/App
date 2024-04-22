@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import TweetsPage from "../../Pages/TweetsPage";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 
-const TweetFormCard = ({ tweet }) => {
+const TweetFormCard = () => {
   const authStatus = useSelector((state) => state.auth.status)
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
@@ -30,48 +29,31 @@ const TweetFormCard = ({ tweet }) => {
       setError(false)
     }, 4000)
   }
-  const onFormSubmit = (data) => {
-    if (tweet) {
-      axios({
-        method: 'POST',
-        url: '/api/v1/tweet',
-        data: {
-          'content': data.newtweetContent
-        }
-      }).then(response => {
-        console.log(response)
-      }).catch()
-    } else {
-      axios({
-        method: 'POST',
-        url: '/api/v1/tweets/',
-        data: {
-          'content': data.tweetContent
-        }
-      }).then(response => {
-        setTweetData(response.data.data)
-        reset();
-      })
+  const onFormSubmit = async (data) => {
+     try {
+       const tweetdata = await axios({
+         method: 'POST',
+         url: '/api/v1/tweets/',
+         data: {
+           'content': data.tweetContent
+         }
+        })
+         if (tweetdata) {
+           reset()
+           navigate('/Tweet')
+           setIsOpen(false)
+           setTweetData(response.data.data)
+          }
+ 
+    } catch (error) {
+      setError("Something went wrong try refreshing the page")
+      
     }
-    if (tweetData) {
-      setIsOpen(false)
-    }
-
-  };
-
+  }
   return (
     <>
-      {
-        tweet ? (
-          <div>
-            <button onClick={openModal}
-              className=' font-bold text-sm '>
-              <img className='size-8 mx-7 rounded-'
-                src="https://cdn-icons-png.flaticon.com/128/14417/14417460.png"
-                alt="" />Edit
-            </button>
-          </div>
-        ) : (
+      
+        
           <div>
             <button onClick={openModal}
               className=' font-bold text-sm '>
@@ -80,10 +62,10 @@ const TweetFormCard = ({ tweet }) => {
                 alt="" />Tweet
             </button>
           </div>
-        )
-      }
+
+       
       {
-        isOpen &&
+        isOpen && 
         <>
           <div className="flex fixed justify-center items-center h-screen">
             <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-70 z-50">
@@ -129,6 +111,9 @@ const TweetFormCard = ({ tweet }) => {
 
         </>
       }
+
+      
+
     </>);
 };
 

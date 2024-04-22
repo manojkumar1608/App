@@ -6,7 +6,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { useSelector, useDispatch } from 'react-redux';
 import CommentLikeHandler from './CommentLikeHandler';
 import { useForm } from 'react-hook-form';
-import Button from '../../components/Button';
+import Button from '../../components/utilities/Button';
 import { load } from '../../store/commentSlice';
 function CommentCard({ comment }) {
   let owner = comment.owner
@@ -53,7 +53,7 @@ function CommentCard({ comment }) {
         }
       })
       if (commentData) {
-        setUpdate(commentData.data)
+        // setUpdate(commentData.data)
         reset()
         setedit(false)
         dispatch(load(commentData.data))
@@ -63,8 +63,6 @@ function CommentCard({ comment }) {
   const deleteHandler = async () => {
     const deletedata = await axios.delete(`/api/v1/comments/c/${comment._id}`)
     dispatch(load(deletedata.data))
-
-
   }
 
   const clicked = () => {

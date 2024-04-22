@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Button from "./Button.jsx"
+import Button from "./utilities/Button.jsx"
 import { Link } from 'react-router-dom'
-import TweetsPage from './Tweets.jsx'
  function YourAccount() {
  
 

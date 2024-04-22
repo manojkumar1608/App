@@ -6,7 +6,8 @@ const store = configureStore({
   reducer:{
      auth: authSlice,
      Sidebar: SidebarSlice,
-     comment: commentSlice
+     comment: commentSlice,
+     
   }
 })
 

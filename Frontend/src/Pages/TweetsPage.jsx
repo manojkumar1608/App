@@ -2,8 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import TweetCard from '../utils/TweetHandling.jsx/TweetCard'
 import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 
 function TweetsPage() {
+    const userData = useSelector((state) => state.auth.userData)
     const { register, handleSubmit, reset, watch, formState } = useForm();
     const { errors, isDirty, isValid } = formState;
 
@@ -18,17 +20,13 @@ function TweetsPage() {
                 const tweetsData = response.data.data
                 if (tweetsData) {
                     settweets(tweetsData.docs)
-                    console.log(tweetsData.docs)
                 }
-
             } catch (error) {
                 setError(error)
             }
-
         }
         gettweets()
-    }, [update])
-    console.log(tweets)
+    }, [update ])
 
     const onFormSubmit = (data) =>{
         axios({
@@ -38,23 +36,31 @@ function TweetsPage() {
               'content': data.tweetContent
             }
           }).then(response => {
-            console.log(response)
+            if(response){
             setUpdate(response.data.data)
             reset(); 
+            }
           })
       }
     
-
     return tweets && (
         <>
+        
             <div className="w-[30rem] mx-auto bg-gray-200 min-h-screen mt-3">
                 {/* Navbar */}
                 <nav className="bg-white fixed w-[30rem] top-[4rem] z-30 shadow-lg p-4 flex justify-between  items-center">
                     <a href="#" className="text-blue-400 text-2xl font-bold">Twitter</a>
                 <div className='flex flex-row'>
-                    <img src="https://source.unsplash.com/random" alt="Profile Avatar" className="w-10 h-10 rounded-full" />
-                    <h2 className='mt-1 mx-2 text-lg font-semibold'>{'manojKumar'}</h2>
+                    <img src={ userData ?
+                        (userData.data.avatar):"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"} 
+                    alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png" 
+                    className="w-10 h-10 rounded-full border border-gray-400" />
+                    <h2 className='mt-1 mx-2 text-lg font-semibold'>
+                        {userData ?(
+                        userData.data.username):
+                        "Username" }</h2>
                     </div>
+        
                     {/* Twitter Logo */}
                     {/* Search Bar */}
                     {/* <div className="flex items-center bg-gray-200 rounded-lg px-2 py-1">
@@ -64,7 +70,7 @@ function TweetsPage() {
                         <input type="text" placeholder="Search Twitter" className="outline-none bg-transparent placeholder-gray-500" />
                     </div> */}
                     {/* Profile Avatar */}
-                  
+
                 </nav>
 
                 {/* Main Content */}
@@ -103,11 +109,11 @@ function TweetsPage() {
                     </form>
 
                     {/* Tweets */}
-                    <div className='flex flex-col  ml-2 mt-2'>
+                    <div className='flex flex-col mt-2'>
                         {error && <p className='text-center text-3xl font-bold'>Something went wrong</p>}
                         {tweets.map((item) => (
                             <div key={item._id} className=''>
-                                <TweetCard  {...item} />
+                                <TweetCard tweet = {item} />
                             </div>
                         ))
 

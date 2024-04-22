@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import CommentCard from './CommentCard'
-import Button from '../../components/Button'
+import Button from '../../components/utilities/Button'
 
 function CommentsHandler({ video }) {
     let CommentData = useSelector((state) => state.comment.commentData)
+    console.log(CommentData)
     const userData = useSelector((state) => state.auth.userData)
     const navigate = useNavigate()
     const [loading, setLoading] = useState()
@@ -139,21 +140,7 @@ function CommentsHandler({ video }) {
                         <div key={comment._id} className='border-b rounded-lg '>
                             <CommentCard comment={comment} />
 
-                            {
-                                userData && userData.data._id === comment.owner ? (
-                                    <div className=''>
-                                        <button onClick={clicked}
-                                            className='w-8 rounded-md text-xs text-gray-700 font-semibold hover:bg-gray-300'>
-                                            <AiOutlineEdit className='ml-1 rounded-md size-5 ' />
-                                            Edit
-                                        </button>
-                                        <button className=' ml-3 text-xs text-gray-600 font-semibold hover:bg-gray-300 rounded-md '>
-                                            <AiOutlineDelete className='ml-1 size-5 rounded-md' />
-                                            Delete
-                                        </button>
-                                    </div>
-                                ) : null
-                            }
+                           
                         </div>
 
                     ))

@@ -7,7 +7,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 const getAllTweets= asyncHandler(async (req, res) => {
     //getting all videos based on query, sort, pagination
     
-    const { page = 1, limit = 10, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
+    const { page = 1, limit = 40, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
     
     // find user in db
     // const user = await User.findById(
@@ -162,7 +162,7 @@ const updateTweet = asyncHandler(async (req, res) => {
 })
 
 const deleteTweet = asyncHandler(async (req, res) => {
-    //TODO: delete tweet
+    // delete tweet
     const {tweetId} = req.params;
 
     if(!isValidObjectId(tweetId)){
@@ -179,7 +179,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
         throw new ApiError(403, "You don't have permission to delete this tweet!");
     }
 
-    const deleteTweet = await Tweet.deleteOne(req.user._id)
+    const deleteTweet = await Tweet.deleteOne(tweet._Id)
 
     // console.log("delete successfully", deleteTweet)
 

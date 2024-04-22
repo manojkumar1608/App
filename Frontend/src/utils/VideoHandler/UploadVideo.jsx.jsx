@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import Input from './Input';
-import Button from './Button';
+import Input from '../../components/utilities/Input';
+import Button from '../../components/utilities/Button';
 import { BiLogIn } from "react-icons/bi";
 import { RiVideoUploadFill } from "react-icons/ri";
 
