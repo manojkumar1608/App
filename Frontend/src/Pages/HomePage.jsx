@@ -22,18 +22,17 @@ function HomePage() {
         getVideos()
     }, [])
     return (
-        <div className='w-full '>
-        <div className='flex flex-wrap '>
-            {error && <p className='text-center text-3xl font-bold'>Something went wrong Try Refreshing</p>}
-            {videos.map((video) => (
-                <div key={video._id} className=''>
-                    <VideoCard  {...video} />
-                </div>
-            ))
-
-            }
-        </div>
-        </div>
+        <>
+         <div className='flex flex-wrap ml-3.5'>
+        {error && <p className='text-center text-3xl font-bold'>Something went wrong Try Refreshing</p>}
+        {videos.map((video) => (
+            <div key={video._id} className=''>
+                <VideoCard  {...video} />
+            </div>
+        ))
+}
+         </div>
+</>
     )
 }
 

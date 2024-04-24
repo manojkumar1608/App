@@ -14,13 +14,13 @@ import { VscAccount } from "react-icons/vsc";
 
 
 function Header() {
-  const authStatus = useSelector((state) => state.auth.status)
+  const userData = useSelector((state) => state.auth.userData)
   const [error, setError] = useState()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const HandleCreateVideo = () => {
-    if (authStatus) {
+    if (userData) {
       navigate('/uploadvideo')
     } else {
       navigate('login')
@@ -74,7 +74,7 @@ function Header() {
             alt="" />Create
         </button>
         <UploadTweetHandling />
-        {authStatus ?
+        {userData ?
           <LogoutBtn /> :
 
           <Link to='/login'>
@@ -117,7 +117,7 @@ function Header() {
                 </li>
                     </Link>
 
-                    <Link to="/" >
+                    <Link to={`/acc/${userData.data.username}`} >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
                         <VscAccount className="text-3xl"  />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>

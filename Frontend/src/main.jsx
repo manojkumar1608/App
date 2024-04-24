@@ -4,7 +4,6 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-
 import store from "./store/store.js";
 import WatchPage from "./Pages/WatchPage.jsx";
 import Signup from "./components/Authentication/SignUp.jsx";
@@ -14,6 +13,8 @@ import UploadVideo from "./utils/VideoHandler/UploadVideo.jsx.jsx";
 import EditVideo from './Pages/EditVideo.jsx';
 import TweetsPage from './Pages/TweetsPage.jsx';
 import HomePage from './Pages/HomePage.jsx';
+import YourAccount from './utils/UserAccHandler/YourAccount.jsx';
+import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,9 +31,18 @@ const router = createBrowserRouter([
           element:<WatchPage/>
 
         },
+        {
+          path:"/user/:username",
+          element:<YourAccount/>
+
+        },
           {
-        path:"/Tweet",
+        path:"/Tweets",
         element:<TweetsPage/>
+      },
+          {
+        path:"/Like",
+        element:<LikedVideos/>
       },
      
     
@@ -89,4 +99,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
  </Provider>
    
   </React.StrictMode>,
+   
 )

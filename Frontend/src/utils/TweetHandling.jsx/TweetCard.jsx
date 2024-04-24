@@ -52,7 +52,6 @@ function TweetCard({ tweet }) {
         }
       })
       if (tweetData) {
-        console.log(tweetData.data)
         reset()
         setedit(false)
         window.location.reload()
@@ -79,7 +78,7 @@ function TweetCard({ tweet }) {
           className="w-12 h-12 border border-gray-400 rounded-full mr-4"
         />
         <div className="flex-grow">
-          <div className="flex items-center justify-between mb-2 mt-1">
+          <div className="flex items-center justify-between mb-1 mt-1">
             <div className='flex flex-row'>
               <p className="font-bold ">{user.username}</p>
               <img src="https://img.icons8.com/?size=96&id=2sZ0sdlG9kWP&format=png"
@@ -90,12 +89,12 @@ function TweetCard({ tweet }) {
               userData && userData.data._id === tweet.owner ? (
                 <div className=''>
                   <button onClick={EditHandler}
-                    className='w-8 rounded-md text-xs text-gray-700 font-semibold hover:bg-gray-300'>
+                    className='w-8 rounded-md text-xs text-gray-600 font-semibold hover:bg-gray-200'>
                     <AiOutlineEdit className='ml-1 rounded-md size-5 ' />
                     Edit
                   </button>
                   <button onClick={DeleteHandler}
-                    className=' ml-3 text-xs text-gray-600 font-semibold hover:bg-gray-300 rounded-md '>
+                    className=' ml-3 text-xs text-gray-600 font-semibold hover:bg-gray-200 rounded-md '>
                     <AiOutlineDelete className='ml-1 size-5 rounded-md' />
                     Delete
                   </button>
@@ -107,6 +106,7 @@ function TweetCard({ tweet }) {
           <div className="flex mt-2">
             <TweetlikeHandler tweet={tweet} />
           </div>
+
           {
             edit &&
             <div className="flex fixed justify-center items-center h-screen">

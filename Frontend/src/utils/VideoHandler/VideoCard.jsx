@@ -34,16 +34,15 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
   return user ? (
     <>
    
-
-      <div className="m-4 rounded-xl object-cover">
+      <div className="w-[23rem] m-1.5 mt-3 rounded-xl object-cover">
         <Link to={`/watch/${_id}`}>
-    <img  src={thumbnail.url} alt="Video Thumbnail" className="w-[22.5rem] h-56 border bg-gray-100 rounded-xl object-cover"/>
+    <img  src={thumbnail.url} alt="Video Thumbnail" className="w-96 h-56 border bg-gray-100 rounded-xl object-cover"/>
         </Link>
         
         
-    <div className='flex  flex-row'>
+    <div className='flex flex-row'>
 
-      <Link>
+      <Link to={`/acc/${user.username}`}>
     <img src={user.avatar} alt="avatar" className="rounded-full w-[3rem] h-[3rem] mt-2 object-cover"/>
       </Link>
        
@@ -53,7 +52,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
         </Link>
 
-        <Link to={''}>
+        <Link to={`/acc/${user.username}`}>
         <p className="text-md text-gray-600">{user.username} </p> 
         </Link>
 
@@ -64,7 +63,6 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
     
     </div>
 </div>
-
 
 
 

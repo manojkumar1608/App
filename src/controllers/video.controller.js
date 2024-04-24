@@ -64,6 +64,39 @@ const getAllVideos = asyncHandler(async (req, res) => {
         throw error
     })
 })
+const getUserVideos = asyncHandler(async (req, res) => {
+    //getting user videos based on query, sort, pagination
+    const {userId} = req.body
+    
+    // find user in db
+    const user = await User.findById(
+        {
+            _id: userId
+        }
+    )
+    if(!user){
+        throw new ApiError(404, "user not found")
+    }
+
+    const allVideo = await Video.find({
+        owner:userId
+    })
+    
+    if(!allVideo){
+        throw new ApiError(
+            500,
+            "something went wrong while fetching channel all videos!!"
+        )
+    }
+    
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            allVideo,
+            "All videos fetched successfully !!"
+        )
+    )
+})
 
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description , isPublished} = req.body
@@ -276,6 +309,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
 export {
     getAllVideos,
+    getUserVideos,
     publishAVideo,
     getVideoById,
     updateVideo,

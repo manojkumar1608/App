@@ -145,6 +145,7 @@ const getLikedVideos = asyncHandler(async (req, res) => {
                             title: 1,
                             videoFile: 1,
                             thumbnail: 1,
+                            owner:1,
                             views: 1
                         }
                     }
@@ -164,9 +165,11 @@ const getLikedVideos = asyncHandler(async (req, res) => {
                 _id: 0
             }
         },
-        {
-            $replaceRoot: { newRoot: "$videos" }
-        }
+        // {
+        //     $replaceRoot:{
+        //      newRoot: "$videos" 
+        //     }
+        // }
     ]);
 
     res.status(200).json(new ApiResponse(
@@ -181,7 +184,7 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 
 
 const getLikes = asyncHandler(async (req, res) => {
-    // getting all comments for a video
+    // getting all Likes for a video
     const { videoId } = req.params
     if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "This video id is not valid")
@@ -212,7 +215,7 @@ const getLikes = asyncHandler(async (req, res) => {
            
 })
 const getCommentLikes = asyncHandler(async (req, res) => {
-    // getting all comments for a video
+    // getting all commentLikes for a video
     const { commentId } = req.params
     if (!isValidObjectId(commentId)) {
         throw new ApiError(400, "This video id is not valid")
