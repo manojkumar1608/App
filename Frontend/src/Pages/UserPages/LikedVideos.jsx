@@ -9,7 +9,12 @@ function LikedVideos() {
             try {
                 const response = await axios.get('/api/v1/likes/L/videos')
                 if(response){
-                setVideos(response.data.data.videos)
+                    const videos = response.data.data.videos
+                    const result = videos.filter((video)=>{ //filtering video objects which are empty in the response array
+                        return video.videos
+                    })
+                setVideos(result)
+
                 }else{
                     setError("Something went wrong while fetching videos TRY REFRESHING")
                 }
@@ -20,20 +25,25 @@ function LikedVideos() {
         }
         getLikedVideos()
     },[])
-    console.log(videos)
   return (
+    <> 
+     <header className="bg-gradient-to-t from-gray-200 to-gray-400 text-white py-2 rounded-lg mt-1">
+      <div className="container mx-auto text-center">
+        <h1 className="text-2xl text-gray-700 font-bold">Your Liked videos</h1>
+      </div>
+    </header>
     <div className='flex flex-wrap'>
             {error && <p className='text-center text-3xl font-bold'>{error}</p>}
             {videos.map((item) => (
-                // console.log({...item.videos})
-                <div key={item.videos?._id} className=''>
+                <div key={item._id} className=''>
                     <VideoCard {...item.videos} />
                 </div>
             ))
 }
             
             </div>
-  )
+            </>
+            )
 }
 
 export default LikedVideos

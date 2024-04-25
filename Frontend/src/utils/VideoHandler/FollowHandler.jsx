@@ -116,7 +116,7 @@ function FollowHandler({ video }) {
                     ) : (
                         <div className="flex flex-row mt-4">
                             <Link to={`/edit-video/${video._id}`}>
-                                <Button bgColor=" bg-gradient-to-r from-green-600 to-green-950 mr-3 rounded-xl font-semibold" >
+                                <Button bgColor=" bg-gradient-to-r from-green-600 to-green-950 mr-1 rounded-xl font-semibold" >
                                     Edit
                                 </Button>
                             </Link>

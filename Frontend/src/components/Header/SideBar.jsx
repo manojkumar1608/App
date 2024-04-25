@@ -56,7 +56,7 @@ function SideBar() {
                 </Link>
               </li>
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold   ">
-                <Link to="/Tweets" className="flex  ">
+                <Link to="/Tweets" className="flex ">
                   <RiTwitterXLine className="mr-5 mt-1 text-xl" />
                   Twitter
                 </Link>
@@ -93,7 +93,7 @@ function SideBar() {
               </li>
 
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to="/" className="flex">
+                <Link to={'/LikedVideos'} className="flex">
                   <AiOutlineLike className="mr-5 mt-1 text-xl" />
                   Liked videos
                 </Link>

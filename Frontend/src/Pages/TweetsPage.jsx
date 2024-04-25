@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TweetCard from '../utils/TweetHandling.jsx/TweetCard'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 function TweetsPage() {
     const userData = useSelector((state) => state.auth.userData)
@@ -46,11 +47,12 @@ function TweetsPage() {
     return tweets && (
         <>
         
-            <div className="w-[30rem] mx-auto bg-gray-200 min-h-screen mt-3">
+            <div className="w-[30rem] mx-auto bg-gray-200  min-h-screen mt-3">
                 {/* Navbar */}
-                <nav className="bg-white fixed w-[30rem] top-[4rem] z-30 shadow-lg p-4 flex justify-between  items-center">
-                    <a href="#" className="text-blue-400 text-2xl font-bold">Twitter</a>
-                <div className='flex flex-row'>
+                <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
+                    <a href="/Tweets" className="text-blue-400 text-2xl font-bold">Twitter</a>
+                    <Link to={`/user/${userData.data.username}`} >
+                <div className='flex flex-row mt-1 -mr-4'>
                     <img src={ userData ?
                         (userData.data.avatar):"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"} 
                     alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png" 
@@ -60,6 +62,7 @@ function TweetsPage() {
                         userData.data.username):
                         "Username" }</h2>
                     </div>
+                        </Link>
         
                     {/* Twitter Logo */}
                     {/* Search Bar */}
@@ -88,7 +91,7 @@ function TweetsPage() {
                                 <p className="text-red-500 text-sm">{errors.tweetContent.message}</p>
                             )}
 
-                            <div className="flex justify-between items-center mt-2">
+                            <div className="flex justify-end items-end mt-2">
                                 <button
                                     className={`${formState.isDirty && formState.isValid
                                         ? "bg-blue-500 hover:bg-blue-700"
@@ -96,14 +99,6 @@ function TweetsPage() {
                                         } text-white font-semibold py-2 px-4 rounded`}
                                     disabled={!isValid}>
                                     Tweet</button>
-                                <div>
-                                    <label htmlFor="file-upload" className="cursor-pointer">
-                                        <svg className="w-6 h-6 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-                                        </svg>
-                                    </label>
-                                    <input id="file-upload" type="file" className="hidden" />
-                                </div>
                             </div>
                         </div>
                     </form>

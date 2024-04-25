@@ -11,11 +11,11 @@ import Login from "./components/Authentication/Login.jsx";
 import AuthLayout from "./components/Authentication/AuthLayout.jsx";
 import UploadVideo from "./utils/VideoHandler/UploadVideo.jsx.jsx";
 import EditVideo from './Pages/EditVideo.jsx';
-import TweetsPage from './Pages/TweetsPage.jsx';
 import HomePage from './Pages/HomePage.jsx';
+import TweetsPage from './Pages/TweetsPage.jsx';
 import YourAccount from './utils/UserAccHandler/YourAccount.jsx';
 import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
-
+import WatchHistoryPage from './Pages/UserPages/WatchHistoryPage.jsx';
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -41,8 +41,13 @@ const router = createBrowserRouter([
         element:<TweetsPage/>
       },
           {
-        path:"/Like",
+        path:"/LikedVideos",
         element:<LikedVideos/>
+      },
+     
+          {
+        path:"/History",
+        element:<WatchHistoryPage/>
       },
      
     

@@ -21,6 +21,7 @@ function HomePage() {
         }
         getVideos()
     }, [])
+    console.log(videos)
     return (
         <>
          <div className='flex flex-wrap ml-3.5'>

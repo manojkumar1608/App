@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 
-function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }) {
+function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,duration}) {
 
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
@@ -30,19 +30,38 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt }
       navigate('/')
     }
   }, [owner, navigate ])
+  function formatDuration() {
+    let hours = Math.floor(duration / 3600);
+    let minutes = Math.floor((duration % 3600) / 60);
+    let remainingSeconds = Math.floor(duration % 60 );
+
+    // Add leading zeros if necessary
+    hours = String(hours).padStart(2,0);
+    minutes = String(minutes).padStart(1, '0');
+    remainingSeconds = String(remainingSeconds).padStart(2, '0');
+
+    return  hours > 0 ? hours+ ':':"" + minutes + ':' + remainingSeconds;
+}
 
   return user ? (
     <>
    
-      <div className="w-[23rem] m-1.5 mt-3 rounded-xl object-cover">
+      <div className="w-[22.8rem] m-1.5 mt-3 rounded-xl object-cover">
+
         <Link to={`/watch/${_id}`}>
-    <img  src={thumbnail.url} alt="Video Thumbnail" className="w-96 h-56 border bg-gray-100 rounded-xl object-cover"/>
+        <div class="relative">
+    <img src={thumbnail.url} alt="Video Thumbnail"
+     className="w-96 h-56 border bg-gray-100 rounded-xl object-cover"/>
+      <div class="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white font-semibold px-1 text-sm rounded-lg">
+    {formatDuration(duration)}
+    </div>
+    </div>
         </Link>
         
         
     <div className='flex flex-row'>
 
-      <Link to={`/acc/${user.username}`}>
+      <Link to={`/user/${user.username}`}>
     <img src={user.avatar} alt="avatar" className="rounded-full w-[3rem] h-[3rem] mt-2 object-cover"/>
       </Link>
        

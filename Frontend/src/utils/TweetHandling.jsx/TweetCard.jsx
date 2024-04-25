@@ -65,6 +65,7 @@ function TweetCard({ tweet }) {
 
     const DeleteHandler = async () => {
       const deletedata = await axios.delete(`/api/v1/tweets/${tweet._id}`)
+      console.log(deletedata)
       if(deletedata){
         window.location.reload()
       }

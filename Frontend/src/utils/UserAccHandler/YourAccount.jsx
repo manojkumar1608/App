@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import UserHomePage from '../../Pages/UserPages/UserHomePage.jsx';
-import Videos from '../../Pages/UserPages/Videos.jsx';
-import Tweets from '../../Pages/UserPages/Tweets.jsx';
+import Videos from '../../Pages/UserPages/UserVideosPage.jsx';
+import Tweets from '../../Pages/UserPages/UserTweetsPage.jsx';
 import Tabs from './Tabs.jsx';
 import axios from 'axios'
  function YourAccount() {

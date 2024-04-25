@@ -96,7 +96,7 @@ function Header() {
                     </li>
                     </Link>
 
-                    <Link to="/Tweet" >
+                    <Link to="/Tweets" >
                 <li className='flex flex-col py-2 rounded-lg items-center font-bold hover:bg-gray-200 '>
                         <RiTwitterXLine className="inline-block text-3xl" />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Twitter</p>
@@ -110,14 +110,14 @@ function Header() {
                 </li>
                     </Link>
 
-                    <Link to="/" >
+                    <Link to="/LikedVideos" >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
                         <AiOutlineLike className="text-3xl"  />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Liked Videos</p>
                 </li>
                     </Link>
 
-                    <Link to={`/acc/${userData.data.username}`} >
+                    <Link to={`/user/${userData?.data.username}`} >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
                         <VscAccount className="text-3xl"  />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>
