@@ -5,12 +5,13 @@ import { isTogglemenu } from "../../store/SidebarSlice"
 import LogoutBtn from './LogoutBtn';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../utilities/Button';
-import UploadTweetHandling from '../../utils/TweetHandling.jsx/TweetFormCard';
+import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineSubscriptions } from "react-icons/md"
 import { AiOutlineLike } from "react-icons/ai";
 import { RiTwitterXLine } from "react-icons/ri";
 import { VscAccount } from "react-icons/vsc";
+import TweetFormCard from '../Handlers/TweetHandling.jsx/TweetFormCard';
 
 
 function Header() {
@@ -45,11 +46,10 @@ function Header() {
 
       {/* <!-- Logo --> */}
       <div className='flex flex-row'>
-        <img
+        <RxHamburgerMenu
           onClick={() => dispatch(isTogglemenu())}
-          className='size-8 mx-2 cursor-pointer'
-          src="https://cdn.iconscout.com/icon/free/png-256/free-hamburger-menu-462145.png?f=webp"
-          alt="sidebar" />
+          className='size-6 mt-2 mx-3 cursor-pointer'
+           />
 
         <a className="flex flex-row" href='/'>
           <img className='h-10 w-12 bg-transparent rounded-3xl inline-block'
@@ -73,7 +73,7 @@ function Header() {
             src="https://cdn-icons-png.flaticon.com/128/4120/4120760.png"
             alt="" />Create
         </button>
-        <UploadTweetHandling />
+        <TweetFormCard/>
         {userData ?
           <LogoutBtn /> :
 
@@ -103,10 +103,10 @@ function Header() {
                 </li>
                     </Link>
 
-                    <Link to="/" >
+                    <Link to="/Following" >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200 '>
                         <MdOutlineSubscriptions className="text-3xl"/>
-                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Subscriptions</p>
+                    <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>Following</p>
                 </li>
                     </Link>
 

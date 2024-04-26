@@ -9,13 +9,14 @@ import WatchPage from "./Pages/WatchPage.jsx";
 import Signup from "./components/Authentication/SignUp.jsx";
 import Login from "./components/Authentication/Login.jsx";
 import AuthLayout from "./components/Authentication/AuthLayout.jsx";
-import UploadVideo from "./utils/VideoHandler/UploadVideo.jsx.jsx";
+import UploadVideo from './components/Handlers/VideoHandler/UploadVideo.jsx.jsx'
 import EditVideo from './Pages/EditVideo.jsx';
 import HomePage from './Pages/HomePage.jsx';
 import TweetsPage from './Pages/TweetsPage.jsx';
-import YourAccount from './utils/UserAccHandler/YourAccount.jsx';
+import YourAccount from './components/Handlers/UserAccHandler/YourAccount.jsx'
 import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
-import WatchHistoryPage from './Pages/UserPages/WatchHistoryPage.jsx';
+import FollowingVideosPage from './Pages/UserPages/FollowingVideosPage.jsx';
+
 const router = createBrowserRouter([
   {
     path:"/", 
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
 
         },
         {
+          path:"/Following",
+          element:<FollowingVideosPage/>
+
+        },
+        {
           path:"/user/:username",
           element:<YourAccount/>
 
@@ -45,10 +51,6 @@ const router = createBrowserRouter([
         element:<LikedVideos/>
       },
      
-          {
-        path:"/History",
-        element:<WatchHistoryPage/>
-      },
      
     
       {

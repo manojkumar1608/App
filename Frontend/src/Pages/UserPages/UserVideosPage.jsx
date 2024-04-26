@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import VideoCard from '../../utils/VideoHandler/VideoCard'
+import VideoCard from '../../components/Handlers/VideoHandler/VideoCard'
 
 function Videos({userData}) {
     const [videos , setVideos] = useState([])

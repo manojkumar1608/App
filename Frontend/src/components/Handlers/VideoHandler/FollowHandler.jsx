@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Button from '../../components/utilities/Button'
+import Button from '../../utilities/Button'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -85,7 +85,7 @@ function FollowHandler({ video }) {
         <>
             <div className='flex flex-row '>
                 <Link to="/" >
-                    <img src={user.avatar}
+                    <img src={user?.avatar}
                         className='flex flex-row rounded-full h-[3.5rem] w-[3.5rem] p-1 mt-1 mr-1 '
                         alt="avatar" />
                 </Link>
@@ -93,12 +93,12 @@ function FollowHandler({ video }) {
                 <div>
                     <p className='text-xl mt-2 mr-4 font-semibold'>
                         <Link to="/">
-                            {user.username}
+                            {user?.username}
                         </Link>
                     </p>
 
                     <p className=' text-gray-500 w-[12rem]'>
-                        {Subscribers.length} Followers  • {SubscribedTo.length} Following
+                        {Subscribers?.length} Followers  • {SubscribedTo?.length} Following
                     </p>
                 </div>
 

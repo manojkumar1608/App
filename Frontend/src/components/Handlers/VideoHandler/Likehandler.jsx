@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Button from '../../components/utilities/Button'
+import Button from '../../utilities/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BiLike } from "react-icons/bi";

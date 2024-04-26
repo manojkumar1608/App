@@ -5,6 +5,7 @@ import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
+import { isValidObjectId } from "mongoose";
 
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -482,12 +483,43 @@ const getWatchHistory = asyncHandler(async(req, res) => {
     .json(
         new ApiResponse(
             200,
-            user[0].WatchHistory,
+            user[0],
             "Watch history fetched successfully"
         )
     )
 })
+// const updateWatchHistory = asyncHandler(async (req, res) => {
+//     try {
+//         const { videoId,title, thumbnail, views, duration, owner, createdAt, updatedAt} = req.body
+//         // if(!isValidObjectId(req.user._id)){
+//         //     throw new ApiError(404, "Video not found")
+//         // }
 
+//         const user = await User.findById(req.user._id)
+//         if(!user){
+//             throw new ApiError(400, "user not found")
+//         }
+//         user.watchHistory.push({
+            
+//             videoId,
+//             title,
+//             thumbnail,
+//             views,
+//             duration,
+//             owner,
+//             createdAt,
+//             updatedAt,
+//         })
+//         console.log(user.watchHistory)
+//        await user.save({validateBeforeSave:false});
+//         return res.status(200)
+//         .json( new ApiResponse (200,{ user }," user history updated successfully" )
+//         )
+//     } catch (error) {
+//         throw new ApiError(404)
+        
+//     }
+// })
 
 export {
     registerUser,

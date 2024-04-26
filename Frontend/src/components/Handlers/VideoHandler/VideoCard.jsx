@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-
+import moment from 'moment'
 
 
 function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,duration}) {
@@ -62,7 +62,7 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,
     <div className='flex flex-row'>
 
       <Link to={`/user/${user.username}`}>
-    <img src={user.avatar} alt="avatar" className="rounded-full w-[3rem] h-[3rem] mt-2 object-cover"/>
+    <img src={user.avatar} alt="avatar" className="rounded-full w-[2.8rem] h-[2.8rem] mt-1.5 object-cover"/>
       </Link>
        
     <div className="p-2 ml-1">
@@ -75,10 +75,8 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,
         <p className="text-md font-medium text-gray-400">{user.username} </p> 
         </Link>
 
-        <p className='text-md font-medium text-gray-400'>  {views} views • 2 days ago</p>
+        <p className='text-md font-medium text-gray-400'>  {views} views • {moment(createdAt).fromNow()}</p>
     </div>
-    
-
     
     </div>
 </div>

@@ -6,8 +6,9 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { useSelector, useDispatch } from 'react-redux';
 import CommentLikeHandler from './CommentLikeHandler';
 import { useForm } from 'react-hook-form';
-import Button from '../../components/utilities/Button';
-import { load } from '../../store/commentSlice';
+import Button from '../../utilities/Button'
+import { load } from '../../../store/commentSlice';
+import moment from 'moment';
 function CommentCard({ comment }) {
   let owner = comment.owner
   const userData = useSelector((state) => state.auth.userData)
@@ -88,7 +89,7 @@ function CommentCard({ comment }) {
           </Button>
         </form>
       }
-      <div className="flex flex-wrap  p-3 mb-4">
+      <div className="relative flex flex-wrap  p-3 mb-4">
         {/* Avatar */}
         <div className="mr-3 ">
           <img
@@ -102,7 +103,7 @@ function CommentCard({ comment }) {
 
         <div>
           <p className="inline-block text-xl text-gray-800 font-semibold mr-2">{user.username}</p>
-          <span className=' text-gray-400'>{comment.createdAt} </span>
+          <span className=' text-gray-400'>{moment(comment.createdAt).fromNow()} </span>
           <p className="text-lg text-black mb-1">{comment.content}</p>
 
 
@@ -115,7 +116,7 @@ function CommentCard({ comment }) {
         </div>
         {
           userData && userData.data._id === comment.owner ? (
-            <div className=''>
+            <div className='absolute bottom-2 right-2'>
               <button onClick={clicked}
                 className='w-8 rounded-md text-xs text-gray-700 font-semibold hover:bg-gray-300'>
                 <AiOutlineEdit className='ml-1 rounded-md size-5 ' />

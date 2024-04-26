@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import TweetCard from '../utils/TweetHandling.jsx/TweetCard'
+import TweetCard from '../components/Handlers/TweetHandling.jsx/TweetCard'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { BiLogIn } from "react-icons/bi";
+import Button from '../components/utilities/Button'
 
 function TweetsPage() {
     const userData = useSelector((state) => state.auth.userData)
@@ -51,7 +53,7 @@ function TweetsPage() {
                 {/* Navbar */}
                 <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
                     <a href="/Tweets" className="text-blue-400 text-2xl font-bold">Twitter</a>
-                    <Link to={`/user/${userData.data.username}`} >
+                    <Link to={`/user/${userData?.data.username}`} >
                 <div className='flex flex-row mt-1 -mr-4'>
                     <img src={ userData ?
                         (userData.data.avatar):"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"} 
@@ -102,6 +104,22 @@ function TweetsPage() {
                             </div>
                         </div>
                     </form>
+                    {
+                       !userData && 
+                       <div>
+                       <div className='flex justify-center '>
+                       <BiLogIn className='text-4xl mt-1 mr-2' />
+                    <Link to={'/login'}>
+                        <Button
+                            type='button'
+                            className='bg-red-700 rounded-lg'>
+                            Login
+                        </Button>
+                    </Link>
+                    </div>
+                    </div>
+
+                    }
 
                     {/* Tweets */}
                     <div className='flex flex-col mt-2'>

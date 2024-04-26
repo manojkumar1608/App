@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react'
-import TweetCard from '../../utils/TweetHandling.jsx/TweetCard'
+import TweetCard from '../../components/Handlers/TweetHandling.jsx/TweetCard'
 import axios from 'axios'
 function Tweets({userData}) {
   const [tweets, setTweets] = useState([])

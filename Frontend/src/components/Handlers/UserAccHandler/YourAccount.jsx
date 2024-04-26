@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import UserHomePage from '../../Pages/UserPages/UserHomePage.jsx';
-import Videos from '../../Pages/UserPages/UserVideosPage.jsx';
-import Tweets from '../../Pages/UserPages/UserTweetsPage.jsx';
+import UserHomePage from '../../../Pages/UserPages/UserHomePage.jsx'
+import Videos from '../../../Pages/UserPages/UserVideosPage.jsx'
+import Tweets from '../../../Pages/UserPages/UserTweetsPage.jsx'
 import Tabs from './Tabs.jsx';
 import axios from 'axios'
+import { BiLogIn } from "react-icons/bi";
+import Button from '../../utilities/Button.jsx'
+
  function YourAccount() {
   const [userData , setUserData] = useState()
   const { username } = useParams()
@@ -32,7 +35,7 @@ try {
   getchannel()
  },[])
 
-  return userData &&(
+  return userData ?(
 
 <div>
   {userData.coverImage &&
@@ -53,6 +56,23 @@ try {
   <div className=" mt-3">
     <Tabs tabs={tabs} />
   </div>
+</div>
+  ):(
+    <div className='w-full h-screen bg-gradient-to-r from-gray-200 to-gray-500'>
+    <div className='flex  justify-center '>
+        <BiLogIn className='text-7xl mt-10 mr-2' />
+        <h1 className='text-3xl font-bold mt-12'>Login to get Your Channel</h1>
+    </div>
+    <div className='flex justify-center '>
+        <Link to={'/login'}>
+            <Button
+                type='button'
+                className='bg-red-700 rounded-lg'>
+                Login
+            </Button>
+        </Link>
+
+    </div>
 </div>
   )
 }
