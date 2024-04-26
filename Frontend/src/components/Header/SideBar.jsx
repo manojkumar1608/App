@@ -78,14 +78,14 @@ function SideBar() {
               </div>
 
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to={`/user/${userData.data.username}`} className="flex">
+                <Link to={`/user/${userData?.data.username}`} className="flex">
                   <VscAccount className="mr-5 mt-1 text-xl" />
                   Your channel
                 </Link>
               </li>
 
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to="/" className="flex">
+                <Link to="/History" className="flex">
                   {""}
                   <LuHistory className="mr-5 mt-1 text-xl" />
                   History
@@ -100,7 +100,7 @@ function SideBar() {
               </li>
 
               <li className="py-2 flex hover:bg-gray-300 rounded-lg pl-2 font-semibold">
-                <Link to={`/user/${userData.data.username}`} className="flex">
+                <Link to={`/user/${userData?.data.username}`} className="flex">
                   <GoVideo className="mr-5 mt-1 text-xl" />
                   Your videos
                 </Link>

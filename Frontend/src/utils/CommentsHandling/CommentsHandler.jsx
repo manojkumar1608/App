@@ -8,7 +8,6 @@ import Button from '../../components/utilities/Button'
 
 function CommentsHandler({ video }) {
     let CommentData = useSelector((state) => state.comment.commentData)
-    console.log(CommentData)
     const userData = useSelector((state) => state.auth.userData)
     const navigate = useNavigate()
     const [loading, setLoading] = useState()

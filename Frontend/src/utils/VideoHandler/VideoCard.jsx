@@ -49,10 +49,10 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,
       <div className="w-[22.8rem] m-1.5 mt-3 rounded-xl object-cover">
 
         <Link to={`/watch/${_id}`}>
-        <div class="relative">
+        <div className="relative">
     <img src={thumbnail.url} alt="Video Thumbnail"
      className="w-96 h-56 border bg-gray-100 rounded-xl object-cover"/>
-      <div class="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white font-semibold px-1 text-sm rounded-lg">
+      <div className="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white font-semibold px-1 text-sm rounded-lg">
     {formatDuration(duration)}
     </div>
     </div>
@@ -68,14 +68,14 @@ function VideoCard({ _id, title, thumbnail, owner, views, createdAt, updatedAt ,
     <div className="p-2 ml-1">
 
       <Link to={`/watch/${_id}`}>
-        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         </Link>
 
-        <Link to={`/acc/${user.username}`}>
-        <p className="text-md text-gray-600">{user.username} </p> 
+        <Link to={`/user/${user.username}`}>
+        <p className="text-md font-medium text-gray-400">{user.username} </p> 
         </Link>
 
-        <p>  {views} views • 2 days ago</p>
+        <p className='text-md font-medium text-gray-400'>  {views} views • 2 days ago</p>
     </div>
     
 

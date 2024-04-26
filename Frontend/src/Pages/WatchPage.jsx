@@ -13,6 +13,7 @@ function WatchPage() {
    const navigate = useNavigate()
    let [video, setVideo] = useState(null)
    let [open, setOpen] = useState(false)
+   let [error, setError] = useState()
 
 
    useEffect(() => {
@@ -27,14 +28,22 @@ function WatchPage() {
             } else {
                navigate('/')
             }
-
+         }).catch((error) =>{
+          setError("Something went wrong",error)
          })
       } else {
          navigate('/')
       }
-   }, [videoId, navigate,])
-
- 
+      //updating video views// 
+     if(videoId){
+       axios.post(`/api/v1/videos/toggle/views/${videoId}`)
+       .then((response) => {
+       }).catch((error) => {
+        setError("Failed to toggle",error)
+       });
+     }
+   
+    }, [videoId])  
 
    const handledescription = () => {
       setOpen(open = !open)
