@@ -32,6 +32,7 @@ function Login() {
 
             if (session) {
                 const userData  = await axios.get('/api/v1/users/current-user')
+                console.log(userData.data)
                 if(userData){
                     dispatch(authLogin(userData.data))
                 }

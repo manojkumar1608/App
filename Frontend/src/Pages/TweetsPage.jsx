@@ -29,43 +29,53 @@ function TweetsPage() {
             }
         }
         gettweets()
-    }, [update ])
+    }, [update])
 
-    const onFormSubmit = (data) =>{
-        axios({
-            method: 'POST',
-            url: '/api/v1/tweets/',
-            data: {
-              'content': data.tweetContent
-            }
-          }).then(response => {
-            if(response){
-            setUpdate(response.data.data)
-            reset(); 
-            }
-          })
-      }
-    
+    const onFormSubmit = (data) => {
+        if (userData) {
+            axios({
+                method: 'POST',
+                url: '/api/v1/tweets/',
+                data: {
+                    'content': data.tweetContent
+                }
+            }).then(response => {
+                if (response) {
+                    setUpdate(response.data.data)
+                    reset();
+                }
+            }).catch(error => {
+                setError("Failed to update tweet")
+            })
+        } else {
+            setError("Login to Tweet your Thoughts")
+        }
+    }
+    if(error){
+        setTimeout(() => {
+            setError(false)
+        },4000)
+    }
+
     return tweets && (
         <>
-        
             <div className="w-[30rem] mx-auto bg-gray-200  min-h-screen mt-3">
                 {/* Navbar */}
                 <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
                     <a href="/Tweets" className="text-blue-400 text-2xl font-bold">Twitter</a>
                     <Link to={`/user/${userData?.data.username}`} >
-                <div className='flex flex-row mt-1 -mr-4'>
-                    <img src={ userData ?
-                        (userData.data.avatar):"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"} 
-                    alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png" 
-                    className="w-10 h-10 rounded-full border border-gray-400" />
-                    <h2 className='mt-1 mx-2 text-lg font-semibold'>
-                        {userData ?(
-                        userData.data.username):
-                        "Username" }</h2>
-                    </div>
-                        </Link>
-        
+                        <div className='flex flex-row mt-1 -mr-4'>
+                            <img src={userData ?
+                                (userData.data.avatar) : "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
+                                alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+                                className="w-10 h-10 rounded-full border border-gray-400" />
+                            <h2 className='mt-1 mx-2 text-lg font-semibold'>
+                                {userData ? (
+                                    userData.data.username) :
+                                    "Username"}</h2>
+                        </div>
+                    </Link>
+
                     {/* Twitter Logo */}
                     {/* Search Bar */}
                     {/* <div className="flex items-center bg-gray-200 rounded-lg px-2 py-1">
@@ -105,28 +115,28 @@ function TweetsPage() {
                         </div>
                     </form>
                     {
-                       !userData && 
-                       <div>
-                       <div className='flex justify-center '>
-                       <BiLogIn className='text-4xl mt-1 mr-2' />
-                    <Link to={'/login'}>
-                        <Button
-                            type='button'
-                            className='bg-red-700 rounded-lg'>
-                            Login
-                        </Button>
-                    </Link>
-                    </div>
-                    </div>
+                        !userData &&
+                        <div>
+                            <div className='flex justify-center '>
+                                <BiLogIn className='text-4xl mt-1 mr-2' />
+                                <Link to={'/login'}>
+                                    <Button
+                                        type='button'
+                                        className='bg-red-700 rounded-lg'>
+                                        Login
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>
 
                     }
 
                     {/* Tweets */}
                     <div className='flex flex-col mt-2'>
-                        {error && <p className='text-center text-3xl font-bold'>Something went wrong</p>}
+                        {error && <p className='text-center text-[#f90909] bg-gray-300 rounded-xl mt-6 mb-2  text-xl font-mono'>{error}</p>}
                         {tweets.map((item) => (
                             <div key={item._id} className=''>
-                                <TweetCard tweet = {item} />
+                                <TweetCard tweet={item} />
                             </div>
                         ))
 

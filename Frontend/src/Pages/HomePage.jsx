@@ -15,7 +15,7 @@ function HomePage() {
                 }
 
             } catch (error) {
-                setError(error)
+                setError("Something went wrong Try Refreshing")
             }
 
         }
@@ -24,7 +24,7 @@ function HomePage() {
     return (
         <>
          <div className='flex flex-wrap ml-3.5'>
-        {error && <p className='text-center text-3xl font-bold'>Something went wrong Try Refreshing</p>}
+        {error && <p className='text-center text-3xl font-bold'>{error}</p>}
         {videos.map((video) => (
             <div key={video._id} className=''>
                 <VideoCard  {...video} />

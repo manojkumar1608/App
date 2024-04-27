@@ -9,11 +9,6 @@ import { BiLogIn } from "react-icons/bi";
 import { RiVideoUploadFill } from "react-icons/ri";
 
 function UploadVideo({ video }) {
-    //     const [Video , setVideo] =useState()
-    //     if(video){
-    //     const VideoData = video.video
-    //     setVideo(VideoData)
-    // }
     const navigate = useNavigate();
     const [error, setError] = useState('')
     const [status, setStatus] = useState(false)
@@ -35,7 +30,7 @@ function UploadVideo({ video }) {
             if (video) {
                 const file = data.thumbnail[0] ? await axios({
                     method: "PATCH",
-                    url: `/api/v1/videos/${video._id}`,
+                    url: `/api/v1/videos/${video.video._id}`,
                     data: {
                         'title': data.title,
                         'description': data.description,
@@ -68,9 +63,7 @@ function UploadVideo({ video }) {
                     navigate(`/watch/${videoId}`)
 
                 }
-                //   if(videoData && status) {
-                //     const publish = await axios.patch('/toggle/publish/:videoId')
-                // }
+
             }
         } catch (error) {
             setError(error.response.statusText + ' ' + 'Something went wrong')
@@ -121,7 +114,7 @@ function UploadVideo({ video }) {
                         accept="image/png, image/jpg, image/jpeg, image/gif"
                         {...register("thumbnail", { required: !video })}
                     />
-                    
+
                     {video && (
                         <div className="w-full mb-4">
                             <img
@@ -131,29 +124,15 @@ function UploadVideo({ video }) {
                             />
                         </div>
                     )}
-                    <Input
-                        label="video:"
-                        type="file"
-                        className="mb-4"
-                        {...register("videoFile", { required: !video })}
-                    />
-
-                    <label
-                        htmlFor="AcceptConditions"
-                        className="relative px-4 mx-4  h-8 w-14 cursor-pointer rounded-full bg-gray-700 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
-                    >
-
-
-
-                        <input type="checkbox" id="AcceptConditions" className="peer sr-only" />
-
-                        <span onClick={toggle}
-                            className="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-white transition-all peer-checked:start-6">
-
-                        </span>
-                    </label>
-                    <h1 className='font-bold mx-2 px-3 '>Publish</h1>
-
+                    {
+                        !video &&
+                        <Input
+                            label="video:"
+                            type="file"
+                            className="mb-4"
+                            {...register("videoFile", { required: !video })}
+                        />
+                    }
 
                     <Button type="submit" className="w-fit m-auto bg-red-700 ">
                         {video ? "Update" : "Upload"}

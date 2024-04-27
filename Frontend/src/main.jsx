@@ -16,6 +16,7 @@ import TweetsPage from './Pages/TweetsPage.jsx';
 import YourAccount from './components/Handlers/UserAccHandler/YourAccount.jsx'
 import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
 import FollowingVideosPage from './Pages/UserPages/FollowingVideosPage.jsx';
+import UserAvatar from './components/Handlers/UserAccHandler/UserAvatar.jsx';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
           {
         path:"/LikedVideos",
         element:<LikedVideos/>
+      },
+          {
+        path:"/pic",
+        element:<UserAvatar/>
       },
      
      

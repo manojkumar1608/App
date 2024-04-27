@@ -33,9 +33,8 @@ function Signup() {
                 }
             })
             if (userData) {
-               const userData = await axios.get('/api/v1/users/current-user')
                 dispatch(login(userData.data));
-                navigate("/")
+                navigate("/login")
             }
         } catch (error) {
             setError(error.response.status)

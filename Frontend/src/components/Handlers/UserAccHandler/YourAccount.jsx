@@ -7,12 +7,20 @@ import Tabs from './Tabs.jsx';
 import axios from 'axios'
 import { BiLogIn } from "react-icons/bi";
 import Button from '../../utilities/Button.jsx'
+import { RiImageEditFill } from "react-icons/ri";
+import { useSelector } from 'react-redux'
+import ChangeAvatarHandling from './UserAvatar.jsx'
+import UserAvatar from './UserAvatar.jsx'
+import UserCoverImage from './UserCoverImage.jsx'
 
  function YourAccount() {
+  const cuurentuser = useSelector((state)=> state.auth.userData)
   const [userData , setUserData] = useState()
+  
+  const [error , setError] = useState()
   const { username } = useParams()
   const tabs = [
-    { title: 'Home', content: <UserHomePage userData={userData} /> },
+    { title: 'Home', content: <UserHomePage userData={userData}/> },
     { title: 'Videos', content: <Videos userData={userData}/> },
     { title: 'Tweets', content: <Tweets userData={userData} /> },
   ];
@@ -29,24 +37,25 @@ try {
   }
   
 } catch (error) {
+  setError('Something went wrong Ty Refreshing')
   
 }
   }
   getchannel()
  },[])
 
-  return userData ?(
+ 
 
+  return userData ?(
 <div>
-  {userData.coverImage &&
-  <div className='w-[67rem] h-40 bg-gray-400 mx-11 mt-2 mb-1 p-1 rounded-xl'>
-  <img src={userData.coverImage} alt="Cover" className="object-cover w-full h-full rounded-xl" />
-  </div>
- }
+{error && <p className='text-center text-3xl font-bold'>{error}</p>}
+
+ <UserCoverImage userData={userData}/>
+
   <div className='flex flex-row w-1/2 mx-11 p-1 justify-start '>
-  <div className=" mr-2 rounded-full border-4 border-white ">
- <img src={userData.avatar} alt="Avatar" className="w-40 h-40 rounded-full" />
-   </div>
+    
+    <UserAvatar userData={userData} />
+
   <div className='mt-6 '>
   <h1 className=" text-3xl font-bold ">{userData.username}</h1>
        <h2 className="text-xl mb-2 font-semibold text-gray-400">@{userData.fullName} • {userData.email}</h2>
@@ -73,6 +82,8 @@ try {
         </Link>
 
     </div>
+
+   
 </div>
   )
 }

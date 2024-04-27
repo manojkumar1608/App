@@ -52,9 +52,9 @@ function Header() {
            />
 
         <a className="flex flex-row" href='/'>
-          <img className='h-10 w-12 bg-transparent rounded-3xl inline-block'
+          <img className='h-10 w-12 inline-block'
             src="https://cdn-icons-png.flaticon.com/512/8894/8894556.png" alt="videoTube" />
-          <h3 className='text-2xl font-bold text-gray-950' >PlayTube</h3>
+          <h3 className='text-[1.6rem] font-bold text-gray-950 mt-0.5' >PlayTube</h3>
         </a>
       </div>
 
@@ -117,7 +117,7 @@ function Header() {
                 </li>
                     </Link>
 
-                    <Link to={`/user/${userData?.data.username}`} >
+                    <Link to={`/user/${userData?.data?.username}`} >
                 <li className='flex flex-col items-center py-2  rounded-lg  hover:bg-gray-200  '>
                         <VscAccount className="text-3xl"  />
                     <p className='mt-1 mb-1 text-xs font-medium text-gray-500'>You</p>
