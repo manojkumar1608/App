@@ -12,20 +12,23 @@ function UserHomePage({channelData}) {
                     method: 'POST',
                     url:'/api/v1/videos/user',
                     data:{
-                        'userId': channelData._id
+                        'userId': channelData?._id
                     }
                 })
+                if(response){
             setVideos(response.data.data)
+                }
         } catch (error) {
-            setError('Something went wrong Try Refreshing')
+            setError("Something went wrong")
             
         }
     }
     getuservideos()
     },[channelData])
+    console.log(error)
   return (
     <div className='flex flex-wrap'>
-            {error && <p className='text-center text-3xl font-bold'>{error}</p>}
+                    {error && <p className='text-center text-3xl font-bold'>{error}</p>}
             {videos.map((item) => (
                 <div key={item._id} className=''>
                     <VideoCard  {...item} />

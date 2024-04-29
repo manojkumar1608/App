@@ -65,7 +65,6 @@ function TweetCard({ tweet }) {
 
     const DeleteHandler = async () => {
       const deletedata = await axios.delete(`/api/v1/tweets/${tweet._id}`)
-      console.log(deletedata)
       if(deletedata){
         window.location.reload()
       }
@@ -76,14 +75,14 @@ function TweetCard({ tweet }) {
         <img
           src={user.avatar.url}
           alt="Avatar"
-          className="w-12 h-12 border border-gray-400 rounded-full mr-4"
+          className="w-12 h-12 border border-gray-400 rounded-full mr-3.5"
         />
         <div className="flex-grow">
-          <div className="flex items-center justify-between mb-1 mt-1">
-            <div className='flex flex-row'>
+          <div className="flex items-center justify-between mb-1 ">
+            <div className='flex flex-row '>
               <p className="font-bold ">{user.username}</p>
               <img src="https://img.icons8.com/?size=96&id=2sZ0sdlG9kWP&format=png"
-                alt='https://img.icons8.com/?size=64&id=HBR0c_yZeXyu&format=png'
+                alt="Bluetick"
                 className='h-4 w-4 mt-1.5 ml-1' />
             </div>
             {

@@ -44,6 +44,7 @@ function FollowingVideosPage() {
     }
     getfollowingChannels()
   }, [])
+  console.log(videos)
   return userData ?(
     <div className='flex flex-wrap'>
       {error && <p className='text-center text-3xl font-bold'>{error}</p>}
@@ -52,6 +53,19 @@ function FollowingVideosPage() {
           <VideoCard {...item} />
         </div>
       ))
+      }
+
+      {
+        videos?.length === 0 &&
+        <div className='w-full h-screen bg-gray-100 rounded-xl m-2 mr-2 mx-auto'>
+           <div className="flex flex-col items-center justify-center h-screen ">
+      <div className="text-4xl font-bold mb-4 text-gray-700">Nothing to show here</div>
+      <img src="https://cdn-icons-png.flaticon.com/128/3893/3893258.png" alt="Nothing Found" className="w-64 h-64 mb-4" />
+      <div className="text-2xl font-semibold text-gray-700">Start following channels to get your Recommendations</div>
+    </div>
+    </div>
+        
+        
       }
 
     </div>

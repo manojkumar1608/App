@@ -7,17 +7,20 @@ import Likehandler from '../components/Handlers/VideoHandler/Likehandler'
 import CommentsHandler from '../components/Handlers/CommentsHandling/CommentsHandler'
 import FollowHandler from '../components/Handlers/VideoHandler/FollowHandler'
 import { useSelector } from 'react-redux';
+import LoadingWatchPage from '../components/utilities/LoadingWatchPage';
 
 
 function WatchPage() {
   const { videoId } = useParams()
   const navigate = useNavigate()
+  let [loading, setLoading] = useState(true)
   let [video, setVideo] = useState(null)
   let [open, setOpen] = useState(false)
   let [error, setError] = useState()
 
   const userData = useSelector((state) => state.auth.userData)
   useEffect(() => {
+
     if (videoId) {
       axios({
         method: 'GET',
@@ -43,6 +46,11 @@ function WatchPage() {
           setError("Failed to toggle", error)
         });
     }
+    const Timeout = setTimeout(() =>{
+      setLoading(false)
+      },2000)
+
+      return () => clearTimeout(Timeout);
     
   }, [videoId])
 
@@ -51,11 +59,13 @@ function WatchPage() {
   }
   return video && (
     <>
+{
+  loading ? (<LoadingWatchPage/>):(
 
       <div className='flex flex-col md:flex-row'>
         {/* Video Player Section */}
         <div className='flex flex-col md:w-47rem'>
-          <video className='rounded-2xl mt-2 w-[47.5rem] h-auto md:h-[27rem]'
+          <video className='rounded-2xl mt-2 w-[47.7rem] h-auto md:h-[27rem]'
             key={video._id}
             controls preload="auto" >
             <source src={video.videoFile.url}
@@ -67,7 +77,7 @@ function WatchPage() {
         </div>
 
         {/* Video Information Section */}
-        <div className='w-[26rem] md:w-25rem p-2 border-t-2 border-gray-500 shadow-lg shadow-gray-400 mt-3 rounded-xl'>
+        <div className='w-[24.8rem] mr-2  md:w-25rem p-2 border-2 border-gray-300 shadow-md mt-3 rounded-2xl'>
           <p className='p-2 overflow-hidden text-ellipsis font-bold text-xl bg-gray-100 rounded-xl'>
             {video.title}
           </p>
@@ -97,7 +107,8 @@ function WatchPage() {
             <CommentsHandler video={video} />
           </div>
         </div>
-      </div>
+      </div>)
+}
 
 
     </>

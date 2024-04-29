@@ -6,12 +6,15 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BiLogIn } from "react-icons/bi";
 import Button from '../components/utilities/Button'
+import LoadingTweetCard from '../components/utilities/LoadingTweetCard'
 
 function TweetsPage() {
     const userData = useSelector((state) => state.auth.userData)
     const { register, handleSubmit, reset, watch, formState } = useForm();
     const { errors, isDirty, isValid } = formState;
 
+
+    const [loading, setLoading] = useState(true)
     const [update, setUpdate] = useState()
     const [tweets, settweets] = useState([])
     const [error, setError] = useState()
@@ -23,12 +26,19 @@ function TweetsPage() {
                 const tweetsData = response.data.data
                 if (tweetsData) {
                     settweets(tweetsData.docs)
+                    
                 }
             } catch (error) {
                 setError(error)
             }
         }
         gettweets()
+        const Timeout = setTimeout(()=>{
+            setLoading(false)
+        },2000)
+        
+        return () => clearTimeout(Timeout);
+       
     }, [update])
 
     const onFormSubmit = (data) => {
@@ -45,7 +55,7 @@ function TweetsPage() {
                     reset();
                 }
             }).catch(error => {
-                setError("Failed to update tweet")
+                setError("Failed to update tweet",error)
             })
         } else {
             setError("Login to Tweet your Thoughts")
@@ -57,8 +67,9 @@ function TweetsPage() {
         }, 4000)
     }
 
-    return tweets && (
+    return (
         <>
+        
             <div className="w-[30rem] mx-auto bg-gray-200  min-h-screen mt-3">
                 {/* Navbar */}
                 <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
@@ -68,8 +79,8 @@ function TweetsPage() {
                             <img src={userData ?
                                 (userData.data.avatar.url) : "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
                                 alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
-                                className="w-10 h-10 rounded-full border border-gray-400" />
-                            <h2 className='mt-1 mx-2 text-lg font-semibold'>
+                                className="w-10 h-10 rounded-full border border-gray-300" />
+                            <h2 className='mt-1 mx-2 mr-3 text-lg font-semibold'>
                                 {userData ? (
                                     userData.data.username) :
                                     "Username"}</h2>
@@ -132,16 +143,25 @@ function TweetsPage() {
                     }
 
                     {/* Tweets */}
+                     
                     <div className='flex flex-col mt-2'>
                         {error && <p className='text-center text-[#f90909] bg-gray-300 rounded-xl mt-6 mb-2  text-xl font-mono'>{error}</p>}
-                        {tweets.map((item) => (
+                        { 
+                        tweets?.map((item) => (
+                            loading ? (
+                                <div key={item._id}>
+                                    <LoadingTweetCard/>
+                                </div>
+                            ):(
                             <div key={item._id} className=''>
                                 <TweetCard tweet={item} />
                             </div>
+                            )
                         ))
 
-                        }
+                    }
                     </div>
+
 
 
 

@@ -5,6 +5,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {uploadOnCloudinary , deleteOnCloudinary} from "../utils/cloudinary.js"
+import { ObjectId } from "mongodb"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -69,14 +70,11 @@ const getUserVideos = asyncHandler(async (req, res) => {
     const {userId} = req.body
     
     // find user in db
-    const user = await User.findById(
-        {
-            _id: userId
-        }
-    )
-    if(!user){
-        throw new ApiError(404, "user not found")
-    }
+    const user = await User.findById(userId)
+        
+    // if(!user){
+    //     throw new ApiError(404, "user not found")
+    // }
 
     const allVideo = await Video.find({
         owner:userId
@@ -88,7 +86,6 @@ const getUserVideos = asyncHandler(async (req, res) => {
             "something went wrong while fetching channel all videos!!"
         )
     }
-    
     return res.status(200).json(
         new ApiResponse(
             200,

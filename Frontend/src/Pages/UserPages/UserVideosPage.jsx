@@ -7,6 +7,7 @@ function Videos({channelData}) {
     const [error , setError] = useState()
     useEffect(()=>{
         async function getuservideos(){
+          
             try {
                 const response = await axios({
                     method: 'POST',
@@ -15,7 +16,9 @@ function Videos({channelData}) {
                         'userId': channelData._id
                     }
                 })
+                if(response){
             setVideos(response.data.data)
+                }
         } catch (error) {
             setError(true)
             

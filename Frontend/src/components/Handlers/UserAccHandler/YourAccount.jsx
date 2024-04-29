@@ -32,7 +32,7 @@ function YourAccount() {
           method: 'POST',
           url: '/api/v1/users/c/username',
           data: {
-            'userId': cuurentuser.data._id,// to check cureent user is following the channel or not
+            'userId': cuurentuser?.data._id,// to check cureent user is following the channel or not
             'username': username
           }
         })
@@ -49,11 +49,11 @@ function YourAccount() {
   }, [update , username])
 
   const ToggleFollowBtn = async () => {
-    const response = await axios.post(`/api/v1/subscriptions/c/${channelData._id}`)
+    const response = await axios.post(`/api/v1/subscriptions/c/${channelData?._id}`)
     setUpdate(response.data.data)
   }
 
-  return channelData ? (
+  return  (
     <div>
       {error && <p className='text-center text-3xl font-bold'>{error}</p>}
 
@@ -66,12 +66,12 @@ function YourAccount() {
         <div className='mt-6 '>
           <UserAccDetails channelData={channelData} />
           {
-            channelData._id === cuurentuser.data._id ? (
+            channelData?._id === cuurentuser?.data._id ? (
               <div className='mx-1.5'>
                 <ChangePasswordBtn />
               </div>) : (
 
-              channelData.isSubscribed ? (
+              channelData?.isSubscribed ? (
                 <Button onClick={ToggleFollowBtn}
                   className=' w-[7rem]  mt-2 p-2 pl-4 border border-black bg-gray-500 font-bold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
                   Following
@@ -90,8 +90,11 @@ function YourAccount() {
       <div className=" mt-3">
         <Tabs tabs={tabs} />
       </div>
-    </div>
-  ) : (
+    
+  
+{
+  !channelData ?  (
+    
     <div className='w-full h-screen bg-gradient-to-r from-gray-200 to-gray-500'>
       <div className='flex  justify-center '>
         <BiLogIn className='text-7xl mt-10 mr-2' />
@@ -110,7 +113,10 @@ function YourAccount() {
 
 
     </div>
-  )
+  ):null
+}
+</div>
+)
 }
 
 export default YourAccount

@@ -34,11 +34,24 @@ function LikedVideos() {
     console.log(videos)
   return userData ? (
     <> 
-     <header className="bg-gradient-to-t from-gray-200 to-gray-400 text-white py-2 rounded-lg mt-1">
+    {
+        videos?.length === 0 && 
+        <div className='w-full h-screen bg-gray-100 rounded-xl m-2 mr-2 mx-auto'>
+        <div className="flex flex-col items-center justify-center h-screen ">
+   <div className="text-4xl font-bold mb-4 text-gray-700">Nothing to show here</div>
+   <img src="https://cdn-icons-png.freepik.com/256/4712/4712850.png?ga=GA1.1.136363513.1709819991&semt=ais_hybrid" alt="Nothing Found" className="w-64 h-64 mb-4" />
+   <div className="text-2xl font-semibold text-gray-700">Start Liking Videos to get your liked videos</div>
+ </div>
+ </div>
+    } 
+
+     { videos?.length > 0 &&
+        <header className="bg-gradient-to-t from-gray-200 to-gray-400 text-white py-2 rounded-lg mt-1">
       <div className="container mx-auto text-center">
         <h1 className="text-2xl text-gray-700 font-bold">Your Liked videos</h1>
       </div>
     </header>
+}
     <div className='flex flex-wrap'>
             {error && <p className='text-center text-3xl font-bold'>{error}</p>}
             {videos.map((item) => (

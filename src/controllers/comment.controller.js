@@ -134,7 +134,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         throw new ApiError(500, "something went wrong while deleting comment")
     }
 
-    // return responce
+    // return response
     return res.status(201).json(
         new ApiResponse(200, deleteComment, "comment deleted successfully!!"))
 })

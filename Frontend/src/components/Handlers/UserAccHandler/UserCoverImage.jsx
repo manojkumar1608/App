@@ -45,11 +45,11 @@ function UserCoverImage({ channelData }) {
 
     return (
         <div>
-            {channelData.coverImage &&
+            {channelData?.coverImage &&
                 <div className='relative'>
                     <div className='w-[67rem] h-40 mx-11 mt-2 mb-1 rounded-xl border border-gray-200'>
                         <img className="object-cover w-full h-full rounded-xl z-10"
-                            src={channelData.coverImage.url} alt="Cover" />
+                            src={channelData?.coverImage.url} alt="Cover" />
                         {
                             channelData?._id === cuurentuser?.data?._id &&
                             <div onClick={() => setShowModal(true)} 

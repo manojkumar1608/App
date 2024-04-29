@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function FollowHandler({ video }) {
+    const [error , setError] = useState("")
     const [user, setUser] = useState() // user details after fetching through video.owner i.e getuserbyId
     const [Subscribed, setSubscribed] = useState()   //checking whether current user is subscribed or not when watch page rendered
     const [Subscribers, setTotalSubscribers] = useState()  //the total followers of video owner i/e currently playing
@@ -67,10 +68,19 @@ function FollowHandler({ video }) {
             }
         } getSubscribers()
     }, [update, video])
+
     const ToggleFollowBtn = async () => {
-        const response = await axios.post(`/api/v1/subscriptions/c/${video.owner}`)
-        setSubscribed(response.data.data)
-        setUpdate(response.data.data)
+        try {
+            if(userData){
+            const response = await axios.post(`/api/v1/subscriptions/c/${video.owner}`)
+            setSubscribed(response.data.data)
+            setUpdate(response.data.data)
+            }else{
+                setError("Login to Follow this channel")
+            }
+        } catch (error) {
+            setError("Login to Follow this channel",error)
+        }
     }
 
     const deleteVideo = () => {
@@ -81,17 +91,24 @@ function FollowHandler({ video }) {
                 }
             });
     };
-    return Subscribed && SubscribedTo && (
+    if(error){
+        setTimeout(()=>{
+            setError("")
+        },4000)
+    }
+    
+    return  (
         <>
+            {error && <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-1 mb-2 text-center text-lg font-mono">{error}</p>}
             <div className='flex flex-row '>
                 <Link to="/" >
-                    <img src={user?.avatar}
+                    <img src={user?.avatar.url}
                         className='flex flex-row rounded-full h-[3.5rem] w-[3.5rem] p-1 mt-1 mr-1 '
                         alt="avatar" />
                 </Link>
 
                 <div>
-                    <p className='text-xl mt-2 mr-4 font-semibold'>
+                    <p className='text-xl mt-2 mr-4  font-semibold'>
                         <Link to="/">
                             {user?.username}
                         </Link>
@@ -102,15 +119,16 @@ function FollowHandler({ video }) {
                     </p>
                 </div>
 
+               
                 {
                     !isAuthor ? (
-                        Subscribed.length > 0 ? (
+                        Subscribed?.length > 0 ?(
                             <Button onClick={ToggleFollowBtn}
-                                className=' w-[6rem] m-3 ml-7 p-2 pl-3 border border-black bg-gray-300 text-gray-900 font-semibold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
+                                className=' w-[6rem] m-3 ml-3 p-2 pl-3 border border-black bg-gray-700  font-bold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
                                 Following
                             </Button>) : (
                             <Button onClick={ToggleFollowBtn}
-                                className=' w-[6rem] m-3 ml-7 px-2  bg-gray-700 border border-black font-semibold rounded-2xl transition ease-in delay-300 duration-150 hover:-translate-y-1 hover:scale-110 hover:bg-green-800'>
+                                className=' w-[6rem] m-3 ml-3 px-2  bg-gray-700 border border-black font-semibold rounded-2xl transition ease-in delay-300 duration-150 hover:-translate-y-1 hover:scale-110 hover:bg-green-800'>
                                 Follow
                             </Button>)
                     ) : (

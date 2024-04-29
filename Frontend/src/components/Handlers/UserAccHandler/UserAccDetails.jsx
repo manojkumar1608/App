@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 function UserAccDetails({ channelData }) {
     const { register, handleSubmit } = useForm({
         defaultValues: {
-            username: channelData.username,
-            fullName: channelData.fullName,
-            email: channelData.email
+            username: channelData?.username,
+            fullName: channelData?.fullName,
+            email: channelData?.email
         }
     })
     const navigate = useNavigate()
@@ -39,10 +39,10 @@ function UserAccDetails({ channelData }) {
         }
         }
     }
-    return (
+    return channelData && (
         <div className=''>
             <div className='flex flex-row'>
-                <p className=" text-3xl font-bold ">{channelData.username}   </p>
+                <p className=" text-3xl font-bold ">{channelData?.username}   </p>
                 {
                     channelData?._id === cuurentuser?.data?._id &&
                     <div className='cursor-pointer hover:bg-gray-100 rounded-xl ' onClick={() => setShowModal(true)}>
@@ -51,8 +51,8 @@ function UserAccDetails({ channelData }) {
                         </div>
                 }
             </div>
-            <h2 className="text-xl mb-1.5 font-semibold text-gray-400">@{channelData.fullName} • {channelData.email}</h2>
-            <p className='font-semibold text-gray-400 ml-1'>Followers {channelData.subscribersCount} • Following {channelData.channelsSubscribedToCount}</p>
+            <h2 className="text-xl mb-1.5 font-semibold text-gray-400">@{channelData?.fullName} • {channelData?.email}</h2>
+            <p className='font-semibold text-gray-400 ml-1'>Followers {channelData?.subscribersCount} • Following {channelData?.channelsSubscribedToCount}</p>
 
             {showModal && (
 
