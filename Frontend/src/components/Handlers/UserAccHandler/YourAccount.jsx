@@ -7,84 +7,109 @@ import Tabs from './Tabs.jsx';
 import axios from 'axios'
 import { BiLogIn } from "react-icons/bi";
 import Button from '../../utilities/Button.jsx'
-import { RiImageEditFill } from "react-icons/ri";
 import { useSelector } from 'react-redux'
-import ChangeAvatarHandling from './UserAvatar.jsx'
 import UserAvatar from './UserAvatar.jsx'
 import UserCoverImage from './UserCoverImage.jsx'
+import UserAccDetails from './UserAccDetails.jsx'
+import ChangePasswordBtn from './ChangePasswordBtn.jsx'
 
- function YourAccount() {
-  const cuurentuser = useSelector((state)=> state.auth.userData)
-  const [userData , setUserData] = useState()
-  
-  const [error , setError] = useState()
+function YourAccount() {
+  const cuurentuser = useSelector((state) => state.auth.userData)
+  const [channelData, setChannelData] = useState()
+  const [update, setUpdate] = useState()
+  const [error, setError] = useState()
   const { username } = useParams()
   const tabs = [
-    { title: 'Home', content: <UserHomePage userData={userData}/> },
-    { title: 'Videos', content: <Videos userData={userData}/> },
-    { title: 'Tweets', content: <Tweets userData={userData} /> },
+    { title: 'Home', content: <UserHomePage channelData={channelData} /> },
+    { title: 'Videos', content: <Videos channelData={channelData} /> },
+    { title: 'Tweets', content: <Tweets channelData={channelData} /> },
   ];
 
-   useEffect(()=>{
-  async function getchannel(){
-try {
-  const channelData = await axios({
-    method: 'GET',
-    url:`/api/v1/users/c/${username}`
-  })
-  if(channelData){
-    setUserData(channelData.data.data)
+  useEffect(() => {
+    async function getchannel() {
+      try {
+        const channelData = await axios({
+          method: 'POST',
+          url: '/api/v1/users/c/username',
+          data: {
+            'userId': cuurentuser.data._id,// to check cureent user is following the channel or not
+            'username': username
+          }
+        })
+        if (channelData) {
+          setChannelData(channelData.data.data)
+        }
+
+      } catch (error) {
+        setError('Something went wrong Ty Refreshing')
+
+      }
+    }
+    getchannel()
+  }, [update , username])
+
+  const ToggleFollowBtn = async () => {
+    const response = await axios.post(`/api/v1/subscriptions/c/${channelData._id}`)
+    setUpdate(response.data.data)
   }
-  
-} catch (error) {
-  setError('Something went wrong Ty Refreshing')
-  
-}
-  }
-  getchannel()
- },[])
 
- 
+  return channelData ? (
+    <div>
+      {error && <p className='text-center text-3xl font-bold'>{error}</p>}
 
-  return userData ?(
-<div>
-{error && <p className='text-center text-3xl font-bold'>{error}</p>}
+      <UserCoverImage channelData={channelData} />
 
- <UserCoverImage userData={userData}/>
+      <div className='flex flex-row w-1/2 mx-11 p-1 justify-start '>
 
-  <div className='flex flex-row w-1/2 mx-11 p-1 justify-start '>
-    
-    <UserAvatar userData={userData} />
+        <UserAvatar channelData={channelData} />
 
-  <div className='mt-6 '>
-  <h1 className=" text-3xl font-bold ">{userData.username}</h1>
-       <h2 className="text-xl mb-2 font-semibold text-gray-400">@{userData.fullName} • {userData.email}</h2>
-       <p className='font-semibold text-gray-400 '>Followers {userData.subscribersCount} • Following {userData.channelsubscribedCount}</p>
-  </div>
-  </div>
-  <div className=" mt-3">
-    <Tabs tabs={tabs} />
-  </div>
-</div>
-  ):(
+        <div className='mt-6 '>
+          <UserAccDetails channelData={channelData} />
+          {
+            channelData._id === cuurentuser.data._id ? (
+              <div className='mx-1.5'>
+                <ChangePasswordBtn />
+              </div>) : (
+
+              channelData.isSubscribed ? (
+                <Button onClick={ToggleFollowBtn}
+                  className=' w-[7rem]  mt-2 p-2 pl-4 border border-black bg-gray-500 font-bold rounded-2xl transition ease-in hover:-translate-y-1 hover:scale-110 hover:bg-red-700 delay-300 duration-150'>
+                  Following
+                </Button>) : (
+                <Button onClick={ToggleFollowBtn}
+                  className=' w-[6.5rem] mt-2  bg-gray-700 border border-black font-bold rounded-2xl transition ease-in delay-300 duration-150 hover:-translate-y-1 hover:scale-110 hover:bg-green-700'>
+                  Follow
+                </Button>)
+
+            )
+          }
+        </div>
+
+      </div>
+
+      <div className=" mt-3">
+        <Tabs tabs={tabs} />
+      </div>
+    </div>
+  ) : (
     <div className='w-full h-screen bg-gradient-to-r from-gray-200 to-gray-500'>
-    <div className='flex  justify-center '>
+      <div className='flex  justify-center '>
         <BiLogIn className='text-7xl mt-10 mr-2' />
         <h1 className='text-3xl font-bold mt-12'>Login to get Your Channel</h1>
-    </div>
-    <div className='flex justify-center '>
+      </div>
+      <div className='flex justify-center '>
         <Link to={'/login'}>
-            <Button
-                type='button'
-                className='bg-red-700 rounded-lg'>
-                Login
-            </Button>
+          <Button
+            type='button'
+            className='bg-red-700 rounded-lg'>
+            Login
+          </Button>
         </Link>
 
-    </div>
+      </div>
 
-   
-</div>
+
+    </div>
   )
 }
 

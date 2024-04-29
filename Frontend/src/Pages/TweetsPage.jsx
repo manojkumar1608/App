@@ -51,10 +51,10 @@ function TweetsPage() {
             setError("Login to Tweet your Thoughts")
         }
     }
-    if(error){
+    if (error) {
         setTimeout(() => {
             setError(false)
-        },4000)
+        }, 4000)
     }
 
     return tweets && (
@@ -66,7 +66,7 @@ function TweetsPage() {
                     <Link to={`/user/${userData?.data.username}`} >
                         <div className='flex flex-row mt-1 -mr-4'>
                             <img src={userData ?
-                                (userData.data.avatar) : "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
+                                (userData.data.avatar.url) : "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
                                 alt="https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
                                 className="w-10 h-10 rounded-full border border-gray-400" />
                             <h2 className='mt-1 mx-2 text-lg font-semibold'>

@@ -5,11 +5,11 @@ import { RiImageEditFill } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-function UserCoverImage({ userData }) {
+function UserCoverImage({ channelData }) {
     const { register, handleSubmit } = useForm()
     const cuurentuser = useSelector((state) => state.auth.userData)
-    const coverImage = userData?.coverImage.url;
-    const [profilePic, setProfilePic] = useState(coverImage?.url);
+    const coverImage = channelData?.coverImage.url;
+    const [profilePic, setProfilePic] = useState(coverImage);
     const [showModal, setShowModal] = useState(false);
 
     const handleFileChange = (event) => {
@@ -45,16 +45,17 @@ function UserCoverImage({ userData }) {
 
     return (
         <div>
-            {userData.coverImage &&
+            {channelData.coverImage &&
                 <div className='relative'>
-                    <div className='w-[67rem] h-40 mx-11 mt-2 mb-1 p-1 rounded-xl'>
-                        <img className="object-cover w-full h-full rounded-xl"
-                            src={userData.coverImage.url} alt="Cover" />
+                    <div className='w-[67rem] h-40 mx-11 mt-2 mb-1 rounded-xl border border-gray-200'>
+                        <img className="object-cover w-full h-full rounded-xl z-10"
+                            src={channelData.coverImage.url} alt="Cover" />
                         {
-                            userData?._id === cuurentuser?.data?._id &&
-                            <div className='absolute right-20 bottom-0'>
-                                <RiImageEditFill onClick={() => setShowModal(true)}
-                                    className='size-9 hover:bg-gray-300 rounded-lg cursor-pointer' />
+                            channelData?._id === cuurentuser?.data?._id &&
+                            <div onClick={() => setShowModal(true)} 
+                            className='absolute right-16 -bottom-1 rounded-xl cursor-pointer bg-gray-100 hover:bg-gray-200 z-20'>
+                               <img className='size-12 '
+                               src="https://cdn-icons-png.flaticon.com/128/8350/8350435.png" alt= {<RiImageEditFill className='size-9'/>} />
                             </div>
                         }
                     </div>

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import VideoCard from '../../components/Handlers/VideoHandler/VideoCard'
 
-function UserHomePage({userData}) {
+function UserHomePage({channelData}) {
     const [videos , setVideos] = useState([])
     const [error , setError] = useState()
     useEffect(()=>{
@@ -12,7 +12,7 @@ function UserHomePage({userData}) {
                     method: 'POST',
                     url:'/api/v1/videos/user',
                     data:{
-                        'userId': userData._id
+                        'userId': channelData._id
                     }
                 })
             setVideos(response.data.data)
@@ -22,7 +22,7 @@ function UserHomePage({userData}) {
         }
     }
     getuservideos()
-    },[])
+    },[channelData])
   return (
     <div className='flex flex-wrap'>
             {error && <p className='text-center text-3xl font-bold'>{error}</p>}

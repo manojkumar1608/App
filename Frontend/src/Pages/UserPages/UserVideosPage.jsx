@@ -2,18 +2,17 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import VideoCard from '../../components/Handlers/VideoHandler/VideoCard'
 
-function Videos({userData}) {
+function Videos({channelData}) {
     const [videos , setVideos] = useState([])
     const [error , setError] = useState()
     useEffect(()=>{
-        console.log(userData._id)
         async function getuservideos(){
             try {
                 const response = await axios({
                     method: 'POST',
                     url:'/api/v1/videos/user',
                     data:{
-                        'userId': userData._id
+                        'userId': channelData._id
                     }
                 })
             setVideos(response.data.data)
@@ -23,7 +22,7 @@ function Videos({userData}) {
         }
     }
     getuservideos()
-    },[])
+    },[channelData])
   return (
     <div className='flex flex-wrap '>
             {error && <p className='text-center text-3xl font-bold'>Something went wrong Try Refreshing</p>}

@@ -74,7 +74,7 @@ function TweetCard({ tweet }) {
     return user && (
       <div className="bg-white shadow-md rounded-lg p-4 m-1 flex">
         <img
-          src={user.avatar}
+          src={user.avatar.url}
           alt="Avatar"
           className="w-12 h-12 border border-gray-400 rounded-full mr-4"
         />
