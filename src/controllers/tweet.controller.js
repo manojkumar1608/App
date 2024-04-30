@@ -6,24 +6,13 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 const getAllTweets= asyncHandler(async (req, res) => {
     //getting all videos based on query, sort, pagination
+    const { page = 1, limit = 4, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
     
-    const { page = 1, limit = 40, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
-    
-    // find user in db
-    // const user = await User.findById(
-    //     {
-    //         _id: userId
-    //     }
-    // )
-
-    // if(!user){
-    //     throw new ApiError(404, "user not found")
-    // }
+  
 
     const getAllTweets = await Tweet.aggregate([
         {
             $match: { 
-                // owner: new mongoose.Types.ObjectId(userId),
                 $or: [
                     { content: { $regex: query, $options: 'i' } },
                 ]

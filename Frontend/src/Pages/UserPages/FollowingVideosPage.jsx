@@ -5,9 +5,11 @@ import VideoCard from '../../components/Handlers/VideoHandler/VideoCard'
 import { BiLogIn } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import Button from '../../components/utilities/Button';
+import Loadingpage from '../../components/utilities/Loadingpage';
 function FollowingVideosPage() {
   const [videos, setVideos] = useState([])
   const [error, setError] = useState()
+  const [loading, setLoading] = useState(true)
   const userData = useSelector((state) => state.auth.userData)
   useEffect(() => {
     async function getfollowingChannels() {
@@ -43,20 +45,33 @@ function FollowingVideosPage() {
       }
     }
     getfollowingChannels()
+
+    const Timeout = setTimeout(() => {
+      setLoading(false)
+  }, 2000)
+  return () => clearTimeout(Timeout)
+
   }, [])
-  console.log(videos)
   return userData ?(
     <div className='flex flex-wrap'>
       {error && <p className='text-center text-3xl font-bold'>{error}</p>}
-      {videos.map((item) => (
-        <div key={item} className=''>
+      {
+        videos.length > 0 ?(
+      videos.map((item) => (
+        loading ? (
+          <div key={item._id} className=''>
+          <Loadingpage {...item} />
+        </div>
+        ):
+        <div key={item._id} className=''>
           <VideoCard {...item} />
         </div>
-      ))
-      }
-
-      {
-        videos?.length === 0 &&
+      ))):
+          loading ? (
+            <div className='h-screen bg-gray-50 mx-auto mt-4'>
+                    <p className='text-black font-bold text-3xl text-center animate-pulse'> Loading... </p>
+                </div>
+          ):
         <div className='w-full h-screen bg-gray-100 rounded-xl m-2 mr-2 mx-auto'>
            <div className="flex flex-col items-center justify-center h-screen ">
       <div className="text-4xl font-bold mb-4 text-gray-700">Nothing to show here</div>

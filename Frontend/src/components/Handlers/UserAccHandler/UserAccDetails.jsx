@@ -19,7 +19,6 @@ function UserAccDetails({ channelData }) {
     const [showModal, setShowModal] = useState(false);
 
     const Submit = async (data) => {
-        console.log(data);
         const response = await axios({
             method: 'PATCH',
             url: '/api/v1/users/update-account',

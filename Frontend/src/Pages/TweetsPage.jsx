@@ -15,6 +15,8 @@ function TweetsPage() {
 
 
     const [loading, setLoading] = useState(true)
+    const [totalPages, setTotalPages] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
     const [update, setUpdate] = useState()
     const [tweets, settweets] = useState([])
     const [error, setError] = useState()
@@ -22,24 +24,44 @@ function TweetsPage() {
     useEffect(() => {
         async function gettweets() {
             try {
-                const response = await axios.get('/api/v1/tweets/')
+                const response = await axios.get(`/api/v1/tweets?page=${currentPage}`)
                 const tweetsData = response.data.data
                 if (tweetsData) {
-                    settweets(tweetsData.docs)
-                    
+                    settweets((prevTweets) => {
+                        // Filter out videos that are already present
+                        const filteredTweets = tweetsData.docs.filter(tweet => !prevTweets.some(prevTweet => prevTweet._id === tweet._id));
+                        return [...prevTweets, ...filteredTweets];
+                    })
+                    setTotalPages(tweetsData.totalPages)
+
                 }
             } catch (error) {
                 setError(error)
             }
         }
         gettweets()
-        const Timeout = setTimeout(()=>{
+        const Timeout = setTimeout(() => {
             setLoading(false)
-        },2000)
-        
+        }, 1500)
         return () => clearTimeout(Timeout);
-       
-    }, [update])
+
+    }, [currentPage ,update])
+
+    const handleScroll = () => {
+        const scrolledToBottom = window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100; // Adjust the offset as needed
+        if (scrolledToBottom) {
+            if (!loading && currentPage < totalPages) {
+                setCurrentPage(currentPage + 1);
+            }
+        }
+    };
+    
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [loading, currentPage, totalPages]);
 
     const onFormSubmit = (data) => {
         if (userData) {
@@ -55,7 +77,7 @@ function TweetsPage() {
                     reset();
                 }
             }).catch(error => {
-                setError("Failed to update tweet",error)
+                setError("Failed to update tweet", error)
             })
         } else {
             setError("Login to Tweet your Thoughts")
@@ -69,7 +91,7 @@ function TweetsPage() {
 
     return (
         <>
-        
+
             <div className="w-[30rem] mx-auto bg-gray-200  min-h-screen mt-3">
                 {/* Navbar */}
                 <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
@@ -143,23 +165,23 @@ function TweetsPage() {
                     }
 
                     {/* Tweets */}
-                     
+
                     <div className='flex flex-col mt-2'>
                         {error && <p className='text-center text-[#f90909] bg-gray-300 rounded-xl mt-6 mb-2  text-xl font-mono'>{error}</p>}
-                        { 
-                        tweets?.map((item) => (
-                            loading ? (
-                                <div key={item._id}>
-                                    <LoadingTweetCard/>
-                                </div>
-                            ):(
-                            <div key={item._id} className=''>
-                                <TweetCard tweet={item} />
-                            </div>
-                            )
-                        ))
+                        {
+                            tweets?.map((item) => (
+                                loading ? (
+                                    <div key={item._id}>
+                                        <LoadingTweetCard />
+                                    </div>
+                                ) : (
+                                    <div key={item._id} className=''>
+                                        <TweetCard tweet={item} />
+                                    </div>
+                                )
+                            ))
 
-                    }
+                        }
                     </div>
 
 

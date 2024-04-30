@@ -40,7 +40,7 @@ const TweetFormCard = () => {
         })
          if (tweetdata) {
            reset()
-           navigate('/Tweet')
+           navigate('/Tweets')
            setIsOpen(false)
            setTweetData(response.data.data)
           }

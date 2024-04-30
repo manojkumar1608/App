@@ -5,13 +5,12 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {uploadOnCloudinary , deleteOnCloudinary} from "../utils/cloudinary.js"
-import { ObjectId } from "mongodb"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
     //getting all videos based on query, sort, pagination
     
-    const { page = 1, limit = 10, query =`/^video/` , sortBy= "createddAt", sortType= 1} = req.query
+    const { page = 1, limit = 12, query =`/^video/` , sortBy= "createddAt", sortType= 1} = req.query
     
     // find user in db
     // const user = await User.findById(
