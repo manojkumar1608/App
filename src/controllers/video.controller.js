@@ -4,13 +4,13 @@ import {User} from "../models/user.model.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
-import {uploadOnCloudinary , deleteOnCloudinary} from "../utils/cloudinary.js"
+import {uploadOnCloudinary , deleteOnCloudinary , deleteVideoOnCloudinary} from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
     //getting all videos based on query, sort, pagination
     
-    const { page = 1, limit = 12, query =`/^video/` , sortBy= "createddAt", sortType= 1} = req.query
+    const { page = 1, limit = 12, query =`/^video/` , sortBy= "createdAt", sortType=1} = req.query
     
     // find user in db
     // const user = await User.findById(
@@ -22,7 +22,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
     // if(!user){
     //     throw new ApiError(404, "user not found")
     // }
-
+    const sortOrder = parseInt(sortType) === 1 ? 1 : -1;
     const getAllVideosAggregate = await Video.aggregate([
         {
             $match: { 
@@ -35,7 +35,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
         },
         {
             $sort:{
-                [sortBy]: sortType
+                [sortBy]: sortOrder
             }
         },
         {
@@ -107,7 +107,6 @@ const publishAVideo = asyncHandler(async (req, res) => {
     if(!VideoFile){
         throw new ApiError(400,"VideoFile is required")
     }
-    console.log(VideoFile)
 
     const thumbnailLocalPath = req.files?.thumbnail[0]?.path;
     if(!thumbnailLocalPath){
@@ -240,7 +239,6 @@ const deleteVideo = asyncHandler(async (req, res) => {
     // delete video
     const { videoId } = req.params
     const video =  Video.findById(videoId)
-    console.log(video)
     // if(!isValidObjectId(video)){
     //     throw new ApiError(404, "Video not found")
     // }
@@ -260,11 +258,11 @@ const deleteVideo = asyncHandler(async (req, res) => {
     //delete video and thumbnail  in cloudinary
 
     if(videoinDB.thumbnail){
-         await deleteOnCloudinary(videoinDB.thumbnail) 
+        await deleteOnCloudinary(videoinDB.thumbnail.public_id) 
     }
-
+    
     if(videoinDB.videoFile){
-        await deleteOnCloudinary(videoinDB.videoFile,"videoinDB")
+        await deleteVideoOnCloudinary(videoinDB.videoFile.public_id,"videoinDB")
     }
 
     const deletedResponse = await Video.findByIdAndDelete(videoId)

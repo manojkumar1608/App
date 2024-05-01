@@ -134,14 +134,14 @@ function FollowHandler({ video }) {
                     ) : (
                         <div className="flex flex-row mt-4">
                             <Link to={`/edit-video/${video._id}`}>
-                                <Button bgColor=" bg-gradient-to-r from-green-600 to-green-950 mr-1 rounded-xl font-semibold" >
+                                <button className ="w-[3.5rem] h-10 text-white bg-gradient-to-r from-green-600 to-green-950 mr-0.5 rounded-xl font-semibold " >
                                     Edit
-                                </Button>
+                                </button>
                             </Link>
-                            <Button bgColor=" bg-gradient-to-r from-red-600 to-red-950" className="h-fit font-semibold rounded-xl"
+                            <button  className="w-[4rem] h-10 text-white font-semibold rounded-xl bg-gradient-to-r from-red-600 to-red-950"
                                 onClick={deleteVideo}>
                                 Delete
-                            </Button>
+                            </button>
                         </div>)
                 }
             </div>

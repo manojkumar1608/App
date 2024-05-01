@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react'
 import VideoCard from '../../components/Handlers/VideoHandler/VideoCard'
 import Loadingpage from '../../components/utilities/Loadingpage'
 import { useNavigate } from 'react-router-dom'
-
+import TweetCard from '../../components/Handlers/TweetHandling.jsx/TweetCard'
+import LoadingTweetCard from '../../components/utilities/LoadingTweetCard'
 function UserHomePage({ channelData }) {
     const [loading, setLoading] = useState(true)
     const [videos, setVideos] = useState([])
+    const [tweets, setTweets] = useState([])
     const [error, setError] = useState()
     const navigate = useNavigate()
     useEffect(() => {
@@ -28,6 +30,19 @@ function UserHomePage({ channelData }) {
             }
         }
         getuservideos()
+        async function getUserTweets() {
+            try {
+              const response = await axios.get(`/api/v1/tweets/user/${channelData._id}`)
+              const tweetsData = response.data.data
+      
+              if (tweetsData) {
+                setTweets(tweetsData)
+              }
+            } catch (error) {
+              setError(error)
+            }
+          }
+          getUserTweets()
 
         const Timeout = setTimeout(() => {
             setLoading(false)
@@ -35,9 +50,11 @@ function UserHomePage({ channelData }) {
         return () => clearTimeout(Timeout)
         
     }, [channelData])
+   
     return (
-        videos?.length > 0 ? (
-            <div className='flex flex-wrap'>
+        videos?.length > 0 || tweets.length > 0 ? (
+            <div className='flex flex-col'>
+            <div className='flex flex-wrap '>
                 {error && <p className='text-center text-3xl font-bold'>{error}</p>}
                 {videos.map((item) => (
                     loading ? (
@@ -46,9 +63,27 @@ function UserHomePage({ channelData }) {
                         </div>) : (
                         <div key={item._id} className=''>
                             <VideoCard  {...item} />
-                        </div>)
-                ))
+                        </div> 
+                        )
+                    ))
                 }
+                </div>
+                <hr className='bg-gray-600 mb-2'/>
+                <p className='ml-10  font-bold text-xl'>Tweets</p>
+                <div className='flex flex-wrap justify-start ml-12'>
+
+                {tweets.map((item) => (
+          loading ? (
+              <div key={item._id} className='w-[30rem] m-3'>
+              <LoadingTweetCard tweet={item} />
+            </div>) : (
+                <div
+                 key={item._id} className='w-[30rem] m-3 border rounded-xl'>
+              <TweetCard tweet={item} />
+            </div>)
+        ))
+        }
+            </div>
             </div>
         ) : (
             loading ? (
@@ -58,11 +93,12 @@ function UserHomePage({ channelData }) {
             ) : (
                 <div className='w-full h-screen bg-gray-100 rounded-xl m-2 mr-2 mx-auto'>
                     <div className="flex flex-col items-center h-screen ">
-                        <div className="text-4xl font-bold mb-4 text-gray-700">Nothing to show here</div>
+                       
                         <img onClick={() => navigate('/uploadvideo')}
-                            src="https://cdn-icons-png.flaticon.com/128/5764/5764384.png" alt="Nothing Found"
-                            className="w-48 h-48 mb-4 cursor-pointer hover:bg-gray-200 rounded-xl" />
-                        <div className="text-2xl font-bold text-gray-700">Start Uplaoding Videos</div>
+                            src="https://cdn-icons-png.flaticon.com/256/12679/12679422.png" alt="Nothing Found"
+                            className="w-48 h-48 cursor-pointer hover:bg-gray-200 rounded-xl" />
+                       <div className="text-2xl font-bold text-gray-700">Channel does not have any Videos</div>
+            
                     </div>
                 </div>)
 

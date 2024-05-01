@@ -7,8 +7,8 @@ function Logo() {
     <Link 
     className="flex flex-row " to={'/'} >
     <img className='h-[2rem] '
-        src="https://cdn.pixabay.com/photo/2018/05/27/22/48/social-3434840_1280.png" alt="videoTube" />
-    <h3 className='font-bold font-' >PlayTube</h3>
+        src="https://cdn-icons-png.flaticon.com/512/8894/8894556.png" alt="videoTube" />
+    <h3 className='font-bold mt-0.5 text-lg' >PlayTube</h3>
     </Link> 
   )
 }

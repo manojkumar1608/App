@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const Loadingpage = () => {
+const Loadingpage = () => { //videoCard Loading component
     return (
       <div className="w-[22.8rem] m-1.5 mt-3 rounded-xl object-cover ">
       <div className="relative ">

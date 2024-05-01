@@ -26,18 +26,27 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-const deleteOnCloudinary  = async (publicId) => {
-try {
-    if(!publicId) return null;
-    const response = await cloudinary.uploader.destroy(publicId, {
-        resource_type: "auto"
-    })
-    return response;
-
-} catch (error) {
-    return null;
+const deleteOnCloudinary  = async (public_id) => {
+    
+    await cloudinary.uploader.destroy(public_id, { resource_type: "image"}, (error, result) => {
+        if (error) {
+          return null;
+        } else {
+          return result;
+        }
+      });
 }
+const deleteVideoOnCloudinary  = async (public_id) => {
+    console.log("video")
+    
+    await cloudinary.uploader.destroy(public_id, { resource_type: "video"}, (error, result) => {
+        if (error) {
+          return null;
+        } else {
+          return result;
+        }
+      });
 }
 
 
-export {deleteOnCloudinary , uploadOnCloudinary}
+export {deleteOnCloudinary , uploadOnCloudinary, deleteVideoOnCloudinary}

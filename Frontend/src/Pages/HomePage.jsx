@@ -42,8 +42,7 @@ function HomePage() {
             document.documentElement.offsetHeight
         ) {
             if (!loading && currentPage < totalPages) {
-                setCurrentPage(currentPage + 1);
-            }
+                setCurrentPage(currentPage + 1)            }
         }
     };
     useEffect(() => {

@@ -58,11 +58,11 @@ function Videos({channelData}) {
                 ):(
                   <div className='w-full h-screen bg-gray-100 rounded-xl m-2 mr-2 mx-auto'>
                   <div className="flex flex-col items-center h-screen ">
-             <div className="text-4xl font-bold mb-4 text-gray-700">Nothing to show here</div>
-             <img onClick={()=>navigate('/uploadvideo')}
-             src="https://cdn-icons-png.flaticon.com/128/5764/5764384.png" alt="Nothing Found"
-              className="w-48 h-48 mb-4 cursor-pointer hover:bg-gray-200 rounded-xl" />
-             <div className="text-2xl font-bold text-gray-700">Start Uplaoding Videos</div>
+             <img onClick={() => navigate('/uploadvideo')}
+                            src="https://cdn-icons-png.flaticon.com/256/12679/12679422.png" alt="Nothing Found"
+                            className="w-48 h-48 cursor-pointer hover:bg-gray-200 rounded-xl" />
+                       <div className="text-2xl font-bold text-gray-700">Channel does not have any Videos</div>
+            
            </div>
            </div>)
             )

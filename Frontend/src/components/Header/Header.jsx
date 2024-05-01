@@ -37,13 +37,7 @@ function Header() {
     <>
     <div>
     <nav className="w-full flex fixed top-0 z-40 px-4 py-2 bg-gray-100 shadow-sm justify-between items-center">
-      {/* <!-- Hamburger menu icon for small screens --> */}
-      {/* <button className="block lg:hidden text-white focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button> */}
-
+      
       {/* <!-- Logo --> */}
       <div className='flex flex-row'>
         <RxHamburgerMenu

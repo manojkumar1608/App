@@ -317,6 +317,7 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
     }
     if(avatarfile){
     const deletedAvatar = await deleteOnCloudinary(currentuser.avatar.public_id)
+    console.log(deletedAvatar)
     }
 
     const avatar = await uploadOnCloudinary(avatarfile.path)

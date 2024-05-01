@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react'
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import TweetlikeHandler from './TweetLikeHandler';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import moment from 'moment'
+
 function TweetCard({ tweet }) {
   const [user, setUser] = useState()
-  const { register, handleSubmit, reset, watch, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     defaultValues:{
       tweetContent : tweet.content
     }
-
   });
   const { errors, isDirty, isValid } = formState;
   const userData = useSelector((state) => state.auth.userData)
   const owner = tweet.owner;
   let [edit, setedit] = useState()
   const navigate = useNavigate()
-  const dispatch = useNavigate()
   useEffect(() => {
     if (owner) {
       axios({
@@ -72,18 +72,24 @@ function TweetCard({ tweet }) {
 
     return user && (
       <div className="bg-white shadow-md rounded-lg p-4 m-1 flex">
+        <Link to={`/user/${user.username}`}>
         <img
           src={user.avatar.url}
           alt="Avatar"
-          className="w-12 h-12 border border-gray-400 rounded-full mr-3.5"
+          className="w-12 h-12 border border-gray-400 rounded-full mr-2.5"
         />
+        </Link>
         <div className="flex-grow">
           <div className="flex items-center justify-between mb-1 ">
             <div className='flex flex-row '>
-              <p className="font-bold ">{user.username}</p>
-              <img src="https://img.icons8.com/?size=96&id=2sZ0sdlG9kWP&format=png"
+              <Link to={`/user/${user.username}`}>
+              <p className="font-semibold text-lg">{user.username}</p> 
+              </Link>
+              {/* <img src="https://img.icons8.com/?size=96&id=2sZ0sdlG9kWP&format=png"
                 alt="Bluetick"
-                className='h-4 w-4 mt-1.5 ml-1' />
+                className='h-4 w-4 mt-2 ml-1' /> */}
+
+                <p className='text-gray-600 text-sm mt-1 ml-2'> • {moment(tweet.createdAt).fromNow()}</p>
             </div>
             {
               userData && userData.data._id === tweet.owner ? (
