@@ -28,10 +28,16 @@ function TweetsPage() {
                 const tweetsData = response.data.data
                 if (tweetsData) {
                     settweets((prevTweets) => {
-                        // Filter out videos that are already present
-                        const filteredTweets = tweetsData.docs.filter(tweet => !prevTweets.some(prevTweet => prevTweet._id === tweet._id));
-                        return [...prevTweets, ...filteredTweets];
-                    })
+                        const tweetIdMap = new Map(tweetsData.docs.map(tweet => [tweet._id, tweet]));
+
+                        // Filter out tweets from prevTweets that are already present in tweetsData.docs
+                        const existingTweets = prevTweets.filter(tweet => !tweetIdMap.has(tweet._id));
+
+                        // Concatenate tweets from tweetsData.docs with the remaining tweets from prevTweets
+                        const updatedTweets = [...tweetsData.docs, ...existingTweets];
+
+                        return updatedTweets;
+                    });
                     setTotalPages(tweetsData.totalPages)
 
                 }
@@ -45,7 +51,21 @@ function TweetsPage() {
         }, 1500)
         return () => clearTimeout(Timeout);
 
-    }, [currentPage ,update])
+    }, [currentPage, update])
+
+    const handleDelete = async (deletedTweet) => {
+        try {
+            // Delete the tweet from the backend
+            const deletedData = await axios.delete(`/api/v1/tweets/${deletedTweet._id}`);
+            // Update the state with the deleted tweet removed
+            if (deletedData) {
+                settweets(prevTweets => prevTweets.filter(tweet => tweet._id !== deletedTweet._id));
+            }
+
+        } catch (error) {
+            setError("Error deleting tweet:", error);
+        }
+    };
 
     const handleScroll = () => {
         const scrolledToBottom = window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100; // Adjust the offset as needed
@@ -55,7 +75,7 @@ function TweetsPage() {
             }
         }
     };
-    
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -63,6 +83,9 @@ function TweetsPage() {
         };
     }, [loading, currentPage, totalPages]);
 
+    const handleTweetUpdate = (updatedTweets) => {
+        setUpdate(updatedTweets);
+    }
     const onFormSubmit = (data) => {
         if (userData) {
             axios({
@@ -88,10 +111,8 @@ function TweetsPage() {
             setError(false)
         }, 4000)
     }
-
     return (
         <>
-
             <div className="w-[30rem] mx-auto bg-gray-200  min-h-screen mt-3">
                 {/* Navbar */}
                 <nav className="bg-gray-200 fixed w-[30rem] top-[4rem] shadow-lg p-4 flex justify-between rounded-lg items-center">
@@ -176,16 +197,12 @@ function TweetsPage() {
                                     </div>
                                 ) : (
                                     <div key={item._id} className=''>
-                                        <TweetCard tweet={item} />
+                                        <TweetCard tweet={item} onUpdate={handleTweetUpdate} onDelete={handleDelete} />
                                     </div>
                                 )
                             ))
-
                         }
                     </div>
-
-
-
 
                 </div>
             </div>

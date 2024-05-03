@@ -12,11 +12,12 @@ import AuthLayout from "./components/Authentication/AuthLayout.jsx";
 import UploadVideo from './components/Handlers/VideoHandler/UploadVideo.jsx.jsx'
 import EditVideo from './Pages/EditVideo.jsx';
 import HomePage from './Pages/HomePage.jsx';
-import TweetsPage from './Pages/TweetsPage.jsx';
 import YourAccount from './components/Handlers/UserAccHandler/YourAccount.jsx'
 import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
 import FollowingVideosPage from './Pages/UserPages/FollowingVideosPage.jsx';
 import UserAvatar from './components/Handlers/UserAccHandler/UserAvatar.jsx';
+import TweetsPage from './Pages/TweetsPage.jsx'
+import SearchResults from './components/Handlers/SearchHandling/SearchVideoList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -52,12 +53,10 @@ const router = createBrowserRouter([
         element:<LikedVideos/>
       },
           {
-        path:"/pic",
-        element:<UserAvatar/>
+        path:"/search-results",
+        element:<SearchResults/>
       },
-     
-     
-    
+       
       {
         path:"/signup",
         element:(

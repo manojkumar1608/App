@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 const getAllTweets= asyncHandler(async (req, res) => {
     //getting all videos based on query, sort, pagination
-    const { page = 1, limit = 4, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
+    const { page = 1, limit = 10, query =`/^tweet/` , sortBy= "createddAt", sortType= 1} = req.query
     
   
 
@@ -105,7 +105,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
 })
 
 const updateTweet = asyncHandler(async (req, res) => {
-    //TODO: update tweet
+    
     const { newContent } = req.body
     const { tweetId } = req.params
 
