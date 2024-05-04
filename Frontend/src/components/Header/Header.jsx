@@ -40,7 +40,6 @@ function Header() {
   const isActive = (path) => {
     return location.pathname === path ? "bg-gray-200" : "";
   };
-  console.log(location.pathname)
   return (
     <>
       <div>
