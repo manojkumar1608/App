@@ -42,7 +42,7 @@ function TweetlikeHandler({ tweet }) {
                 navigate('/')
             }
         } catch (error) {
-            setError(error.response.statusText + ":" + "Something went wrong")
+            setError( "Something went wrong",error)
         }
 
     }, [userData, tweet, navigate, loading, change])
@@ -61,7 +61,7 @@ function TweetlikeHandler({ tweet }) {
                     }
             }
         } catch (error) {
-            setError(error.response.statusText + ' ' + ':' + ' ' + "Login to Like/DisLike")
+            setError( " Login to Like/DisLike")
         }
 
     }
@@ -73,7 +73,7 @@ function TweetlikeHandler({ tweet }) {
 
     const DislikeHandler = async () => {
         if (!userData) {
-            setError("Unauthorized : Login to Like/DisLike")
+            setError(" Login to Like/DisLike")
         } else {
             setDisLike(disLike = !disLike)
         }
@@ -87,20 +87,19 @@ function TweetlikeHandler({ tweet }) {
 
     return !loading ? (
         <>
-            {error && <p className=" text-[#f90909]  bg-gray-200 rounded-xl mt-1 mb-2 text-center text-lg font-mono">{error}</p>}
-            <div className='flex flex-row'>
+            <div className='flex flex-wrap'>
                 <div className='flex mr-4'>
                     {
                         Like.length > 0 ? (
                             <button onClick={LikeHandler}
-                                className="text-gray-500">
+                            className="text-gray-500">
                                 <BiSolidLike className='inline-block size-6' /> <span>{tweetLikes.Likeslength}</span>
                             </button>) : <button onClick={LikeHandler}
                                 className="text-gray-500 ">
                             <BiLike className='inline-block size-6' /> <span>{tweetLikes.Likeslength}</span>
                         </button>
 
-                    }
+}
                 </div>
                 <div className='flex '>
 
@@ -117,6 +116,10 @@ function TweetlikeHandler({ tweet }) {
 
                 </div>
             </div>
+            
+            
+            {error && <p className ="mx-auto text-[#f90909] text-base bg-gray-200 rounded-md px-2 text-center font-mono">{error}</p>}
+            
         </>
     ) : null
 }

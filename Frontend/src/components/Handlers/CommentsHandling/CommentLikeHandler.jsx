@@ -42,7 +42,7 @@ function CommentLikeHandler({ comment }) {
                 navigate('/')
             }
         } catch (error) {
-            setError(error.response.statusText + ":" + "Something went wrong")
+            setError("Something went wrong Try Refreshing...", error)
         }
 
     }, [userData, comment, navigate, loading, change])

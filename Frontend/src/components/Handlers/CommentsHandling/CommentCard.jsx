@@ -78,14 +78,14 @@ function CommentCard({ comment }) {
         <form onSubmit={handleSubmit(Edit)}>
           <input
             type='text'
-            className="w-full p-2 mb-3 border-b-2 border-black text-ellipsis"
+            className="w-full p-2 mb-1 border-b-2 border-black text-ellipsis"
             placeholder="Write a comment..."
             {...register("content", { required: true })}
           />
           <Button
             type="submit"
-            className=' text-gray-200 border bg-gradient-to-r from-red-600 to-red-950 border-gray-900 rounded-xl font-bold '>
-            Comment
+            className='float-right mr-2 text-gray-200 border bg-gradient-to-t from-red-800 to-red-950 border-gray-900 rounded-xl font-bold '>
+            Update
           </Button>
         </form>
       }

@@ -18,7 +18,6 @@ import FollowingVideosPage from './Pages/UserPages/FollowingVideosPage.jsx';
 import UserAvatar from './components/Handlers/UserAccHandler/UserAvatar.jsx';
 import TweetsPage from './Pages/TweetsPage.jsx'
 import SearchResults from './components/Handlers/SearchHandling/SearchVideoList.jsx';
-
 const router = createBrowserRouter([
   {
     path:"/", 
