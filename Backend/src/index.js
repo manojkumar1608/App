@@ -6,6 +6,7 @@ dotenv.config({
     path: './.env'
 })
 
+
 connectDB()
 .then(() => {
     app.listen('https://playtube-mern-app.vercel.app', () => {
