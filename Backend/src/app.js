@@ -5,7 +5,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'playtube-mern-app.vercel.app',
+    origin: 'https://playtube-mern-app.vercel.app/',
     credentials: true
 }))
 
