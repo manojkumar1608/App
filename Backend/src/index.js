@@ -9,8 +9,8 @@ dotenv.config({
 
 connectDB()
 .then(() => {
-    app.listen('https://playtube-mern-app.vercel.app', () => {
-        console.log(`⚙️ Server is running at port : https://playtube-mern-app.vercel.app`);
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
     })
 })
 .catch((err) => {
