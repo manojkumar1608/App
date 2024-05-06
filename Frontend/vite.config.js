@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      '/api' :'https://playtube-mern-app.vercel.app'
+      '/api' :'playtube-mern-app-ivory.vercel.app'
     },
   },
   plugins: [react()]
