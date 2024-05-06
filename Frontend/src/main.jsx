@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { createBrowserRouter,Outlet,RouterProvider } from "react-router-dom";
+import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import WatchPage from "./Pages/WatchPage.jsx";
@@ -15,7 +15,6 @@ import HomePage from './Pages/HomePage.jsx';
 import YourAccount from './components/Handlers/UserAccHandler/YourAccount.jsx'
 import LikedVideos from './Pages/UserPages/LikedVideos.jsx';
 import FollowingVideosPage from './Pages/UserPages/FollowingVideosPage.jsx';
-import UserAvatar from './components/Handlers/UserAccHandler/UserAvatar.jsx';
 import TweetsPage from './Pages/TweetsPage.jsx'
 import SearchResults from './components/Handlers/SearchHandling/SearchVideoList.jsx';
 const router = createBrowserRouter([
