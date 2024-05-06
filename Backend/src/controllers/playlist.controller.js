@@ -11,7 +11,7 @@ import {Video} from "../models/video.model.js"
 const createPlaylist = asyncHandler(async (req, res) => {
     const {name, description} = req.body
 
-    //TODO: create playlist
+    // create playlist
     if((!name || name?.trim()==="") || (!description || description?.trim()==="")){
         throw new ApiError(400, "name and deccription both are required")
     }

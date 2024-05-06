@@ -5,7 +5,6 @@ import {deleteOnCloudinary, uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
-import { isValidObjectId } from "mongoose";
 
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -37,7 +36,6 @@ const registerUser = asyncHandler( async (req, res) => {
 
 
     const {fullName, email, username, password } = req.body
-    //console.log("email: ", email);
 
     if (
         [fullName, email, username, password].some((field) => field?.trim() === "")
@@ -391,7 +389,7 @@ import { ObjectId } from "mongodb";
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
     const { username, userId } = req.body;
-    const userid = new ObjectId(userId);  //To get isSubscribed true/false.. converted userId(String) to userid (Object) to match with $subscribers.subscriber which have objectIds ..
+    const userid = new ObjectId(userId);  //To get isSubscribed true/false.. ..converted userId(String) to userid (Object) to match with $subscribers.subscriber which have objectIds ..
 
     if (!username?.trim()) {
         throw new ApiError(400, "username is missing");
@@ -464,8 +462,6 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
 
 
-
-
 const getWatchHistory = asyncHandler(async(req, res) => {
     const user = await User.aggregate([
         {
@@ -519,38 +515,6 @@ const getWatchHistory = asyncHandler(async(req, res) => {
         )
     )
 })
-// const updateWatchHistory = asyncHandler(async (req, res) => {
-//     try {
-//         const { videoId,title, thumbnail, views, duration, owner, createdAt, updatedAt} = req.body
-//         // if(!isValidObjectId(req.user._id)){
-//         //     throw new ApiError(404, "Video not found")
-//         // }
-
-//         const user = await User.findById(req.user._id)
-//         if(!user){
-//             throw new ApiError(400, "user not found")
-//         }
-//         user.watchHistory.push({
-            
-//             videoId,
-//             title,
-//             thumbnail,
-//             views,
-//             duration,
-//             owner,
-//             createdAt,
-//             updatedAt,
-//         })
-//         console.log(user.watchHistory)
-//        await user.save({validateBeforeSave:false});
-//         return res.status(200)
-//         .json( new ApiResponse (200,{ user }," user history updated successfully" )
-//         )
-//     } catch (error) {
-//         throw new ApiError(404)
-        
-//     }
-// })
 
 export {
     registerUser,

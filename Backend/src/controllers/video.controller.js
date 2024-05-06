@@ -239,9 +239,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
     // delete video
     const { videoId } = req.params
     const video = Video.findById(videoId)
-    // if(!isValidObjectId(video)){
-    //     throw new ApiError(404, "Video not found")
-    // }
+   
 
     //find in DB
 
@@ -292,7 +290,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
     await video.save({ validateBeforeSave: false })
 
-    //return responce 
+    //return response 
     return res.status(200).json(
         new ApiResponse(
             200,

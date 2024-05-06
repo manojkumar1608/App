@@ -99,7 +99,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
         throw new ApiError(500, "something went wrong while fetching tweets")
 
     }
-    // return responce
+    // return response
      return res.status(201).json(
         new ApiResponse(200, tweets, "tweets fetched  successfully!!"))
 })
@@ -176,7 +176,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
         throw new ApiError(500, "something went wrong while deleting tweet")
        }
 
-       // return responce
+       // return response
        return res.status(201).json(
         new ApiResponse(200, deleteTweet, "tweet deleted successfully!!"))
 })

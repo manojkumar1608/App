@@ -109,7 +109,7 @@ return res.status(200).json(
 
 // get channel videos
 const getChannelVideos = asyncHandler(async (req, res) => {
-// TODO: Get all the videos uploaded by the channel
+//  Getting all the videos uploaded by the channel
 
 const allVideo = await Video.find({
     owner: req.user._id
