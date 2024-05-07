@@ -28,6 +28,7 @@ import playlistRouter from "./routes/playlist.routes.js"
 import dashboardRouter from "./routes/dashboard.routes.js"
 app.use('/',(res,req)=>{
     res.send('server is running..')
+    console.log('server is running')
 })
 //routes declaration
 app.use("/api/v1/healthcheck", healthcheckRouter)
