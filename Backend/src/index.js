@@ -5,7 +5,10 @@ import {app} from './app.js'
 dotenv.config({
     path: './.env'
 })
-
+app.use('/',(res,req)=>{
+    res.send('server is running..')
+    console.log('server is running')
+})
 
 connectDB()
 .then(() => {
