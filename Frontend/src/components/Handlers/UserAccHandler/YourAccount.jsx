@@ -56,6 +56,10 @@ function YourAccount() {
 
   }, [update , username])
 
+  const HandleUpdate = (update) => {
+    setUpdate(update)
+  }
+
   const ToggleFollowBtn = async () => {
     const response = await axios.post(`/api/v1/subscriptions/c/${channelData?._id}`)
     setUpdate(response.data.data)
@@ -69,11 +73,11 @@ function YourAccount() {
       <div>
         {error && <p className='text-center text-3xl font-bold'>{error}</p>}
       
-      <UserCoverImage channelData={channelData} />
+      <UserCoverImage channelData={channelData} onUpdate={HandleUpdate} />
       
       <div className='flex flex-row w-1/2 mx-11 p-1 justify-start '>
 
-        <UserAvatar channelData={channelData} />
+        <UserAvatar channelData={channelData} onUpdate={HandleUpdate} />
 
         <div className='mt-6 '>
           <UserAccDetails channelData={channelData} />
