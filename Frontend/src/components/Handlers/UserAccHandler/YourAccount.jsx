@@ -7,20 +7,23 @@ import Tabs from './Tabs.jsx';
 import axios from 'axios'
 import { BiLogIn } from "react-icons/bi";
 import Button from '../../utilities/Button.jsx'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import UserAvatar from './UserAvatar.jsx'
 import UserCoverImage from './UserCoverImage.jsx'
 import UserAccDetails from './UserAccDetails.jsx'
 import ChangePasswordBtn from './ChangePasswordBtn.jsx'
 import LoadingUserChannel from '../../utilities/LoadingUserChannel.jsx'
+import { login } from '../../../store/authSlice.js'
 
 function YourAccount() {
   const cuurentuser = useSelector((state) => state.auth.userData)
+  console.log(cuurentuser)
   const [loading, setLoading] = useState(true)
   const [channelData, setChannelData] = useState()
   const [update, setUpdate] = useState()
   const [error, setError] = useState()
   const { username } = useParams()
+  const dispatch = useDispatch()
   const tabs = [
     { title: 'Home', content: <UserHomePage channelData={channelData} /> },
     { title: 'Videos', content: <Videos channelData={channelData} /> },
@@ -30,7 +33,7 @@ function YourAccount() {
   useEffect(() => {
     async function getchannel() {
       try {
-        const channelData = await axios({
+        const response = await axios({
           method: 'POST',
           url: '/api/v1/users/c/username',
           data: {
@@ -38,8 +41,11 @@ function YourAccount() {
             'username': username
           }
         })
-        if (channelData) {
-          setChannelData(channelData.data.data)
+        if (response) {
+          setChannelData(response.data.data)
+        }
+        if(channelData?._id === cuurentuser?.data?._id){
+          dispatch(login(response.data))
         }
 
       } catch (error) {
@@ -82,7 +88,7 @@ function YourAccount() {
         <div className='mt-6 '>
           <UserAccDetails channelData={channelData} />
           {
-            channelData?._id === cuurentuser?.data._id ? (
+            channelData?._id === cuurentuser?.data?._id ? (
               <div className='mx-1.5'>
                 <ChangePasswordBtn />
               </div>) : (

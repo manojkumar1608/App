@@ -31,6 +31,7 @@ function TweetCard({ tweet, onUpdate, onDelete }) {
         }
       }).then((response) => {
         if (response) {
+         
           const userData = response.data.data
           setUser(userData)
         } else {

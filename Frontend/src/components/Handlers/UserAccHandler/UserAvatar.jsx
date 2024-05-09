@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RiImageEditFill } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -10,6 +10,7 @@ function UserAvatar({ channelData, onUpdate }) {
   const avatar = channelData?.avatar.url
   const [profilePic, setProfilePic] = useState(avatar);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch()
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -48,7 +49,7 @@ function UserAvatar({ channelData, onUpdate }) {
             <div onClick={() => setShowModal(true)}
               className='absolute bottom-0 right-0 bg-opacity-90 bg-gray-100 font-semibold text-sm rounded-full hover:bg-gray-300 z-30 cursor-pointer'>
               <img className='size-10'
-                src="https://cdn-icons-png.flaticon.com/128/12266/12266279.png" alt={<RiImageEditFill className='size-8'/>} />
+                src="https://cdn-icons-png.flaticon.com/128/12266/12266279.png" alt={<RiImageEditFill className='size-8' />} />
             </div>
           }
         </div>

@@ -49,7 +49,11 @@ function TweetlikeHandler({ tweet }) {
 
     const LikeHandler = async () => {
         setError("")
-        try {
+        
+            if(!userData){
+                setError("Login to Like/DisLike")
+            }else{
+                try{
             if (tweet._id) {
                 await axios.post(`/api/v1/likes/toggle/t/${tweet._id}`)
                     .then(response => {
@@ -60,9 +64,11 @@ function TweetlikeHandler({ tweet }) {
                         setDisLike(false)
                     }
             }
+        
         } catch (error) {
-            setError( " Login to Like/DisLike")
+            setError( " Something went wrong")
         }
+    }
 
     }
     if (error) {
