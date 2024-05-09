@@ -17,8 +17,10 @@ function UserAccDetails({ channelData }) {
     const navigate = useNavigate()
     const cuurentuser = useSelector((state) => state.auth.userData)
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const Submit = async (data) => {
+        setLoading(true)
         const response = await axios({
             method: 'PATCH',
             url: '/api/v1/users/update-account',
@@ -34,11 +36,23 @@ function UserAccDetails({ channelData }) {
                 setShowModal(false)
                 const username = response.data.data.username
                 navigate(`/user/${username}`)
+                setLoading(false)
                 window.location.reload()
         }
         }
     }
-    return channelData && (
+    return loading ? (
+        <div className='fixed top-0 mx-auto left-0 w-full h-full z-50 bg-opacity-80 bg-gray-600 '>
+    <div className=" w-full h-[32rem] flex justify-center items-center ">
+    <div className="w-1/3 h-1/3 rounded-xl text-center bg-gray-200 shadow-lg ">
+        <div className="mt-6 animate-spin text-gray-700 text-4xl mb-3 duration-1000">&#9696;</div>
+  
+        <p className="text-lg text-gray-700 font-semibold">uploading</p>
+        <p className="text-gray-500">please wait</p>
+    </div>
+    </div>
+      </div>):
+    channelData && (
         <div className=''>
             <div className='flex flex-row'>
                 <p className=" text-3xl font-bold ">{channelData?.username}   </p>

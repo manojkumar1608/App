@@ -10,6 +10,7 @@ function UserAvatar({ channelData, onUpdate }) {
   const avatar = channelData?.avatar.url
   const [profilePic, setProfilePic] = useState(avatar);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch()
 
   const handleFileChange = (event) => {
@@ -24,6 +25,7 @@ function UserAvatar({ channelData, onUpdate }) {
   };
 
   const Submit = async (data) => {
+    setLoading(true)
     const response = await axios({
       method: 'PATCH',
       url: '/api/v1/users/avatar',
@@ -37,9 +39,21 @@ function UserAvatar({ channelData, onUpdate }) {
     if (response) {
       setShowModal(false)
       onUpdate(response.data.data)
+      setLoading(false)
     }
   }
-  return (
+  return loading ? (
+    <div className='fixed top-0 mx-auto left-0 w-full h-full z-50 bg-opacity-80 bg-gray-600 '>
+
+  <div className=" w-full h-[32rem] flex justify-center items-center ">
+  <div className="w-1/3 h-1/3 rounded-xl text-center bg-gray-200 shadow-lg ">
+      <div className="mt-6 animate-spin text-gray-700 text-4xl mb-3 duration-1000">&#9696;</div>
+
+      <p className="text-lg text-gray-700 font-semibold">uploading</p>
+      <p className="text-gray-500">please wait</p>
+  </div>
+    </div>
+</div>) :
     <div>
       <div className='relative'>
         <div className=" mr-2 mt-1 rounded-full z-20">
@@ -91,7 +105,7 @@ function UserAvatar({ channelData, onUpdate }) {
         </div>
       )}
     </div>
-  )
+  
 }
 
 export default UserAvatar
