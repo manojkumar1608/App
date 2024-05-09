@@ -32,7 +32,8 @@ function UserCoverImage({ channelData ,onUpdate}) {
             },
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            withCredentials: true
         })
         if (response) {
             setShowModal(false)

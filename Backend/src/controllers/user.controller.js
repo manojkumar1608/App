@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiError.js"
 import { User} from "../models/user.model.js"
-import {deleteOnCloudinary, uploadOnCloudinary} from "../utils/cloudinary.js"
+import {deleteOnCloudinary, uploadOnCloudinary} from "../utils/Cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
@@ -76,11 +76,11 @@ const registerUser = asyncHandler( async (req, res) => {
         fullName,
         avatar: {
             public_id: avatar?.public_id,
-            url: avatar?.url
+            url: avatar?.secure_url
         },
         coverImage:{
           public_id : coverImage?.public_id || "",
-          url : coverImage?.url || "",
+          url : coverImage?.secure_url || "",
         },
             
         email, 
@@ -314,7 +314,6 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
     }
     if(avatarfile){
     const deletedAvatar = await deleteOnCloudinary(currentuser.avatar.public_id)
-    console.log(deletedAvatar)
     }
 
     const avatar = await uploadOnCloudinary(avatarfile.path)
@@ -330,7 +329,7 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
             $set:{
                 avatar: {
                     public_id: avatar.public_id,
-                    url : avatar.url
+                    url : avatar.secure_url
                 }
             }
         },
@@ -371,7 +370,7 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
             $set:{
                 coverImage:{
                     public_id: coverImage.public_id,
-                url: coverImage.url
+                url: coverImage.secure_url
                 }
             }
         },

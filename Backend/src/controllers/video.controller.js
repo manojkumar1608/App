@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
-import { uploadOnCloudinary, deleteOnCloudinary, deleteVideoOnCloudinary } from "../utils/cloudinary.js"
+import { uploadOnCloudinary, deleteOnCloudinary, deleteVideoOnCloudinary } from "../utils/Cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -127,11 +127,11 @@ const publishAVideo = asyncHandler(async (req, res) => {
         videoFile:
         {
             public_id: VideoFile?.public_id,
-            url: VideoFile.url
+            url: VideoFile?.secure_url
         },
         thumbnail: {
             public_id: Thumbnail?.public_id,
-            url: Thumbnail.url
+            url: Thumbnail?.secure_url
         }
 
     })
@@ -219,7 +219,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         updateFields.$set = {
             thumbnail: {
                 public_id: thumbnailUploadOnCloudinary.public_id,
-                url: thumbnailUploadOnCloudinary.url
+                url: thumbnailUploadOnCloudinary.secure_url
             }
         }
     }
