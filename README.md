@@ -9,4 +9,3 @@ ments, and tweets, enhancing UI & UX. Achieved Lighthouse performance score of 9
 
  • Revolutionized content discovery with advanced search feature, addressing basic usability issues and following
  best software development practices. Achieved Lighthouse Accessibility score of 85 and Best Practices 93.
- BlogApp-A web app for creating, managing, and sharing content developed using React and Appwrite
